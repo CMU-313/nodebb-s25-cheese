@@ -2519,3 +2519,196 @@ describe('Topics\'', async () => {
 		});
 	});
 });
+
+
+
+
+// Unit Tests Marking Question Resolved/Unresolved
+
+const sinon = require('sinon');
+const topicsController = require('../src/controllers/topics');
+
+describe('topicsController.setResolved - Unit Test', () => {
+    let req, res;
+
+    beforeEach(() => {
+        req = { params: { tid: 123 }, body: {}, uid: 1 };
+        res = { json: sinon.spy(), status: sinon.stub().returnsThis() };
+
+        sinon.stub(topicsController, 'setResolved').callsFake((req, res) => {
+            if (typeof req.body.resolved !== 'boolean') {
+                return res.status(400).json({ error: "Invalid request. 'resolved' must be a boolean." });
+            }
+
+            return res.json({
+                message: 'Topic resolved status updated',
+                tid: req.params.tid,
+                resolved: req.body.resolved,
+            });
+        });
+    });
+
+    afterEach(() => {
+        sinon.restore();
+    });
+
+    it('should successfully mark a topic as resolved', () => {
+        req.body.resolved = true;
+        topicsController.setResolved(req, res);
+
+        assert(res.json.calledWithMatch({
+            message: 'Topic resolved status updated',
+            tid: 123,
+            resolved: true,
+        }));
+    });
+
+    it('should successfully unmark a topic as resolved (set unresolved)', () => {
+        req.body.resolved = false;
+        topicsController.setResolved(req, res);
+
+        assert(res.json.calledWithMatch({
+            message: 'Topic resolved status updated',
+            tid: 123,
+            resolved: false,
+        }));
+    });
+
+    it('should return 400 if "resolved" field is missing', () => {
+        topicsController.setResolved(req, res);
+        assert(res.status.calledWith(400));
+        assert(res.json.calledWithMatch({ error: "Invalid request. 'resolved' must be a boolean." }));
+    });
+
+    it('should return 400 if "resolved" field is not a boolean', () => {
+        req.body.resolved = 'invalid';  // Invalid type
+        topicsController.setResolved(req, res);
+        
+        assert(res.status.calledWith(400));
+        assert(res.json.calledWithMatch({ error: "Invalid request. 'resolved' must be a boolean." }));
+    });
+});
+
+// Integration Tests Marking Question Resolved/Unresolved
+
+describe('Marking Topics as Resolved', () => {
+    let testTid;
+    let adminUid;
+    let adminJar;
+    let csrf_token;
+    
+    before(async () => {
+        adminUid = await User.create({ username: 'admin', password: '123456' });
+        await groups.join('administrators', adminUid);
+
+        const adminLogin = await helpers.loginUser('admin', '123456');
+        adminJar = adminLogin.jar;
+        csrf_token = adminLogin.csrf_token;
+
+        const categoryObj = await categories.create({
+            name: 'Resolved Topics Test',
+            description: 'Category for testing resolved topics',
+        });
+
+        const topic = await topics.post({
+            uid: adminUid,
+            cid: categoryObj.cid,
+            title: 'Test Resolved Topic',
+            content: 'This is a topic that will be marked as resolved.',
+        });
+
+        testTid = topic.topicData.tid;
+    });
+
+    function mockResponse() {
+        return {
+            statusCode: 200,
+            status: function(code) { 
+                this.statusCode = code; 
+                return this; 
+            },
+            json: function(data) { 
+                this.data = data; 
+                return this; 
+            },
+        };
+    }
+
+    it('should successfully mark a topic as resolved', async () => {
+        const res = mockResponse();
+
+        await topicsController.setResolved({
+            params: { tid: testTid },
+            body: { resolved: true },
+            uid: adminUid,
+        }, res);
+
+        assert.strictEqual(res.statusCode, 200);
+        assert.strictEqual(res.data.message, 'Topic resolved status updated');
+        assert.strictEqual(res.data.tid, testTid);
+        assert.strictEqual(res.data.resolved, true);
+
+        const resolvedStatus = await topics.getTopicField(testTid, 'resolved');
+        assert.strictEqual(resolvedStatus, 'true');
+    });
+
+    it('should successfully unmark a topic as resolved', async () => {
+        const res = mockResponse();
+
+        await topicsController.setResolved({
+            params: { tid: testTid },
+            body: { resolved: false },
+            uid: adminUid,
+        }, res);
+
+        assert.strictEqual(res.statusCode, 200);
+        assert.strictEqual(res.data.message, 'Topic resolved status updated');
+        assert.strictEqual(res.data.tid, testTid);
+        assert.strictEqual(res.data.resolved, false);
+
+        const resolvedStatus = await topics.getTopicField(testTid, 'resolved');
+        assert.strictEqual(resolvedStatus, 'false');
+    });
+
+    it('should return 403 if user does not have permission', async () => {
+        const normalUser = await User.create({ username: 'testuser', password: 'testpass' });
+        const res = mockResponse();
+
+        await topicsController.setResolved({
+            params: { tid: testTid },
+            body: { resolved: true },
+            uid: normalUser,
+        }, res);
+
+        assert.strictEqual(res.statusCode, 403);
+        assert.strictEqual(res.data.error, '[[error:no-privileges]]');
+    });
+
+    it('should return 400 if "resolved" field is missing or invalid', async () => {
+        const res = mockResponse();
+
+        await topicsController.setResolved({
+            params: { tid: testTid },
+            body: { resolved: 'invalid' },  // Invalid data type
+            uid: adminUid,
+        }, res);
+
+        assert.strictEqual(res.statusCode, 400);
+        assert.strictEqual(res.data.error, "Invalid request. 'resolved' must be a boolean.");
+    });
+
+    it('should return 404 if topic does not exist', async () => {
+        const res = mockResponse();
+
+        await topicsController.setResolved({
+            params: { tid: 999999 },  // Non-existent topic
+            body: { resolved: true },
+            uid: adminUid,
+        }, res);
+
+        assert.strictEqual(res.statusCode, 404);
+        assert.strictEqual(res.data.error, 'Topic not found');
+    });
+});
+
+
