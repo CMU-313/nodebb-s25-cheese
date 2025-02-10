@@ -4,6 +4,8 @@ const express = require('express');
 
 const uploadsController = require('../controllers/uploads');
 const helpers = require('./helpers');
+// importing topicsController
+const topicsController = require('../controllers/topics');
 
 module.exports = function (app, middleware, controllers) {
 	const middlewares = [middleware.autoLocale, middleware.authenticateRequest];
@@ -42,4 +44,13 @@ module.exports = function (app, middleware, controllers) {
 		middleware.canViewUsers,
 		middleware.checkAccountPermissions,
 	], helpers.tryRoute(controllers.accounts.edit.uploadPicture));
+	// API endpoint for filtering unanswered questions – 
+	router.get('/topics/unanswered', async (req, res) => {
+		try {
+			const topics = await topicsController.getUnansweredTopics(); // ✅ Correct reference
+			res.json({ topics });
+		} catch (err) {
+			res.status(500).json({ error: err.message });
+		}
+	});
 };
