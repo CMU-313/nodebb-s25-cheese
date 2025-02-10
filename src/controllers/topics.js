@@ -408,6 +408,8 @@ topicsController.pagination = async function (req, res, next) {
 
 const db = require('../database');
 
+const socket = require('../socket.io');
+
 topicsController.setResolved = async function (req, res) {
     try {
         const { tid } = req.params;
@@ -420,7 +422,9 @@ topicsController.setResolved = async function (req, res) {
         // Fetch topic tags
         const topicTags = await Topics.getTopicTags(tid);
         if (topicTags.includes('resolved')) {
-            resolved = true; // Auto-set resolved if tag is present
+            resolved = true;
+        } else {
+            resolved = false;
         }
 
         // Check user permissions
@@ -429,13 +433,36 @@ topicsController.setResolved = async function (req, res) {
             return res.status(403).json({ error: '[[error:no-privileges]]' });
         }
 
-        // Update the resolved status in the database
+        // Update resolved status in the database
         await db.setObjectField(`topic:${tid}`, 'resolved', resolved.toString());
+
+        // Fetch topic data
+        const topicData = await Topics.getTopicFields(tid, ['uid', 'title']);
+
+        // Fetch watchers
+        const watchers = await db.getSortedSetRange(`tid:${tid}:watchers`, 0, -1);
+        const recipients = new Set([...watchers, topicData.uid]);
+
+        // Send notification to OP and watchers
+        await Notifications.create({
+            type: 'topic-resolved-status',
+            bodyShort: resolved ? `The topic **"${topicData.title}"** has been marked as **resolved**.` : 
+                                  `The topic **"${topicData.title}"** is no longer marked as resolved.`,
+            bodyLong: `Your watched topic **"${topicData.title}"** has been updated.`,
+            nid: `topic:resolved-status:${tid}`,
+            from: topicData.uid,
+            tid: tid,
+            path: `/topic/${tid}`,
+        }, [...recipients]);
+
+        // Emit event to notify frontend
+        socket.emit('event:topicResolvedUpdated', { tid, resolved });
 
         res.json({ message: 'Topic resolved status updated', tid, resolved });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 };
+
 
 

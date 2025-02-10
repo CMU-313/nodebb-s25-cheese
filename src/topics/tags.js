@@ -16,6 +16,7 @@ const translator = require('../translator');
 const utils = require('../utils');
 const batch = require('../batch');
 const cache = require('../cache');
+const socket = require('../socket.io');
 
 module.exports = function (Topics) {
 	Topics.createTags = async function (tags, tid, timestamp) {
@@ -417,16 +418,38 @@ module.exports = function (Topics) {
 		tags = await Topics.filterTags(tags, cid);
 		await Topics.addTags(tags, [tid]);
 	
-		// Auto-update resolved status if the "resolved" tag is present
-		if (tags.includes('resolved')) {
-			await db.setObjectField(`topic:${tid}`, 'resolved', 'true');
-		}
-		if (!tags.includes('resolved')) {
-			await db.setObjectField(`topic:${tid}`, 'resolved', 'false');
+		// Determine resolved status
+		const resolved = tags.includes('resolved');
+		await db.setObjectField(`topic:${tid}`, 'resolved', resolved.toString());
+	
+		// Fetch topic data
+		const topicData = await Topics.getTopicFields(tid, ['uid', 'title']);
+	
+		// Fetch watchers
+		const watchers = await db.getSortedSetRange(`tid:${tid}:watchers`, 0, -1);
+		const recipients = new Set([...watchers, topicData.uid]);
+	
+		// Create and send notification to OP and watchers
+		if (recipients.size > 0) {
+			const notifObj = await notifications.create({
+				type: 'topic-resolved-status',
+				bodyShort: resolved ? 
+					`The topic "${topicData.title}" has been marked as resolved.` : 
+					`The topic "${topicData.title}" is no longer marked as resolved.`,
+				bodyLong: `Your watched topic "${topicData.title}" has been updated.`,
+				nid: `topic:resolved-status:${tid}`,
+				from: topicData.uid,
+				tid: tid,
+				path: `/topic/${tid}`,
+			});
+	
+			await notifications.push(notifObj, Array.from(recipients));
 		}
 	
-		plugins.hooks.fire('action:topic.updateTags', { tags, tid });
+		// Emit event to notify frontend
+		plugins.hooks.fire('action:topic.updateTags', { tags, tid, resolved });
 	};
+	
 	
 	Topics.deleteTopicTags = async function (tid) {
 		const topicData = await Topics.getTopicFields(tid, ['cid', 'tags']);
