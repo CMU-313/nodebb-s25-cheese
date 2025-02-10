@@ -10,3 +10,14 @@
 		display: none;
 	}
 }
+
+// resolved tag
+.badge-success {
+    background-color: #4caf50; // Green background
+    color: #fff; // White text
+    font-size: 0.75rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.25rem;
+    text-transform: uppercase;
+    display: inline-block;
+}
