@@ -32,6 +32,14 @@ topicsController.get = async function getTopic(req, res, next) {
 	}
 	let postIndex = parseInt(req.params.post_index, 10) || 1;
 	const topicData = await topics.getTopicData(tid);
+
+	// debug & get correct resolved field
+	const rawResolved = await db.getObjectField(`topic:${tid}`, 'resolved');
+	console.log(`Raw resolved value from Redis for topic ${tid}:`, rawResolved);
+
+	topicData.resolved = rawResolved === '1' || rawResolved === 'true';
+	console.log(`Resolved status for topic ${tid}:`, topicData.resolved);
+
 	if (!topicData) {
 		return next();
 	}
@@ -430,10 +438,33 @@ topicsController.setResolved = async function (req, res) {
         }
 
         // Update the `resolved` field in Redis
-        await db.setObjectField(`topic:${tid}`, 'resolved', resolved.toString());
+        await db.setObjectField(`topic:${tid}`, 'resolved', resolved ? '1' : '0');
 
         res.json({ message: 'Topic resolved status updated', tid, resolved });
     } catch (error) {
+		console.error('Error in setResolved:', error); // Log the error for debugging
         res.status(500).json({ error: error.message });
     }
 };
+
+// Render the topic page and include the `resolved` field
+/* topicsController.renderTopic = async function (req, res) {
+    try {
+        const tid = req.params.tid;
+
+        // Fetch topic data, including the resolved field
+        const topicData = await topics.getTopicData(tid);
+
+        // Check if the `resolved` field exists in topic data and convert to boolean
+        topicData.resolved = topicData.resolved === '1';
+
+        // Pass the data to the template
+        res.render('topic', {
+            ...topicData,
+        });
+
+    } catch (error) {
+        console.error('Error rendering topic:', error);
+        res.status(500).render('error', { error });
+    }
+}; */
