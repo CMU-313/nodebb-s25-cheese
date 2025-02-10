@@ -35,7 +35,10 @@ module.exports = function (Topics) {
 			viewcount: 0,
 			
 			//Newly added fields:
-			resolved: false
+			resolved: false,
+
+			//unanswered field
+			unanswered: 1
 		};
 
 		if (Array.isArray(data.tags) && data.tags.length) {
