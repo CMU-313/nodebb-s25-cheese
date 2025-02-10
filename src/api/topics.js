@@ -298,3 +298,22 @@ topicsAPI.bump = async (caller, { tid }) => {
 	await topics.markAsUnreadForAll(tid);
 	topics.pushUnreadCount(caller.uid);
 };
+
+
+// API for marking/unmarking resolved questions
+topicsAPI.setResolved = async function (caller, { tid, resolved }) {
+    if (typeof resolved !== 'boolean') {
+        throw new Error('[[error:invalid-data]]');
+    }
+
+    // Check if the user has permission to edit this topic
+    if (!await privileges.topics.canEdit(tid, caller.uid)) {
+        throw new Error('[[error:no-privileges]]');
+    }
+
+    // Update the topic's "resolved" field in the database
+    await db.setObjectField(`topic:${tid}`, 'resolved', resolved);
+
+    return { tid, resolved };
+};
+
