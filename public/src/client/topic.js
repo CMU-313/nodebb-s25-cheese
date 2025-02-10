@@ -74,6 +74,10 @@ define('forum/topic', [
 
 		handleTopicSearch();
 
+		if (ajaxify.data.resolved) {
+			$('.topic-title').append(' <span class="badge badge-success">Resolved</span>');
+		}
+
 		hooks.fire('action:topic.loaded', ajaxify.data);
 	};
 
