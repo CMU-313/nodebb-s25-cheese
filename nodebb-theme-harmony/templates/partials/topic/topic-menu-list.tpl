@@ -18,6 +18,11 @@
 <li>
 	<a component="topic/move" href="#" class="dropdown-item rounded-1 d-flex align-items-center gap-2" role="menuitem"><i class="fa fa-fw fa-arrows text-secondary"></i> [[topic:thread-tools.move]]</a>
 </li>
+<li>
+    <a component="topic/resolve" href="#" class="dropdown-item rounded-1 d-flex align-items-center gap-2" role="menuitem">
+        <i class="fa fa-fw fa-check-circle text-secondary"></i> [[topic:mark-as-resolved]]
+    </a>
+</li>
 
 <li>
 	<a component="topic/merge" href="#" class="dropdown-item rounded-1 d-flex align-items-center gap-2" role="menuitem"><i class="fa fa-fw fa-code-fork text-secondary"></i> [[topic:thread-tools.merge]]</a>

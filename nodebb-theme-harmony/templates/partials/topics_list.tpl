@@ -40,6 +40,12 @@
 						<i class="fa fa-thumb-tack"></i>
 						<span>{{{ if !./pinExpiry }}}[[topic:pinned]]{{{ else }}}[[topic:pinned-with-expiry, {isoTimeToLocaleString(./pinExpiryISO, config.userLang)}]]{{{ end }}}</span>
 					</span>
+
+					<span component="topic/resolved" class="badge border border-gray-300 text-body {{{ if !./resolved }}}hidden{{{ end }}} ">
+						<i class="fa fa-check-circle text-success"></i>
+						<span>[[topic:resolved]]</span>
+					</span>
+
 					<span component="topic/locked" class="badge border border-gray-300 text-body {{{ if !./locked }}}hidden{{{ end }}}">
 						<i class="fa fa-lock"></i>
 						<span>[[topic:locked]]</span>

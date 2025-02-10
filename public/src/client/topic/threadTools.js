@@ -25,6 +25,25 @@ define('forum/topic/threadTools', [
 
 		ThreadTools.observeTopicLabels($('[component="topic/labels"]'));
 
+		define('forum/topic/threadTools', ['api', 'alerts'], function (api, alerts) {
+			$(document).on('click', '[component="topic/resolve"]', async function () {
+				const tid = ajaxify.data.tid;
+				const resolved = !ajaxify.data.resolved;
+		
+				try {
+					await api.put(`/topics/${tid}/resolved`, { resolved });
+					alerts.success(resolved ? 'Topic marked as resolved' : 'Topic marked as unresolved');
+		
+					// Update UI
+					ajaxify.data.resolved = resolved;
+					$(this).find('i').toggleClass('fa-check-circle fa-circle-notch');
+				} catch (err) {
+					alerts.error('Failed to update topic status');
+				}
+			});
+		});
+		
+
 		// function topicCommand(method, path, command, onComplete) {
 		topicContainer.on('click', '[component="topic/delete"]', function () {
 			topicCommand('del', '/state', 'delete');
@@ -50,6 +69,11 @@ define('forum/topic/threadTools', [
 			topicCommand('del', '/lock', 'unlock');
 			return false;
 		});
+
+		topicContainer.on('click', '[component="topic/resolve"]', function () {
+			topicCommand('put', '/resolved', 'resolve');
+            return false;
+        });
 
 		topicContainer.on('click', '[component="topic/pin"]', function () {
 			topicCommand('put', '/pin', 'pin');

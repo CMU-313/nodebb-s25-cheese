@@ -411,25 +411,25 @@ const db = require('../database');
 topicsController.setResolved = async function (req, res) {
     try {
         const { tid } = req.params;
-        const { resolved } = req.body; // Expected payload: { "resolved": true } or { "resolved": false }
+        const { resolved } = req.body;
 
         if (typeof resolved !== 'boolean') {
             return res.status(400).json({ error: "Invalid request. 'resolved' must be a boolean." });
         }
 
-        // Fetch the topic to ensure it exists
+        // Ensure topic exists
         const topic = await topics.getTopicData(tid);
         if (!topic) {
             return res.status(404).json({ error: 'Topic not found' });
         }
 
-        // Ensure the user has permission to edit the topic
+        // Check if user has permission to edit the topic
         const canEdit = await privileges.topics.canEdit(tid, req.uid);
         if (!canEdit) {
             return res.status(403).json({ error: '[[error:no-privileges]]' });
         }
 
-        // Update the `resolved` field in Redis
+        // Update the `resolved` field in the database
         await db.setObjectField(`topic:${tid}`, 'resolved', resolved.toString());
 
         res.json({ message: 'Topic resolved status updated', tid, resolved });

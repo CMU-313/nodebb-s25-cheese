@@ -225,6 +225,11 @@ define('forum/category/tools', [
 		components.get('topic/unpin').toggleClass('hidden', areAllScheduled || !isAnyPinned);
 
 		components.get('topic/merge').toggleClass('hidden', isAnyScheduled);
+
+		components.get('topic/resolve').on('click', function () {
+			categoryCommand('put', '/resolved', 'resolve', onResolvedComplete);
+			return false;
+		});
 	}
 
 	function isAny(method, tids) {
@@ -245,6 +250,19 @@ define('forum/category/tools', [
 		return true;
 	}
 
+	function onResolvedComplete() {
+		closeDropDown();
+		topicSelect.unselectAll();
+		alerts.success('[[topic:resolved-success]]');
+		// Update UI
+		const tids = topicSelect.getSelectedTids();
+		tids.forEach(function (tid) {
+			$('[component="category/topic"][data-tid="' + tid + '"]')
+				.find('[component="topic/resolved"]')
+				.removeClass('hidden');
+		});
+	}
+	
 	function isTopicDeleted(tid) {
 		return getTopicEl(tid).hasClass('deleted');
 	}
