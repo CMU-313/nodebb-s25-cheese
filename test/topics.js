@@ -2581,7 +2581,7 @@ describe('topicsController.setResolved - Unit Test', () => {
 	});
 
 	it('should return 400 if "resolved" field is not a boolean', () => {
-		req.body.resolved = 'invalid';  // Invalid type
+		req.body.resolved = 'invalid'; // Invalid type
 		topicsController.setResolved(req, res);
 
 		assert(res.status.calledWith(400));
@@ -2622,13 +2622,13 @@ describe('Marking Topics as Resolved', () => {
 	function mockResponse() {
 		return {
 			statusCode: 200,
-			status: function(code) { 
-				this.statusCode = code; 
-				return this; 
+			status: function (code) {
+				this.statusCode = code;
+				return this;
 			},
-			json: function(data) { 
-				this.data = data; 
-				return this; 
+			json: function (data) {
+				this.data = data;
+				return this;
 			},
 		};
 	}
@@ -2688,7 +2688,7 @@ describe('Marking Topics as Resolved', () => {
 
 		await topicsController.setResolved({
 			params: { tid: testTid },
-			body: { resolved: 'invalid' },  // Invalid data type
+			body: { resolved: 'invalid' }, // Invalid data type
 			uid: adminUid,
 		}, res);
 
@@ -2700,7 +2700,7 @@ describe('Marking Topics as Resolved', () => {
 		const res = mockResponse();
 
 		await topicsController.setResolved({
-			params: { tid: 999999 },  // Non-existent topic
+			params: { tid: 999999 }, // Non-existent topic
 			body: { resolved: true },
 			uid: adminUid,
 		}, res);

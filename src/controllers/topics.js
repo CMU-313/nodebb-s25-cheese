@@ -433,7 +433,7 @@ topicsController.setResolved = async function (req, res) {
 		await db.setObjectField(`topic:${tid}`, 'resolved', resolved.toString());
 
 		res.json({ message: 'Topic resolved status updated', tid, resolved });
-		} catch (error) {
+	} catch (error) {
 		res.status(500).json({ error: error.message });
 	}
 };
