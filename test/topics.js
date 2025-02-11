@@ -2536,29 +2536,23 @@ describe('topicsController.setResolved - Unit Test', () => {
 	let csrf_token;
 
 	beforeEach(async () => {
-
 		adminUid = await User.create({ username: 'admin', password: '123456' });
 		await groups.join('administrators', adminUid);
-
 		const adminLogin = await helpers.loginUser('admin', '123456');
 		adminJar = adminLogin.jar;
 		csrf_token = adminLogin.csrf_token;
-
 		// Create a test topic in the database using the actual API function
 		const categoryObj = await categories.create({
 			name: 'Resolved Topics Test',
 			description: 'Category for testing resolved topics',
 		});
-
 		const topic = await topics.post({
 			uid: adminUid,
 			title: 'Test Topic',
 			content: 'This is a test topic.',
 			cid: categoryObj.cid, // Assuming category ID 1 exists in test DB
 		});
-
 		testTid = topic.topicData.tid; // Get the actual created topic ID
-
 		req = { params: { tid: testTid }, body: {}, uid: 1 };
 		res = {
 			data: null,
