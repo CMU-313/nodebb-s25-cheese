@@ -8,7 +8,7 @@ const nconf = require('nconf');
 const util = require('util');
 
 const sleep = util.promisify(setTimeout);
-const sinon = require('sinon');
+// const sinon = require('sinon');
 
 const db = require('./mocks/databasemock');
 const file = require('../src/file');
@@ -2530,64 +2530,88 @@ const topicsController = require('../src/controllers/topics');
 describe('topicsController.setResolved - Unit Test', () => {
 	let req;
 	let res;
+	let testTid;
+	let adminUid;
+	let adminJar;
+	let csrf_token;
 
-	beforeEach(() => {
-		req = { params: { tid: 123 }, body: {}, uid: 1 };
-		res = { json: sinon.spy(), status: sinon.stub().returnsThis() };
+	beforeEach(async () => {
 
-		sinon.stub(topicsController, 'setResolved').callsFake((req, res) => {
-			if (typeof req.body.resolved !== 'boolean') {
-				return res.status(400).json({ error: "Invalid request. 'resolved' must be a boolean." });
-			}
+		adminUid = await User.create({ username: 'admin', password: '123456' });
+		await groups.join('administrators', adminUid);
 
-			return res.json({
-				message: 'Topic resolved status updated',
-				tid: req.params.tid,
-				resolved: req.body.resolved,
-			});
+		const adminLogin = await helpers.loginUser('admin', '123456');
+		adminJar = adminLogin.jar;
+		csrf_token = adminLogin.csrf_token;
+
+		// Create a test topic in the database using the actual API function
+		const categoryObj = await categories.create({
+			name: 'Resolved Topics Test',
+			description: 'Category for testing resolved topics',
+		});
+
+		const topic = await topics.post({
+			uid: adminUid,
+			title: 'Test Topic',
+			content: 'This is a test topic.',
+			cid: categoryObj.cid, // Assuming category ID 1 exists in test DB
+		});
+
+		testTid = topic.topicData.tid; // Get the actual created topic ID
+
+		req = { params: { tid: testTid }, body: {}, uid: 1 };
+		res = {
+			data: null,
+			statusCode: null,
+			json: function (data) { this.data = data; return this; },
+			status: function (code) { this.statusCode = code; return this; },
+		};
+	});
+
+	afterEach(async () => {
+		// Clean up the test topic
+		await topics.purge(testTid, 1);
+	});
+
+	it('should successfully mark a topic as resolved', async () => {
+		req.body.resolved = true;
+		await topicsController.setResolved(req, res);
+
+		assert.deepStrictEqual(res.data, {
+			message: 'Topic resolved status updated',
+			tid: testTid,
+			resolved: true,
 		});
 	});
 
-	afterEach(() => {
-		sinon.restore();
-	});
-
-	it('should successfully mark a topic as resolved', () => {
-		req.body.resolved = true;
-		topicsController.setResolved(req, res);
-
-		assert(res.json.calledWithMatch({
-			message: 'Topic resolved status updated',
-			tid: 123,
-			resolved: true,
-		}));
-	});
-
-	it('should successfully unmark a topic as resolved (set unresolved)', () => {
+	it('should successfully unmark a topic as resolved (set unresolved)', async () => {
 		req.body.resolved = false;
-		topicsController.setResolved(req, res);
+		await topicsController.setResolved(req, res);
 
-		assert(res.json.calledWithMatch({
+		assert.deepStrictEqual(res.data, {
 			message: 'Topic resolved status updated',
-			tid: 123,
+			tid: testTid,
 			resolved: false,
-		}));
+		});
 	});
 
-	it('should return 400 if "resolved" field is missing', () => {
-		topicsController.setResolved(req, res);
-		assert(res.status.calledWith(400));
-		assert(res.json.calledWithMatch({ error: "Invalid request. 'resolved' must be a boolean." }));
+	it('should return 400 if "resolved" field is missing', async () => {
+		await topicsController.setResolved(req, res);
+
+		assert.strictEqual(res.statusCode, 400);
+		assert.deepStrictEqual(res.data, { error: "Invalid request. 'resolved' must be a boolean." });
 	});
 
-	it('should return 400 if "resolved" field is not a boolean', () => {
+	it('should return 400 if "resolved" field is not a boolean', async () => {
 		req.body.resolved = 'invalid'; // Invalid type
-		topicsController.setResolved(req, res);
+		await topicsController.setResolved(req, res);
 
-		assert(res.status.calledWith(400));
-		assert(res.json.calledWithMatch({ error: "Invalid request. 'resolved' must be a boolean." }));
+		assert.strictEqual(res.statusCode, 400);
+		assert.deepStrictEqual(res.data, { error: "Invalid request. 'resolved' must be a boolean." });
 	});
 });
+
+
 
 // Integration Tests Marking Question Resolved/Unresolved
 describe('Marking Topics as Resolved', () => {
