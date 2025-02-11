@@ -2525,70 +2525,68 @@ describe('Topics\'', async () => {
 
 
 // Unit Tests Marking Question Resolved/Unresolved
-
-
 const topicsController = require('../src/controllers/topics');
 
 describe('topicsController.setResolved - Unit Test', () => {
-    let req
-	let res
+	let req;
+	let res;
 
-    beforeEach(() => {
-        req = { params: { tid: 123 }, body: {}, uid: 1 };
-        res = { json: sinon.spy(), status: sinon.stub().returnsThis() };
+	beforeEach(() => {
+		req = { params: { tid: 123 }, body: {}, uid: 1 };
+		res = { json: sinon.spy(), status: sinon.stub().returnsThis() };
 
-        sinon.stub(topicsController, 'setResolved').callsFake((req, res) => {
-            if (typeof req.body.resolved !== 'boolean') {
-                return res.status(400).json({ error: "Invalid request. 'resolved' must be a boolean." });
-            }
+		sinon.stub(topicsController, 'setResolved').callsFake((req, res) => {
+			if (typeof req.body.resolved !== 'boolean') {
+				return res.status(400).json({ error: "Invalid request. 'resolved' must be a boolean." });
+			}
 
-            return res.json({
-                message: 'Topic resolved status updated',
-                tid: req.params.tid,
-                resolved: req.body.resolved,
-            });
-        });
-    });
+			return res.json({
+				message: 'Topic resolved status updated',
+				tid: req.params.tid,
+				resolved: req.body.resolved,
+			});
+		});
+	});
 
-    afterEach(() => {
-        sinon.restore();
-    });
+	afterEach(() => {
+		sinon.restore();
+	});
 
-    it('should successfully mark a topic as resolved', () => {
-        req.body.resolved = true;
-        topicsController.setResolved(req, res);
+	it('should successfully mark a topic as resolved', () => {
+		req.body.resolved = true;
+		topicsController.setResolved(req, res);
 
-        assert(res.json.calledWithMatch({
-            message: 'Topic resolved status updated',
-            tid: 123,
-            resolved: true,
-        }));
-    });
+		assert(res.json.calledWithMatch({
+			message: 'Topic resolved status updated',
+			tid: 123,
+			resolved: true,
+		}));
+	});
 
-    it('should successfully unmark a topic as resolved (set unresolved)', () => {
-        req.body.resolved = false;
-        topicsController.setResolved(req, res);
+	it('should successfully unmark a topic as resolved (set unresolved)', () => {
+		req.body.resolved = false;
+		topicsController.setResolved(req, res);
 
-        assert(res.json.calledWithMatch({
-            message: 'Topic resolved status updated',
-            tid: 123,
-            resolved: false,
-        }));
-    });
+		assert(res.json.calledWithMatch({
+			message: 'Topic resolved status updated',
+			tid: 123,
+			resolved: false,
+		}));
+	});
 
-    it('should return 400 if "resolved" field is missing', () => {
-        topicsController.setResolved(req, res);
-        assert(res.status.calledWith(400));
-        assert(res.json.calledWithMatch({ error: "Invalid request. 'resolved' must be a boolean." }));
-    });
+	it('should return 400 if "resolved" field is missing', () => {
+		topicsController.setResolved(req, res);
+		assert(res.status.calledWith(400));
+		assert(res.json.calledWithMatch({ error: "Invalid request. 'resolved' must be a boolean." }));
+	});
 
-    it('should return 400 if "resolved" field is not a boolean', () => {
-        req.body.resolved = 'invalid';  // Invalid type
-        topicsController.setResolved(req, res);
-        
-        assert(res.status.calledWith(400));
-        assert(res.json.calledWithMatch({ error: "Invalid request. 'resolved' must be a boolean." }));
-    });
+	it('should return 400 if "resolved" field is not a boolean', () => {
+		req.body.resolved = 'invalid';  // Invalid type
+		topicsController.setResolved(req, res);
+
+		assert(res.status.calledWith(400));
+		assert(res.json.calledWithMatch({ error: "Invalid request. 'resolved' must be a boolean." }));
+	});
 });
 
 // Integration Tests Marking Question Resolved/Unresolved
