@@ -53,7 +53,6 @@ module.exports = function (Topics) {
 		}
 		return topic[field];
 	};
-	
 
 	Topics.getTopicFields = async function (tid, fields) {
 		const topics = await Topics.getTopicsFields([tid], fields);
@@ -75,7 +74,7 @@ module.exports = function (Topics) {
 	};
 
 	Topics.setTopicField = async function (tid, field, value) {
-	await db.setObjectField(`topic:${tid}`, field, value);
+		await db.setObjectField(`topic:${tid}`, field, value);
 	};
 
 	Topics.setTopicFields = async function (tid, data) {

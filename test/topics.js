@@ -2633,7 +2633,7 @@ describe('Marking Topics as Resolved', () => {
 			title: 'Test Resolved Topic',
 			content: 'This is a topic that will be marked as resolved.',
 		});
-		console.log("TOPIC.TOPICDATA --> ", topic.topicData)
+		// console.log('TOPIC.TOPICDATA --> ', topic.topicData)
 		testTid = topic.topicData.tid;
 	});
 
@@ -2660,8 +2660,8 @@ describe('Marking Topics as Resolved', () => {
 			uid: adminUid,
 		}, res);
 
-		let data = await topics.getTopicData(testTid)
-		console.log("DATA --> ", data)
+		// let data = await topics.getTopicData(testTid)
+		// console.log('DATA --> ', data)
 
 		assert.strictEqual(res.statusCode, 200);
 		assert.strictEqual(res.data.message, 'Topic resolved status updated');
@@ -2669,7 +2669,6 @@ describe('Marking Topics as Resolved', () => {
 		assert.strictEqual(res.data.resolved, true);
 
 		const resolvedStatus = await topics.getTopicField(testTid, 'resolved');
-		
 		assert.strictEqual(resolvedStatus, true);
 	});
 
