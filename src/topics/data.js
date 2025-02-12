@@ -38,10 +38,6 @@ module.exports = function (Topics) {
 		return result.topics;
 	};
 
-// Topics.getTopicField = async function (tid, field) {
-// 	const topic = await Topics.getTopicFields(tid, [field]);
-// 	return topic ? topic[field] : null;
-// };
 	Topics.getTopicField = async function (tid, field) {
 		const topic = await Topics.getTopicFields(tid, [field]);
 		if (!topic) {
