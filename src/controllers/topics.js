@@ -408,6 +408,36 @@ topicsController.pagination = async function (req, res, next) {
 
 const db = require('../database');
 
+// topicsController.setResolved = async function (req, res) {
+// 	try {
+// 		const { tid } = req.params;
+// 		const { resolved } = req.body; // Expected payload: { "resolved": true } or { "resolved": false }
+
+// 		if (typeof resolved !== 'boolean') {
+// 			return res.status(400).json({ error: "Invalid request. 'resolved' must be a boolean." });
+// 		}
+
+// 		// Fetch the topic to ensure it exists
+// 		const topic = await topics.getTopicData(tid);
+// 		if (!topic) {
+// 			return res.status(404).json({ error: 'Topic not found' });
+// 		}
+
+// 		// Ensure the user has permission to edit the topic
+// 		const canEdit = await privileges.topics.canEdit(tid, req.uid);
+// 		if (!canEdit) {
+// 			return res.status(403).json({ error: '[[error:no-privileges]]' });
+// 		}
+
+// 		// Update the `resolved` field in Redis
+// 		await db.setObjectField(`topic:${tid}`, 'resolved', resolved);
+
+// 		res.json({ message: 'Topic resolved status updated', tid, resolved });
+// 	} catch (error) {
+// 		res.status(500).json({ error: error.message });
+// 	}
+// };
+
 topicsController.setResolved = async function (req, res) {
 	try {
 		const { tid } = req.params;
@@ -429,11 +459,11 @@ topicsController.setResolved = async function (req, res) {
 			return res.status(403).json({ error: '[[error:no-privileges]]' });
 		}
 
-		// Update the `resolved` field in Redis
-		await db.setObjectField(`topic:${tid}`, 'resolved', resolved.toString());
-
+		// Update the `resolved` field in Redis as a boolean
+		await db.setObjectField(`topic:${tid}`, 'resolved', resolved);
 		res.json({ message: 'Topic resolved status updated', tid, resolved });
 	} catch (error) {
 		res.status(500).json({ error: error.message });
 	}
 };
+

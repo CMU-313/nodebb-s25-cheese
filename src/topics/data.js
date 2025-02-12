@@ -38,10 +38,22 @@ module.exports = function (Topics) {
 		return result.topics;
 	};
 
+	// Topics.getTopicField = async function (tid, field) {
+	// 	const topic = await Topics.getTopicFields(tid, [field]);
+	// 	return topic ? topic[field] : null;
+	// };
 	Topics.getTopicField = async function (tid, field) {
 		const topic = await Topics.getTopicFields(tid, [field]);
-		return topic ? topic[field] : null;
+		if (!topic) {
+			return null;
+		}
+		// Ensure 'resolved' is returned as a boolean
+		if (field === 'resolved') {
+			return topic[field] === 'true';
+		}
+		return topic[field];
 	};
+	
 
 	Topics.getTopicFields = async function (tid, fields) {
 		const topics = await Topics.getTopicsFields([tid], fields);
@@ -63,7 +75,7 @@ module.exports = function (Topics) {
 	};
 
 	Topics.setTopicField = async function (tid, field, value) {
-		await db.setObjectField(`topic:${tid}`, field, value);
+	await db.setObjectField(`topic:${tid}`, field, value);
 	};
 
 	Topics.setTopicFields = async function (tid, data) {
