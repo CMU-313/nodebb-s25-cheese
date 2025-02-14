@@ -40,7 +40,14 @@ module.exports = function (Topics) {
 
 	Topics.getTopicField = async function (tid, field) {
 		const topic = await Topics.getTopicFields(tid, [field]);
-		return topic ? topic[field] : null;
+		if (!topic) {
+			return null;
+		}
+		// Ensure 'resolved' is returned as a boolean
+		if (field === 'resolved') {
+			return topic[field] === 'true';
+		}
+		return topic[field];
 	};
 
 	Topics.getTopicFields = async function (tid, fields) {
