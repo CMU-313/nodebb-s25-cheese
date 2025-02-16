@@ -411,13 +411,13 @@ const db = require('../database');
 const socket = require('../socket.io');
 
 topicsController.setResolved = async function (req, res) {
-    try {
-        const { tid } = req.params;
-        let { resolved } = req.body;
+	try {
+		const { tid } = req.params;
+		const { resolved } = req.body; // Expected payload: { "resolved": true } or { "resolved": false }
 
-        if (typeof resolved !== 'boolean') {
-            return res.status(400).json({ error: "Invalid request. 'resolved' must be a boolean." });
-        }
+		if (typeof resolved !== 'boolean') {
+			return res.status(400).json({ error: "Invalid request. 'resolved' must be a boolean." });
+		}
 
         // Fetch topic tags
         const topicTags = await Topics.getTopicTags(tid);

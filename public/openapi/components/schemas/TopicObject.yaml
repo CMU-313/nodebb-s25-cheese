@@ -3,6 +3,9 @@ TopicObject:
     - $ref: '#/TopicObjectSlim'
     - type: object
       properties:
+        resolved:
+          type: string
+          description: Whether the topic has been marked as resolved
         lastposttime:
           type: number
         category:
@@ -193,6 +196,9 @@ TopicObjectSlim:
   allOf:
     - type: object
       properties:
+        resolved:
+            type: string
+            description: Whether the topic has been marked as resolved
         tid:
           type: number
           description: A topic identifier
