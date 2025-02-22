@@ -8,6 +8,7 @@ const nconf = require('nconf');
 const util = require('util');
 
 const sleep = util.promisify(setTimeout);
+// const sinon = require('sinon');
 
 const db = require('./mocks/databasemock');
 const file = require('../src/file');
@@ -2524,61 +2525,76 @@ describe('Topics\'', async () => {
 
 
 // Unit Tests Marking Question Resolved/Unresolved
-
-const sinon = require('sinon');
 const topicsController = require('../src/controllers/topics');
 
 describe('topicsController.setResolved - Unit Test', () => {
-    let req, res;
+	let req;
+	let res;
+	let testTid;
+	let adminUid;
+	let adminJar;
+	let csrf_token;
 
-    beforeEach(() => {
-        req = { params: { tid: 123 }, body: {}, uid: 1 };
-        res = { json: sinon.spy(), status: sinon.stub().returnsThis() };
+	beforeEach(async () => {
+		adminUid = await User.create({ username: 'admin', password: '123456' });
+		await groups.join('administrators', adminUid);
+		const adminLogin = await helpers.loginUser('admin', '123456');
+		adminJar = adminLogin.jar;
+		csrf_token = adminLogin.csrf_token;
+		// Create a test topic in the database using the actual API function
+		const categoryObj = await categories.create({
+			name: 'Resolved Topics Test',
+			description: 'Category for testing resolved topics',
+		});
+		const topic = await topics.post({
+			uid: adminUid,
+			title: 'Test Topic',
+			content: 'This is a test topic.',
+			cid: categoryObj.cid, // Assuming category ID 1 exists in test DB
+		});
+		testTid = topic.topicData.tid; // Get the actual created topic ID
+		req = { params: { tid: testTid }, body: {}, uid: 1 };
+		res = {
+			data: null,
+			statusCode: null,
+			json: function (data) { this.data = data; return this; },
+			status: function (code) { this.statusCode = code; return this; },
+		};
+	});
 
-        sinon.stub(topicsController, 'setResolved').callsFake((req, res) => {
-            if (typeof req.body.resolved !== 'boolean') {
-                return res.status(400).json({ error: "Invalid request. 'resolved' must be a boolean." });
-            }
+	afterEach(async () => {
+		// Clean up the test topic
+		await topics.purge(testTid, 1);
+	});
 
-            return res.json({
-                message: 'Topic resolved status updated',
-                tid: req.params.tid,
-                resolved: req.body.resolved,
-            });
-        });
-    });
+	it('should successfully mark a topic as resolved', async () => {
+		req.body.resolved = true;
+		await topicsController.setResolved(req, res);
 
-    afterEach(() => {
-        sinon.restore();
-    });
+		assert.deepStrictEqual(res.data, {
+			message: 'Topic resolved status updated',
+			tid: testTid,
+			resolved: true,
+		});
+	});
 
-    it('should successfully mark a topic as resolved', () => {
-        req.body.resolved = true;
-        topicsController.setResolved(req, res);
+	it('should successfully unmark a topic as resolved (set unresolved)', async () => {
+		req.body.resolved = false;
+		await topicsController.setResolved(req, res);
 
-        assert(res.json.calledWithMatch({
-            message: 'Topic resolved status updated',
-            tid: 123,
-            resolved: true,
-        }));
-    });
+		assert.deepStrictEqual(res.data, {
+			message: 'Topic resolved status updated',
+			tid: testTid,
+			resolved: false,
+		});
+	});
 
-    it('should successfully unmark a topic as resolved (set unresolved)', () => {
-        req.body.resolved = false;
-        topicsController.setResolved(req, res);
+	it('should return 400 if "resolved" field is missing', async () => {
+		await topicsController.setResolved(req, res);
 
-        assert(res.json.calledWithMatch({
-            message: 'Topic resolved status updated',
-            tid: 123,
-            resolved: false,
-        }));
-    });
-
-    it('should return 400 if "resolved" field is missing', () => {
-        topicsController.setResolved(req, res);
-        assert(res.status.calledWith(400));
-        assert(res.json.calledWithMatch({ error: "Invalid request. 'resolved' must be a boolean." }));
-    });
+		assert.strictEqual(res.statusCode, 400);
+		assert.deepStrictEqual(res.data, { error: "Invalid request. 'resolved' must be a boolean." });
+	});
 
     it('should return 400 if "resolved" field is not a boolean', () => {
         req.body.resolved = 'invalid';  // Invalid type
@@ -2607,126 +2623,130 @@ describe('topicsController.setResolved - Unit Test', () => {
 	
 });
 
+
+
 // Integration Tests Marking Question Resolved/Unresolved
-
 describe('Marking Topics as Resolved', () => {
-    let testTid;
-    let adminUid;
-    let adminJar;
-    let csrf_token;
-    
-    before(async () => {
-        adminUid = await User.create({ username: 'admin', password: '123456' });
-        await groups.join('administrators', adminUid);
+	let testTid;
+	let adminUid;
+	let adminJar;
+	let csrf_token;
 
-        const adminLogin = await helpers.loginUser('admin', '123456');
-        adminJar = adminLogin.jar;
-        csrf_token = adminLogin.csrf_token;
+	before(async () => {
+		adminUid = await User.create({ username: 'admin', password: '123456' });
+		await groups.join('administrators', adminUid);
 
-        const categoryObj = await categories.create({
-            name: 'Resolved Topics Test',
-            description: 'Category for testing resolved topics',
-        });
+		const adminLogin = await helpers.loginUser('admin', '123456');
+		adminJar = adminLogin.jar;
+		csrf_token = adminLogin.csrf_token;
 
-        const topic = await topics.post({
-            uid: adminUid,
-            cid: categoryObj.cid,
-            title: 'Test Resolved Topic',
-            content: 'This is a topic that will be marked as resolved.',
-        });
+		const categoryObj = await categories.create({
+			name: 'Resolved Topics Test',
+			description: 'Category for testing resolved topics',
+		});
 
-        testTid = topic.topicData.tid;
-    });
+		const topic = await topics.post({
+			uid: adminUid,
+			cid: categoryObj.cid,
+			title: 'Test Resolved Topic',
+			content: 'This is a topic that will be marked as resolved.',
+		});
+		// console.log('TOPIC.TOPICDATA --> ', topic.topicData)
+		testTid = topic.topicData.tid;
+	});
 
-    function mockResponse() {
-        return {
-            statusCode: 200,
-            status: function(code) { 
-                this.statusCode = code; 
-                return this; 
-            },
-            json: function(data) { 
-                this.data = data; 
-                return this; 
-            },
-        };
-    }
+	function mockResponse() {
+		return {
+			statusCode: 200,
+			status: function (code) {
+				this.statusCode = code;
+				return this;
+			},
+			json: function (data) {
+				this.data = data;
+				return this;
+			},
+		};
+	}
 
-    it('should successfully mark a topic as resolved', async () => {
-        const res = mockResponse();
+	it('should successfully mark a topic as resolved', async () => {
+		const res = mockResponse();
 
-        await topicsController.setResolved({
-            params: { tid: testTid },
-            body: { resolved: true },
-            uid: adminUid,
-        }, res);
+		await topicsController.setResolved({
+			params: { tid: testTid },
+			body: { resolved: true },
+			uid: adminUid,
+		}, res);
 
-        assert.strictEqual(res.statusCode, 200);
-        assert.strictEqual(res.data.message, 'Topic resolved status updated');
-        assert.strictEqual(res.data.tid, testTid);
-        assert.strictEqual(res.data.resolved, true);
+		// let data = await topics.getTopicData(testTid)
+		// console.log('DATA --> ', data)
 
-        const resolvedStatus = await topics.getTopicField(testTid, 'resolved');
-        assert.strictEqual(resolvedStatus, 'true');
-    });
+		assert.strictEqual(res.statusCode, 200);
+		assert.strictEqual(res.data.message, 'Topic resolved status updated');
+		assert.strictEqual(res.data.tid, testTid);
+		assert.strictEqual(res.data.resolved, true);
 
-    it('should successfully unmark a topic as resolved', async () => {
-        const res = mockResponse();
+		const resolvedStatus = await topics.getTopicField(testTid, 'resolved');
+		assert.strictEqual(resolvedStatus, true);
+	});
 
-        await topicsController.setResolved({
-            params: { tid: testTid },
-            body: { resolved: false },
-            uid: adminUid,
-        }, res);
+	it('should successfully unmark a topic as resolved', async () => {
+		const res = mockResponse();
 
-        assert.strictEqual(res.statusCode, 200);
-        assert.strictEqual(res.data.message, 'Topic resolved status updated');
-        assert.strictEqual(res.data.tid, testTid);
-        assert.strictEqual(res.data.resolved, false);
+		await topicsController.setResolved({
+			params: { tid: testTid },
+			body: { resolved: false },
+			uid: adminUid,
+		}, res);
 
-        const resolvedStatus = await topics.getTopicField(testTid, 'resolved');
-        assert.strictEqual(resolvedStatus, 'false');
-    });
+		assert.strictEqual(res.statusCode, 200);
+		assert.strictEqual(res.data.message, 'Topic resolved status updated');
+		assert.strictEqual(res.data.tid, testTid);
+		assert.strictEqual(res.data.resolved, false);
 
-    it('should return 403 if user does not have permission', async () => {
-        const normalUser = await User.create({ username: 'testuser', password: 'testpass' });
-        const res = mockResponse();
+		const resolvedStatus = await topics.getTopicField(testTid, 'resolved');
+		assert.strictEqual(resolvedStatus, false);
+	});
 
-        await topicsController.setResolved({
-            params: { tid: testTid },
-            body: { resolved: true },
-            uid: normalUser,
-        }, res);
+	it('should return 403 if user does not have permission', async () => {
+		const normalUser = await User.create({ username: 'testuser', password: 'testpass' });
+		const res = mockResponse();
 
-        assert.strictEqual(res.statusCode, 403);
-        assert.strictEqual(res.data.error, '[[error:no-privileges]]');
-    });
+		await topicsController.setResolved({
+			params: { tid: testTid },
+			body: { resolved: true },
+			uid: normalUser,
+		}, res);
 
-    it('should return 400 if "resolved" field is missing or invalid', async () => {
-        const res = mockResponse();
+		assert.strictEqual(res.statusCode, 403);
+		assert.strictEqual(res.data.error, '[[error:no-privileges]]');
+	});
 
-        await topicsController.setResolved({
-            params: { tid: testTid },
-            body: { resolved: 'invalid' },  // Invalid data type
-            uid: adminUid,
-        }, res);
+	it('should return 400 if "resolved" field is missing or invalid', async () => {
+		const res = mockResponse();
 
-        assert.strictEqual(res.statusCode, 400);
-        assert.strictEqual(res.data.error, "Invalid request. 'resolved' must be a boolean.");
-    });
+		await topicsController.setResolved({
+			params: { tid: testTid },
+			body: { resolved: 'invalid' }, // Invalid data type
+			uid: adminUid,
+		}, res);
 
-    it('should return 404 if topic does not exist', async () => {
-        const res = mockResponse();
+		assert.strictEqual(res.statusCode, 400);
+		assert.strictEqual(res.data.error, "Invalid request. 'resolved' must be a boolean.");
+	});
 
-        await topicsController.setResolved({
-            params: { tid: 999999 },  // Non-existent topic
-            body: { resolved: true },
-            uid: adminUid,
-        }, res);
+	it('should return 404 if topic does not exist', async () => {
+		const res = mockResponse();
 
-        assert.strictEqual(res.statusCode, 404);
-        assert.strictEqual(res.data.error, 'Topic not found');
-    });
+		await topicsController.setResolved({
+			params: { tid: 999999 }, // Non-existent topic
+			body: { resolved: true },
+			uid: adminUid,
+		}, res);
+
+		assert.strictEqual(res.statusCode, 404);
+		assert.strictEqual(res.data.error, 'Topic not found');
+	});
 });
 
 
