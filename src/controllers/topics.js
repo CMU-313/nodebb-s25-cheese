@@ -438,3 +438,23 @@ topicsController.setResolved = async function (req, res) {
 	}
 };
 
+// adding topics.Controller.getUnansweredTopics function method for filtering unanswered questions
+topicsController.getUnansweredTopics = async function (limit = 10, offset = 0) {
+    try {
+        // Fetch topic IDs with limit and offset
+        let tids = await db.getSortedSetRevRange('topics:tid', offset, offset + limit - 1);
+
+        // Retrieve topic details
+        let topicData = await topics.getTopicsByTids(tids, 0);
+
+        // Filter topics with no replies
+        let unansweredTopics = topicData.filter(topic => topic.unanswered === 1);
+
+        return unansweredTopics;
+    } catch (err) {
+        throw new Error('Error fetching unanswered topics: ' + err.message);
+    }
+};
+
+
+
