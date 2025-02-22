@@ -43,7 +43,6 @@ module.exports = function (app, middleware, controllers) {
 		middleware.checkAccountPermissions,
 	], helpers.tryRoute(controllers.accounts.edit.uploadPicture));
 
-	//API Routing for marking/unmarking resolved field for a question
+	// API Routing for marking/unmarking resolved field for a question
 	router.put('/topics/:tid/resolved', [...middlewares, middleware.ensureLoggedIn], helpers.tryRoute(controllers.topics.setResolved));
-
 };
