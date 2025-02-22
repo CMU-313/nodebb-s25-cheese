@@ -26,11 +26,6 @@
 			<div class="d-flex flex-column gap-3 flex-grow-1">
 				<h1 component="post/header" class="tracking-tight fw-semibold fs-3 mb-0 text-break {{{ if config.theme.centerHeaderElements }}}text-center{{{ end }}}">
 					<span class="topic-title" component="topic/title">{title}</span>
-
-					<script>console.log('Resolved value from template:', '{resolved}');</script>
-					{{{ if resolved }}}
-        				<span class="resolved-tag">Resolved</span>
-    				{{{ end }}}
 				</h1>
 
 				<div class="topic-info d-flex gap-2 align-items-center flex-wrap {{{ if config.theme.centerHeaderElements }}}justify-content-center{{{ end }}}">
