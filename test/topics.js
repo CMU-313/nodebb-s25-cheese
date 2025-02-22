@@ -2587,6 +2587,24 @@ describe('topicsController.setResolved - Unit Test', () => {
         assert(res.status.calledWith(400));
         assert(res.json.calledWithMatch({ error: "Invalid request. 'resolved' must be a boolean." }));
     });
+
+	it('should update the database with the correct resolved status', async () => {
+		req.body.resolved = true;
+		await topicsController.setResolved(req, res);
+	
+		const resolvedStatus = await topics.getTopicField(req.params.tid, 'resolved');
+		assert.strictEqual(resolvedStatus, 'true');
+	});
+	
+	it('should not update the resolved status if the topic does not exist', async () => {
+		req.params.tid = 999999; // Non-existent topic
+		req.body.resolved = true;
+		await topicsController.setResolved(req, res);
+	
+		assert(res.status.calledWith(404));
+		assert(res.json.calledWithMatch({ error: 'Topic not found' }));
+	});
+	
 });
 
 // Integration Tests Marking Question Resolved/Unresolved
