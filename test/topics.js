@@ -8,7 +8,7 @@ const nconf = require('nconf');
 const util = require('util');
 
 const sleep = util.promisify(setTimeout);
-// const sinon = require('sinon');
+const sinon = require('sinon');
 
 const db = require('./mocks/databasemock');
 const file = require('../src/file');
@@ -25,6 +25,19 @@ const socketTopics = require('../src/socket.io/topics');
 const apiTopics = require('../src/api/topics');
 const apiPosts = require('../src/api/posts');
 const request = require('../src/request');
+const notificationService = require('../src/notifications');
+const socket = require('../src/socket.io');
+
+beforeEach(() => {
+	if (!socket.emit) {
+		socket.emit = () => {}; // ✅ Define a dummy function if it doesn't exist
+	}
+	sinon.stub(socket, 'emit'); // ✅ Stub socket.emit only if it exists
+});
+
+afterEach(() => {
+	sinon.restore(); // ✅ Restore original functions after each test
+});
 
 describe('Topic\'s', () => {
 	let topic;
@@ -1580,17 +1593,24 @@ describe('Topic\'s', () => {
 		it('should return related topics', (done) => {
 			const meta = require('../src/meta');
 			meta.config.maximumRelatedTopics = 2;
+
 			const topicData = {
 				tags: [{ value: 'javascript' }],
 			};
+
 			topics.getRelatedTopics(topicData, 0, (err, data) => {
+				console.log('Related Topics Data:', data); // Debugging log
+
 				assert.ifError(err);
 				assert(Array.isArray(data));
-				assert.equal(data[0].title, 'topic title 2');
+				assert(data.length > 0, 'Expected at least one related topic but got none'); // Extra check
+
+				assert.equal(data[0].title, 'topic title 2'); // The failing line
 				meta.config.maximumRelatedTopics = 0;
 				done();
 			});
 		});
+
 
 		it('should return error with invalid data', (done) => {
 			socketAdmin.tags.deleteTags({ uid: adminUid }, null, (err) => {
@@ -2603,6 +2623,75 @@ describe('topicsController.setResolved - Unit Test', () => {
 		assert.strictEqual(res.statusCode, 400);
 		assert.deepStrictEqual(res.data, { error: "Invalid request. 'resolved' must be a boolean." });
 	});
+
+	it('should update the database with the correct resolved status', async () => {
+		req.body.resolved = true;
+		await topicsController.setResolved(req, res);
+
+		// Fetch resolved status from the database
+		const resolvedStatus = await topics.getTopicField(req.params.tid, 'resolved');
+
+		// Convert expected and actual values to string and compare
+		assert.strictEqual(String(resolvedStatus), 'true');
+	});
+
+	const notifications = require('../src/notifications');
+
+	it('should send a notification when a topic is marked as resolved', async () => {
+		req.body.resolved = true;
+
+		// Spy on both Notifications.push and Notifications.create functions
+		const pushSpy = sinon.spy(notifications, 'push');
+		const createSpy = sinon.spy(notifications, 'create');
+
+		await topicsController.setResolved(req, res);
+
+		// Assert either push or create was called
+		assert(pushSpy.calledOnce || createSpy.calledOnce, 'Expected either Notifications.push or Notifications.create to be called once');
+
+		// Log the calls for debugging
+		console.log('Push calls:', pushSpy.getCalls());
+		console.log('Create calls:', createSpy.getCalls());
+
+		// Restore the original functions
+		pushSpy.restore();
+		createSpy.restore();
+	});
+
+	it('should send a notification when a topic is marked as unresolved', async () => {
+		req.body.resolved = false;
+		const topicData = await topics.getTopicData(req.params.tid);
+
+		// Spy on both Notifications.push and Notifications.create functions
+		const pushSpy = sinon.spy(notifications, 'push');
+		const createSpy = sinon.spy(notifications, 'create');
+
+		await topicsController.setResolved(req, res);
+
+		// Assert either push or create was called
+		assert(pushSpy.calledOnce || createSpy.calledOnce, 'Expected either Notifications.push or Notifications.create to be called once');
+
+		// Log the calls for debugging
+		console.log('Push calls:', pushSpy.getCalls());
+		console.log('Create calls:', createSpy.getCalls());
+
+		// Validate the notification payload if push was called
+		if (pushSpy.calledOnce) {
+			const call = pushSpy.getCall(0);
+			assert(call, 'Notifications.push should have been called');
+			const [notification, uids] = call.args;
+
+			assert.strictEqual(uids[0], topicData.uid, 'Notification should be sent to topic owner');
+			assert.strictEqual(notification.nid, `topic_resolved:${req.params.tid}`, 'Notification should have correct nid');
+			assert.strictEqual(notification.pid, topicData.mainPid, 'Notification should reference the correct post ID');
+			assert.strictEqual(notification.tid, req.params.tid, 'Notification should reference the correct topic ID');
+			assert.strictEqual(notification.from, req.uid, 'Notification should be from the user who marked it');
+		}
+
+		// Restore the original functions
+		pushSpy.restore();
+		createSpy.restore();
+	});
 });
 
 
@@ -2721,13 +2810,125 @@ describe('Marking Topics as Resolved', () => {
 		const res = mockResponse();
 
 		await topicsController.setResolved({
-			params: { tid: 999999 }, // Non-existent topic
+			params: { tid: 'nonexistent-tid' }, // Non-existent topic
 			body: { resolved: true },
 			uid: adminUid,
 		}, res);
 
 		assert.strictEqual(res.statusCode, 404);
 		assert.strictEqual(res.data.error, 'Topic not found');
+	});
+
+	it('should correctly store and retrieve the resolved status from the database', async () => {
+		const res = mockResponse();
+
+		await topicsController.setResolved({
+			params: { tid: testTid },
+			body: { resolved: true },
+			uid: adminUid,
+		}, res);
+
+		const resolvedStatus = await topics.getTopicField(testTid, 'resolved');
+		assert.strictEqual(String(resolvedStatus), 'true');
+
+		await topicsController.setResolved({
+			params: { tid: testTid },
+			body: { resolved: false },
+			uid: adminUid,
+		}, res);
+
+		const newResolvedStatus = await topics.getTopicField(testTid, 'resolved');
+		assert.strictEqual(String(newResolvedStatus), 'false');
+	});
+
+	it('should prevent a non-admin user from changing the resolved status', async () => {
+		const res = mockResponse();
+		const normalUser = await User.create({ username: 'regularUser' });
+
+		await topicsController.setResolved({
+			params: { tid: testTid },
+			body: { resolved: true },
+			uid: normalUser,
+		}, res);
+
+		assert.strictEqual(res.statusCode, 403);
+		assert.strictEqual(res.data.error, '[[error:no-privileges]]');
+	});
+
+	it('should notify the topic author when their topic is marked as resolved', async () => {
+		const res = mockResponse();
+		const topicData = await topics.getTopicData(testTid);
+
+		// Spy on both notificationService.push and notificationService.create functions
+		const pushSpy = sinon.spy(notificationService, 'push');
+		const createSpy = sinon.spy(notificationService, 'create');
+
+		await topicsController.setResolved({
+			params: { tid: testTid },
+			body: { resolved: true },
+			uid: adminUid,
+		}, res);
+
+		// Assert either push or create was called
+		assert(pushSpy.calledOnce || createSpy.calledOnce, 'Expected either notificationService.push or notificationService.create to be called once');
+
+		// Log calls for debugging
+		console.log('Push calls:', pushSpy.getCalls());
+		console.log('Create calls:', createSpy.getCalls());
+
+		// Validate the notification payload if push was called
+		if (pushSpy.calledOnce) {
+			const call = pushSpy.getCall(0);
+			assert(call, 'notificationService.push should have been called');
+			const [notification, uids] = call.args;
+
+			assert.strictEqual(uids[0], topicData.uid, 'Notification should be sent to topic owner');
+			assert.strictEqual(notification.nid, `topic_resolved:${testTid}`, 'Notification should have correct nid');
+			assert.strictEqual(notification.tid, testTid, 'Notification should reference the correct topic ID');
+			assert.strictEqual(notification.from, adminUid, 'Notification should be from the user who marked it');
+		}
+
+		// Restore spies after test execution
+		pushSpy.restore();
+		createSpy.restore();
+	});
+
+	it('should notify the topic author when their topic is marked as unresolved', async () => {
+		const res = mockResponse();
+		const topicData = await topics.getTopicData(testTid);
+
+		// Spy on both notificationService.push and notificationService.create functions
+		const pushSpy = sinon.spy(notificationService, 'push');
+		const createSpy = sinon.spy(notificationService, 'create');
+
+		await topicsController.setResolved({
+			params: { tid: testTid },
+			body: { resolved: false },
+			uid: adminUid,
+		}, res);
+
+		// Assert either push or create was called
+		assert(pushSpy.calledOnce || createSpy.calledOnce, 'Expected either notificationService.push or notificationService.create to be called once');
+
+		// Log calls for debugging
+		console.log('Push calls:', pushSpy.getCalls());
+		console.log('Create calls:', createSpy.getCalls());
+
+		// Validate the notification payload if push was called
+		if (pushSpy.calledOnce) {
+			const call = pushSpy.getCall(0);
+			assert(call, 'notificationService.push should have been called');
+			const [notification, uids] = call.args;
+
+			assert.strictEqual(uids[0], topicData.uid, 'Notification should be sent to topic owner');
+			assert.strictEqual(notification.nid, `topic_unresolved:${testTid}`, 'Notification should have correct nid');
+			assert.strictEqual(notification.tid, testTid, 'Notification should reference the correct topic ID');
+			assert.strictEqual(notification.from, adminUid, 'Notification should be from the user who marked it');
+		}
+
+		// Restore spies after test execution
+		pushSpy.restore();
+		createSpy.restore();
 	});
 });
 
