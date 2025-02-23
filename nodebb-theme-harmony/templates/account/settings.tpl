@@ -114,7 +114,6 @@
 			<select class="form-select form-select-sm" id="categoryTopicSort" data-property="categoryTopicSort">
 				<option value="recently_replied" {{{ if (settings.categoryTopicSort == "recently_replied") }}}selected{{{ end }}}>[[topic:recently-replied]]</option>
 				<option value="recently_created" {{{ if (settings.categoryTopicSort == "recently_created") }}}selected{{{ end }}}>[[topic:recently-created]]</option>
-				<option value="unanswered" {{{ if (settings.categoryTopicSort == "unanswered_questions") }}}selected{{{ end }}}>[[topic:unanswered-questions]]</option>
 				<option value="most_posts" {{{ if (settings.categoryTopicSort == "most_posts") }}}selected{{{ end }}}>[[topic:most-posts]]</option>
 				<option value="most_votes" {{{ if (settings.categoryTopicSort == "most_votes") }}}selected{{{ end }}}>[[topic:most-votes]]</option>
 				<option value="most_views" {{{ if (settings.categoryTopicSort == "most_views") }}}selected{{{ end }}}>[[topic:most-views]]</option>
