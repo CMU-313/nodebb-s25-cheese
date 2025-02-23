@@ -21,7 +21,7 @@ const categoryController = module.exports;
 const url = nconf.get('url');
 const relative_path = nconf.get('relative_path');
 const validSorts = [
-	'recently_replied', 'recently_created', 'most_posts', 'most_votes', 'most_views',
+	'recently_replied', 'recently_created', 'most_posts', 'most_votes', 'most_views', 'unanswered_questions'
 ];
 
 categoryController.get = async function (req, res, next) {

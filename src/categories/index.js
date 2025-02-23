@@ -38,7 +38,19 @@ Categories.getCategoryById = async function (data) {
 	const category = categories[0];
 	data.category = category;
 
+	/*
+	let topics;
+	if (data.sort === 'unanswered') {
+		// Use the getUnansweredTopics function to fetch unanswered topics
+		topics = await topicsController.getUnansweredTopics(data.limit || 10, data.start || 0);
+	} else {
+		// Default behavior for other sorts
+		topics = await Categories.getCategoryTopics(data);
+	}
+	*/
+	
 	const promises = [
+		// Promise.resolve({ topics: topics, nextStart: data.start + topics.length }), // Adjust nextStart for pagination
 		Categories.getCategoryTopics(data),
 		Categories.getTopicCount(data),
 		Categories.getWatchState([data.cid], data.uid),
@@ -48,10 +60,10 @@ Categories.getCategoryById = async function (data) {
 	if (category.parentCid) {
 		promises.push(Categories.getCategoryData(category.parentCid));
 	}
-	const [topics, topicCount, watchState, , parent] = await Promise.all(promises);
+	const [topicsData, topicCount, watchState, , parent] = await Promise.all(promises);
 
-	category.topics = topics.topics;
-	category.nextStart = topics.nextStart;
+	category.topics = topicsData.topics;
+	category.nextStart = topicsData.nextStart;
 	category.topic_count = topicCount;
 	category.isWatched = watchState[0] === Categories.watchStates.watching;
 	category.isTracked = watchState[0] === Categories.watchStates.tracking;
