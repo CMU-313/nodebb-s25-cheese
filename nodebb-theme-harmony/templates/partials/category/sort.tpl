@@ -19,13 +19,6 @@
 		</li>
 	
 		<li>
-    		<a class="dropdown-item rounded-1 d-flex align-items-center gap-2" href="#" data-sort="unanswered_questions" role="menuitem">
-        		<span class="flex-grow-1">[[topic:unanswered-questions]]</span>
-        		<i class="flex-shrink-0 fa fa-fw text-secondary"></i>
-   		 	</a>
-		</li>
-	
-		<li>
 			<a class="dropdown-item rounded-1 d-flex align-items-center gap-2" href="#" data-sort="most_posts" role="menuitem">
 				<span class="flex-grow-1">[[topic:most-posts]]</span>
 				<i class="flex-shrink-0 fa fa-fw text-secondary"></i>
