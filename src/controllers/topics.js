@@ -437,44 +437,41 @@ topicsController.setResolved = async function (req, res) {
 		res.status(500).json({ error: error.message });
 	}
 };
+
+// Adding topics.Controller.getUnansweredTopics function method for filtering unanswered questions
 topicsController.getUnansweredTopics = async function (uid, limit = 10, offset = 0) {
-	try {
-		// Check if the user is an administrator
-		const isAdmin = await privileges.users.isAdministrator(uid);
+    try {
+        // Check if the user is an administrator
+        const isAdmin = await privileges.users.isAdministrator(uid);
+        if (!isAdmin) {
+            throw new Error('Forbidden');
+        }
 
-		if (!isAdmin) {
-			const err = new Error('Forbidden');
-			err.status = 403;
-			throw err;
-		}
+        // Fetch topic IDs from Redis
+        const tids = await db.getSortedSetRevRange('topics:tid', offset, offset + (limit * 2) - 1);
+        
+        // 🔍 Debug: Check if we're actually getting topic IDs
+        console.log("Retrieved TIDs from DB:", tids);
 
-		// Fetch topic IDs from Redis
-		const tids = await db.getSortedSetRevRange('topics:tid', offset, offset + (limit * 2) - 1); // Fetch extra in case of filtering
+        if (!tids || tids.length === 0) {
+            return []; // Return an empty array if no topics exist
+        }
 
-		if (!tids || tids.length === 0) {
-			return []; // Return an empty array if no topics exist
-		}
+        // Retrieve topic details
+        const topicData = await topics.getTopicsByTids(tids, uid);
+        
+        // 🔍 Debug: Check what topic data is returned
+        console.log("Fetched Topic Data:", topicData);
 
-		// Retrieve topic details
-		const topicData = await topics.getTopicsByTids(tids, uid);
+        // Filter topics with postcount === 1 (indicating unanswered)
+        let unansweredTopics = topicData.filter(topic => parseInt(topic.postcount, 10) === 1).slice(0, limit);
 
-		// Filter topics with postcount === 1 (indicating unanswered)
-		let unansweredTopics = topicData.filter(topic => parseInt(topic.postcount, 10) === 1).slice(0, limit);
+        // 🔍 Debug: Ensure filtering logic is correct
+        console.log("Filtered Unanswered Topics:", unansweredTopics);
 
-		// Ensure numThumbs is always present in API response
-		unansweredTopics = unansweredTopics.map(topic => ({
-			...topic,
-			numThumbs: topic.numThumbs || 0, // Default to 0 if undefined
-			thumbs: Array.isArray(topic.thumbs) && topic.thumbs.every(t => typeof t === 'string') ?
-				topic.thumbs : [], // Default to an empty array of strings if invalid
-		}));
-
-		console.log('Fetched Topic Data:', topicData);
-		console.log('Filtered Unanswered Topics:', unansweredTopics);
-
-		return unansweredTopics;
-	} catch (err) {
-		console.error('Error fetching unanswered topics:', err);
-		throw new Error('Error fetching unanswered topics');
-	}
+        return unansweredTopics;
+    } catch (err) {
+        console.error('Error fetching unanswered topics:', err);
+        throw new Error('Error fetching unanswered topics');
+    }
 };
