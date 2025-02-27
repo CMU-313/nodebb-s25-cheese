@@ -2619,7 +2619,7 @@ describe('topicsController.setResolved - Unit Test', () => {
 		await topicsController.setResolved(req, res);
 
 		const resolvedStatus = await topics.getTopicField(req.params.tid, 'resolved');
-		assert.strictEqual(resolvedStatus, 'true'); // Ensure value is stored as string
+		assert.strictEqual(resolvedStatus, true); // Ensure value is stored as string
 	});
 
 	it('should not update the resolved status if the topic does not exist', async () => {
