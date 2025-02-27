@@ -46,11 +46,11 @@ jobs:
         with:
           node-version: 20
 
-      - name: NPM Install
-        uses: bahmutov/npm-install@v1
-        with:
-          useLockFile: false
-
+      - name: Clean Install Dependencies
+        run: |
+          rm -rf node_modules package-lock.json
+          npm install --legacy-peer-deps
+  
       - name: Setup for Redis
         env:
           SETUP: >-
