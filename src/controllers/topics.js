@@ -438,7 +438,7 @@ topicsController.setResolved = async function (req, res) {
 	}
 };
 
-// adding topics.Controller.getUnansweredTopics function method for filtering unanswered questions
+// Adding topics.Controller.getUnansweredTopics function method for filtering unanswered questions
 topicsController.getUnansweredTopics = async function (limit = 10, offset = 0) {
 	try {
 		// Fetch topic IDs from Redis
@@ -448,7 +448,16 @@ topicsController.getUnansweredTopics = async function (limit = 10, offset = 0) {
 		const topicData = await topics.getTopicsByTids(tids, 0);
 
 		// Filter topics with postcount === 1 (indicating unanswered)
-		const unansweredTopics = topicData.filter(topic => parseInt(topic.postcount, 10) === 1).slice(0, limit);
+		let unansweredTopics = topicData.filter(topic => parseInt(topic.postcount, 10) === 1).slice(0, limit);
+
+		// Ensure numThumbs is always present in API response
+		unansweredTopics = unansweredTopics.map(topic => ({
+			...topic,
+			numThumbs: topic.numThumbs || 0, // Default to 0 if undefined
+			thumbs: Array.isArray(topic.thumbs) && topic.thumbs.every(t => typeof t === 'string')
+			? topic.thumbs
+			: [], // Default to an empty array of strings if invalid
+		}));
 
 		console.log('Fetched Topic Data:', topicData);
 		console.log('Filtered Unanswered Topics:', unansweredTopics);
@@ -458,3 +467,4 @@ topicsController.getUnansweredTopics = async function (limit = 10, offset = 0) {
 		throw new Error('Error fetching unanswered topics');
 	}
 };
+
