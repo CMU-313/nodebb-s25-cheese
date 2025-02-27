@@ -454,9 +454,8 @@ topicsController.getUnansweredTopics = async function (limit = 10, offset = 0) {
 		unansweredTopics = unansweredTopics.map(topic => ({
 			...topic,
 			numThumbs: topic.numThumbs || 0, // Default to 0 if undefined
-			thumbs: Array.isArray(topic.thumbs) && topic.thumbs.every(t => typeof t === 'string')
-			? topic.thumbs
-			: [], // Default to an empty array of strings if invalid
+			thumbs: Array.isArray(topic.thumbs) && topic.thumbs.every(t => typeof t === 'string') ?
+				topic.thumbs : [], // Default to an empty array of strings if invalid
 		}));
 
 		console.log('Fetched Topic Data:', topicData);
