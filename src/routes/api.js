@@ -5,6 +5,9 @@ const express = require('express');
 const uploadsController = require('../controllers/uploads');
 const helpers = require('./helpers');
 
+// importing topicsController
+const topicsController = require('../controllers/topics');
+
 module.exports = function (app, middleware, controllers) {
 	const middlewares = [middleware.autoLocale, middleware.authenticateRequest];
 	const router = express.Router();
@@ -45,4 +48,14 @@ module.exports = function (app, middleware, controllers) {
 
 	// API Routing for marking/unmarking resolved field for a question
 	router.put('/topics/:tid/resolved', [...middlewares, middleware.ensureLoggedIn], helpers.tryRoute(controllers.topics.setResolved));
+
+	// API endpoint for filtering unanswered questions – 
+	router.get('/topics/unanswered', async (req, res) => {
+		try {
+			const topics = await topicsController.getUnansweredTopics(); // ✅ Correct reference
+			res.json({ topics });
+		} catch (err) {
+			res.status(500).json({ error: err.message });
+		}
+	});
 };
