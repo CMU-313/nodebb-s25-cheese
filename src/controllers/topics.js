@@ -14,6 +14,7 @@ const helpers = require('./helpers');
 const pagination = require('../pagination');
 const utils = require('../utils');
 const analytics = require('../analytics');
+const notifications = require('../notifications');
 
 const topicsController = module.exports;
 
@@ -408,32 +409,52 @@ topicsController.pagination = async function (req, res, next) {
 
 const db = require('../database');
 
+const socket = require('../socket.io');
+
 topicsController.setResolved = async function (req, res) {
 	try {
 		const { tid } = req.params;
-		const { resolved } = req.body; // Expected payload: { "resolved": true } or { "resolved": false }
+		const { resolved } = req.body; // ✅ Use req.body.resolved
 
 		if (typeof resolved !== 'boolean') {
 			return res.status(400).json({ error: "Invalid request. 'resolved' must be a boolean." });
 		}
 
-		// Fetch the topic to ensure it exists
-		const topic = await topics.getTopicData(tid);
-		if (!topic) {
+		// ✅ Instead of checking tags, update the topic with the request's resolved value
+		await db.setObjectField(`topic:${tid}`, 'resolved', resolved.toString());
+
+		// Fetch topic data
+		const topicData = await topics.getTopicFields(tid, ['uid', 'title']);
+		if (!topicData || !topicData.uid) {
 			return res.status(404).json({ error: 'Topic not found' });
 		}
 
-		// Ensure the user has permission to edit the topic
 		const canEdit = await privileges.topics.canEdit(tid, req.uid);
 		if (!canEdit) {
 			return res.status(403).json({ error: '[[error:no-privileges]]' });
 		}
 
-		// Update the `resolved` field in Redis as a boolean
-		await db.setObjectField(`topic:${tid}`, 'resolved', resolved);
+		// Fetch watchers
+		const watchers = await db.getSortedSetRange(`tid:${tid}:watchers`, 0, -1);
+		const recipients = new Set([...watchers, topicData.uid]);
+
+		// Send notification
+		await notifications.create({
+			type: 'topic-resolved-status',
+			bodyShort: resolved ? `The topic **"${topicData.title}"** has been marked as **resolved**.` :
+				`The topic **"${topicData.title}"** is no longer marked as resolved.`,
+			bodyLong: `Your watched topic **"${topicData.title}"** has been updated.`,
+			nid: `topic:resolved-status:${tid}`,
+			from: topicData.uid,
+			tid: tid,
+			path: `/topic/${tid}`,
+		}, [...recipients]);
+
+		// Emit event
+		socket.emit('event:topicResolvedUpdated', { tid, resolved });
+
 		res.json({ message: 'Topic resolved status updated', tid, resolved });
 	} catch (error) {
 		res.status(500).json({ error: error.message });
 	}
 };
-

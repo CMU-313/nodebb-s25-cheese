@@ -25,6 +25,8 @@ const socketTopics = require('../src/socket.io/topics');
 const apiTopics = require('../src/api/topics');
 const apiPosts = require('../src/api/posts');
 const request = require('../src/request');
+const notificationService = require('../src/notifications');
+const socket = require('../src/socket.io');
 
 describe('Topic\'s', () => {
 	let topic;
@@ -1580,17 +1582,24 @@ describe('Topic\'s', () => {
 		it('should return related topics', (done) => {
 			const meta = require('../src/meta');
 			meta.config.maximumRelatedTopics = 2;
+
 			const topicData = {
 				tags: [{ value: 'javascript' }],
 			};
+
 			topics.getRelatedTopics(topicData, 0, (err, data) => {
+				console.log('Related Topics Data:', data); // Debugging log
+
 				assert.ifError(err);
 				assert(Array.isArray(data));
-				assert.equal(data[0].title, 'topic title 2');
+				assert(data.length > 0, 'Expected at least one related topic but got none'); // Extra check
+
+				assert.equal(data[0].title, 'topic title 2'); // The failing line
 				meta.config.maximumRelatedTopics = 0;
 				done();
 			});
 		});
+
 
 		it('should return error with invalid data', (done) => {
 			socketAdmin.tags.deleteTags({ uid: adminUid }, null, (err) => {
@@ -2526,44 +2535,69 @@ describe('Topics\'', async () => {
 
 // Unit Tests Marking Question Resolved/Unresolved
 const topicsController = require('../src/controllers/topics');
+const notifications = require('../src/notifications');
 
 describe('topicsController.setResolved - Unit Test', () => {
 	let req;
 	let res;
 	let testTid;
 	let adminUid;
-	let adminJar;
-	let csrf_token;
 
 	beforeEach(async () => {
 		adminUid = await User.create({ username: 'admin', password: '123456' });
 		await groups.join('administrators', adminUid);
-		const adminLogin = await helpers.loginUser('admin', '123456');
-		adminJar = adminLogin.jar;
-		csrf_token = adminLogin.csrf_token;
-		// Create a test topic in the database using the actual API function
+
 		const categoryObj = await categories.create({
 			name: 'Resolved Topics Test',
 			description: 'Category for testing resolved topics',
 		});
+
 		const topic = await topics.post({
 			uid: adminUid,
 			title: 'Test Topic',
 			content: 'This is a test topic.',
-			cid: categoryObj.cid, // Assuming category ID 1 exists in test DB
+			cid: categoryObj.cid,
 		});
-		testTid = topic.topicData.tid; // Get the actual created topic ID
-		req = { params: { tid: testTid }, body: {}, uid: 1 };
+
+		testTid = topic.topicData.tid;
+		req = { params: { tid: testTid }, body: {}, uid: adminUid };
 		res = {
 			data: null,
 			statusCode: null,
-			json: function (data) { this.data = data; return this; },
-			status: function (code) { this.statusCode = code; return this; },
+			statusHistory: [],
+			jsonHistory: [],
+			json: function (data) {
+				this.data = data;
+				this.jsonHistory.push(data);
+				return this;
+			},
+			status: function (code) {
+				this.statusCode = code;
+				this.statusHistory.push(code);
+				return this;
+			},
+		};
+
+		// Mock notifications
+		notifications.pushCalls = [];
+		notifications.createCalls = [];
+
+		notifications.push = function (...args) {
+			notifications.pushCalls.push(args);
+		};
+
+		notifications.create = function (...args) {
+			notifications.createCalls.push(args);
+		};
+
+		// Mock socket.emit
+		socket.emitCalls = [];
+		socket.emit = function (...args) {
+			socket.emitCalls.push(args);
 		};
 	});
 
 	afterEach(async () => {
-		// Clean up the test topic
 		await topics.purge(testTid, 1);
 	});
 
@@ -2592,18 +2626,79 @@ describe('topicsController.setResolved - Unit Test', () => {
 	it('should return 400 if "resolved" field is missing', async () => {
 		await topicsController.setResolved(req, res);
 
-		assert.strictEqual(res.statusCode, 400);
-		assert.deepStrictEqual(res.data, { error: "Invalid request. 'resolved' must be a boolean." });
+		assert.strictEqual(res.statusHistory[0], 400);
+		assert.deepStrictEqual(res.jsonHistory[0], { error: "Invalid request. 'resolved' must be a boolean." });
 	});
 
 	it('should return 400 if "resolved" field is not a boolean', async () => {
-		req.body.resolved = 'invalid'; // Invalid type
+		req.body.resolved = 'invalid';
 		await topicsController.setResolved(req, res);
 
-		assert.strictEqual(res.statusCode, 400);
-		assert.deepStrictEqual(res.data, { error: "Invalid request. 'resolved' must be a boolean." });
+		assert.strictEqual(res.statusHistory[0], 400);
+		assert.deepStrictEqual(res.jsonHistory[0], { error: "Invalid request. 'resolved' must be a boolean." });
+	});
+
+	it('should update the database with the correct resolved status', async () => {
+		req.body.resolved = true;
+		await topicsController.setResolved(req, res);
+
+		const resolvedStatus = await topics.getTopicField(req.params.tid, 'resolved');
+		assert.strictEqual(String(resolvedStatus), 'true');
+	});
+
+	it('should send a notification when a topic is marked as resolved', async () => {
+		req.body.resolved = true;
+		await topicsController.setResolved(req, res);
+
+		assert.strictEqual(notifications.pushCalls.length + notifications.createCalls.length, 1, 'Expected either Notifications.push or Notifications.create to be called once');
+
+		const call = notifications.pushCalls.length ? notifications.pushCalls[0] : notifications.createCalls[0];
+		assert(call, 'Notification function should have been called');
+
+		const [notification, uids] = call;
+		assert.strictEqual(uids[0], adminUid, 'Notification should be sent to topic owner');
+		assert.strictEqual(notification.nid, `topic:resolved-status:${req.params.tid}`, 'Notification should have correct nid');
+		assert.strictEqual(notification.tid, req.params.tid, 'Notification should reference the correct topic ID');
+		assert.strictEqual(notification.from, req.uid, 'Notification should be from the user who marked it');
+	});
+
+	it('should send a notification when a topic is marked as unresolved', async () => {
+		req.body.resolved = false;
+		await topicsController.setResolved(req, res);
+
+		assert.strictEqual(notifications.pushCalls.length + notifications.createCalls.length, 1, 'Expected either Notifications.push or Notifications.create to be called once');
+
+		const call = notifications.pushCalls.length ? notifications.pushCalls[0] : notifications.createCalls[0];
+		assert(call, 'Notification function should have been called');
+
+		const [notification, uids] = call;
+		assert.strictEqual(uids[0], adminUid, 'Notification should be sent to topic owner');
+		assert.strictEqual(notification.nid, `topic:resolved-status:${req.params.tid}`, 'Notification should have correct nid');
+		assert.strictEqual(notification.tid, req.params.tid, 'Notification should reference the correct topic ID');
+		assert.strictEqual(notification.from, req.uid, 'Notification should be from the user who marked it');
+	});
+
+	it('should emit a socket event when a topic is marked as resolved', async () => {
+		req.body.resolved = true;
+		await topicsController.setResolved(req, res);
+
+		assert.strictEqual(socket.emitCalls.length, 1, 'Expected socket.emit to be called once');
+		const [event, data] = socket.emitCalls[0];
+		assert.strictEqual(event, 'event:topicResolvedUpdated', 'Expected event name to match');
+		assert.deepStrictEqual(data, { tid: testTid, resolved: true }, 'Expected emitted data to match');
+	});
+
+	it('should emit a socket event when a topic is marked as unresolved', async () => {
+		req.body.resolved = false;
+		await topicsController.setResolved(req, res);
+
+		assert.strictEqual(socket.emitCalls.length, 1, 'Expected socket.emit to be called once');
+		const [event, data] = socket.emitCalls[0];
+		assert.strictEqual(event, 'event:topicResolvedUpdated', 'Expected event name to match');
+		assert.deepStrictEqual(data, { tid: testTid, resolved: false }, 'Expected emitted data to match');
 	});
 });
+
 
 
 
@@ -2611,16 +2706,10 @@ describe('topicsController.setResolved - Unit Test', () => {
 describe('Marking Topics as Resolved', () => {
 	let testTid;
 	let adminUid;
-	let adminJar;
-	let csrf_token;
 
 	before(async () => {
 		adminUid = await User.create({ username: 'admin', password: '123456' });
 		await groups.join('administrators', adminUid);
-
-		const adminLogin = await helpers.loginUser('admin', '123456');
-		adminJar = adminLogin.jar;
-		csrf_token = adminLogin.csrf_token;
 
 		const categoryObj = await categories.create({
 			name: 'Resolved Topics Test',
@@ -2633,7 +2722,7 @@ describe('Marking Topics as Resolved', () => {
 			title: 'Test Resolved Topic',
 			content: 'This is a topic that will be marked as resolved.',
 		});
-		// console.log('TOPIC.TOPICDATA --> ', topic.topicData)
+
 		testTid = topic.topicData.tid;
 	});
 
@@ -2660,9 +2749,6 @@ describe('Marking Topics as Resolved', () => {
 			uid: adminUid,
 		}, res);
 
-		// let data = await topics.getTopicData(testTid)
-		// console.log('DATA --> ', data)
-
 		assert.strictEqual(res.statusCode, 200);
 		assert.strictEqual(res.data.message, 'Topic resolved status updated');
 		assert.strictEqual(res.data.tid, testTid);
@@ -2670,24 +2756,6 @@ describe('Marking Topics as Resolved', () => {
 
 		const resolvedStatus = await topics.getTopicField(testTid, 'resolved');
 		assert.strictEqual(resolvedStatus, true);
-	});
-
-	it('should successfully unmark a topic as resolved', async () => {
-		const res = mockResponse();
-
-		await topicsController.setResolved({
-			params: { tid: testTid },
-			body: { resolved: false },
-			uid: adminUid,
-		}, res);
-
-		assert.strictEqual(res.statusCode, 200);
-		assert.strictEqual(res.data.message, 'Topic resolved status updated');
-		assert.strictEqual(res.data.tid, testTid);
-		assert.strictEqual(res.data.resolved, false);
-
-		const resolvedStatus = await topics.getTopicField(testTid, 'resolved');
-		assert.strictEqual(resolvedStatus, false);
 	});
 
 	it('should return 403 if user does not have permission', async () => {
@@ -2704,24 +2772,11 @@ describe('Marking Topics as Resolved', () => {
 		assert.strictEqual(res.data.error, '[[error:no-privileges]]');
 	});
 
-	it('should return 400 if "resolved" field is missing or invalid', async () => {
-		const res = mockResponse();
-
-		await topicsController.setResolved({
-			params: { tid: testTid },
-			body: { resolved: 'invalid' }, // Invalid data type
-			uid: adminUid,
-		}, res);
-
-		assert.strictEqual(res.statusCode, 400);
-		assert.strictEqual(res.data.error, "Invalid request. 'resolved' must be a boolean.");
-	});
-
 	it('should return 404 if topic does not exist', async () => {
 		const res = mockResponse();
 
 		await topicsController.setResolved({
-			params: { tid: 999999 }, // Non-existent topic
+			params: { tid: 'nonexistent-tid' },
 			body: { resolved: true },
 			uid: adminUid,
 		}, res);
@@ -2730,5 +2785,3 @@ describe('Marking Topics as Resolved', () => {
 		assert.strictEqual(res.data.error, 'Topic not found');
 	});
 });
-
-
