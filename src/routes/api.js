@@ -52,10 +52,15 @@ module.exports = function (app, middleware, controllers) {
 	// API endpoint for filtering unanswered questions –
 	router.get('/topics/unanswered', async (req, res) => {
 		try {
-			const topics = await topicsController.getUnansweredTopics(); // ✅ Correct reference
-			res.json({ topics });
+			const uid = req.user ? req.user.uid : req.query.uid; // Get UID from session or query parameter
+			if (!uid) {
+				return res.status(403).json({ error: "Forbidden: Missing user ID" });
+			}
+	
+			const unansweredTopics = await topicsController.getUnansweredTopics(uid, req.query.limit, req.query.offset);
+			res.json(unansweredTopics);
 		} catch (err) {
 			res.status(500).json({ error: err.message });
 		}
-	});
+	});	
 };

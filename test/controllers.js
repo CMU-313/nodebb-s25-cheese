@@ -1872,65 +1872,69 @@ describe('Controllers', () => {
 		}
 	});
 
-	describe('topics', () => {
-		describe('getUnansweredTopics', () => {
-			it('should return only unanswered topics', async () => {
-				// Mock database response: 3 topics, only 2 are unanswered (postcount === 1)
-				const mockTopics = [
-					{ tid: 1, postcount: 1, title: 'Unanswered Topic 1' },
-					{ tid: 2, postcount: 2, title: 'Answered Topic' },
-					{ tid: 3, postcount: 1, title: 'Unanswered Topic 2' },
-				];
-
-				// Stub database and topics methods
-				sinon.stub(db, 'getSortedSetRevRange').resolves([1, 2, 3]);
-				sinon.stub(topics, 'getTopicsByTids').resolves(mockTopics);
-
-				// Call the function
-				const result = await topicsController.getUnansweredTopics(10, 0);
-
-				// Verify response
-				assert.strictEqual(result.length, 2);
-				assert.strictEqual(result[0].title, 'Unanswered Topic 1');
-				assert.strictEqual(result[1].title, 'Unanswered Topic 2');
-
-				// Restore original methods
-				db.getSortedSetRevRange.restore();
-				topics.getTopicsByTids.restore();
-			});
-
-			it('should return an empty array if there are no unanswered topics', async () => {
-				// Mock database response: all topics have replies
-				const mockTopics = [
-					{ tid: 1, postcount: 2, title: 'Answered Topic 1' },
-					{ tid: 2, postcount: 3, title: 'Answered Topic 2' },
-				];
-
-				sinon.stub(db, 'getSortedSetRevRange').resolves([1, 2]);
-				sinon.stub(topics, 'getTopicsByTids').resolves(mockTopics);
-
-				const result = await topicsController.getUnansweredTopics(10, 0);
-
-				assert.strictEqual(result.length, 0); // Should return an empty array
-
-				db.getSortedSetRevRange.restore();
-				topics.getTopicsByTids.restore();
-			});
-
-			it('should handle errors gracefully', async () => {
-				sinon.stub(db, 'getSortedSetRevRange').rejects(new Error('Database error'));
-
-				try {
-					await topicsController.getUnansweredTopics(10, 0);
-					assert.fail('Expected function to throw an error');
-				} catch (err) {
-					assert.strictEqual(err.message, 'Error fetching unanswered topics');
-				}
-
-				db.getSortedSetRevRange.restore();
-			});
+	describe('topicsController.getUnansweredTopics', function () {
+		afterEach(() => {
+			sinon.restore();
 		});
-	});
+	
+		it('should return unanswered topics for an admin user', async function () {
+			sinon.stub(privileges.users, 'isAdminOrGlobalMod').resolves(true);
+	
+			const mockTopics = [
+				{ tid: 1, postcount: 1, title: 'Unanswered Topic 1' },
+				{ tid: 2, postcount: 1, title: 'Unanswered Topic 2' },
+			];
+			sinon.stub(db, 'getSortedSetRevRange').resolves([1, 2]);
+			sinon.stub(topics, 'getTopicsByTids').resolves(mockTopics);
+	
+			const result = await topicsController.getUnansweredTopics(10, 0);
+			assert.strictEqual(result.length, 2);
+			assert.strictEqual(result[0].title, 'Unanswered Topic 1');
+	
+			sinon.restore();
+		});
+	
+		it('should return 403 if user is not an instructor or TA', async function () {
+			sinon.stub(privileges.users, 'isAdminOrGlobalMod').resolves(false);
+	
+			try {
+				await topicsController.getUnansweredTopics(fooUid, 10, 0);
+				assert.fail('Expected function to throw an error');
+			} catch (err) {
+				assert.strictEqual(err.message, '403 Forbidden: Only instructors and TAs (admins/mods) can filter unanswered questions.');
+			}
+	
+			sinon.restore();
+		});
+	
+		it('should return an empty array if there are no unanswered topics', async function () {
+			sinon.stub(privileges.users, 'isAdminOrGlobalMod').resolves(true);
+			sinon.stub(db, 'getSortedSetRevRange').resolves([1, 2]);
+			sinon.stub(topics, 'getTopicsByTids').resolves([
+				{ tid: 1, postcount: 2, title: 'Answered Topic 1' },
+				{ tid: 2, postcount: 3, title: 'Answered Topic 2' },
+			]);
+	
+			const result = await topicsController.getUnansweredTopics(adminUid, 10, 0);
+			assert.strictEqual(result.length, 0);
+	
+			sinon.restore();
+		});
+	
+		it('should handle database errors gracefully', async function () {
+			sinon.stub(privileges.users, 'isAdminOrGlobalMod').resolves(true);
+			sinon.stub(db, 'getSortedSetRevRange').rejects(new Error('Database error'));
+	
+			try {
+				await topicsController.getUnansweredTopics(adminUid, 10, 0);
+				assert.fail('Expected function to throw an error');
+			} catch (err) {
+				assert.strictEqual(err.message, 'Error fetching unanswered topics');
+			}
+	
+			sinon.restore();
+		});
+	});	
 
 	after((done) => {
 		const analytics = require('../src/analytics');

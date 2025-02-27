@@ -437,15 +437,26 @@ topicsController.setResolved = async function (req, res) {
 		res.status(500).json({ error: error.message });
 	}
 };
-
-// Adding topics.Controller.getUnansweredTopics function method for filtering unanswered questions
-topicsController.getUnansweredTopics = async function (limit = 10, offset = 0) {
+topicsController.getUnansweredTopics = async function (uid, limit = 10, offset = 0) {
 	try {
+		// Check if the user is an administrator
+		const isAdmin = await privileges.users.isAdministrator(uid);
+
+		if (!isAdmin) {
+			const err = new Error('Forbidden');
+			err.status = 403;
+			throw err;
+		}
+
 		// Fetch topic IDs from Redis
 		const tids = await db.getSortedSetRevRange('topics:tid', offset, offset + (limit * 2) - 1); // Fetch extra in case of filtering
 
+		if (!tids || tids.length === 0) {
+			return []; // Return an empty array if no topics exist
+		}
+
 		// Retrieve topic details
-		const topicData = await topics.getTopicsByTids(tids, 0);
+		const topicData = await topics.getTopicsByTids(tids, uid);
 
 		// Filter topics with postcount === 1 (indicating unanswered)
 		let unansweredTopics = topicData.filter(topic => parseInt(topic.postcount, 10) === 1).slice(0, limit);
@@ -463,7 +474,7 @@ topicsController.getUnansweredTopics = async function (limit = 10, offset = 0) {
 
 		return unansweredTopics;
 	} catch (err) {
+		console.error('Error fetching unanswered topics:', err);
 		throw new Error('Error fetching unanswered topics');
 	}
 };
-

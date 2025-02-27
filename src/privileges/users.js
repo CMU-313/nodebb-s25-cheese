@@ -155,3 +155,14 @@ async function hasGlobalPrivilege(privilege, uid) {
 	payload = await plugins.hooks.fire(`filter:user.has${privilegeName}Privilege`, payload);
 	return payload[`can${privilegeName}`];
 }
+
+privsUsers.isAdminOrGlobalMod = async function (uid) {
+    if (!uid) {
+        return false;
+    }
+    const [isAdmin, isGlobalMod] = await Promise.all([
+        privsUsers.isAdministrator(uid),
+        privsUsers.isGlobalModerator(uid),
+    ]);
+    return isAdmin || isGlobalMod;
+};
