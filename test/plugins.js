@@ -233,7 +233,8 @@ describe('Plugins', () => {
 
 		it('should install a plugin', function (done) {
 			this.timeout(0);
-			plugins.toggleInstall(pluginName, '1.0.16', (err, pluginData) => {
+			// Before it was 1.0.16
+			plugins.toggleInstall(pluginName, '4.1.0', (err, pluginData) => {
 				assert.ifError(err);
 				latest = pluginData.latest;
 

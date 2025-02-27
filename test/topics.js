@@ -2524,103 +2524,214 @@ describe('Topics\'', async () => {
 
 
 
+// // Unit Tests Marking Question Resolved/Unresolved
+// const topicsController = require('../src/controllers/topics');
+
+// describe('topicsController.setResolved - Unit Test', () => {
+// 	let req;
+// 	let res;
+// 	let testTid;
+// 	let adminUid;
+// 	let adminJar;
+// 	let csrf_token;
+
+// 	beforeEach(async () => {
+// 		adminUid = await User.create({ username: 'admin', password: '123456' });
+// 		await groups.join('administrators', adminUid);
+// 		const adminLogin = await helpers.loginUser('admin', '123456');
+// 		adminJar = adminLogin.jar;
+// 		csrf_token = adminLogin.csrf_token;
+// 		// Create a test topic in the database using the actual API function
+// 		const categoryObj = await categories.create({
+// 			name: 'Resolved Topics Test',
+// 			description: 'Category for testing resolved topics',
+// 		});
+// 		const topic = await topics.post({
+// 			uid: adminUid,
+// 			title: 'Test Topic',
+// 			content: 'This is a test topic.',
+// 			cid: categoryObj.cid, // Assuming category ID 1 exists in test DB
+// 		});
+// 		testTid = topic.topicData.tid; // Get the actual created topic ID
+// 		req = { params: { tid: testTid }, body: {}, uid: 1 };
+// 		res = {
+// 			data: null,
+// 			statusCode: null,
+// 			json: function (data) { this.data = data; return this; },
+// 			status: function (code) { this.statusCode = code; return this; },
+// 		};
+// 	});
+
+// 	afterEach(async () => {
+// 		// Clean up the test topic
+// 		await topics.purge(testTid, 1);
+// 	});
+
+// 	it('should successfully mark a topic as resolved', async () => {
+// 		req.body.resolved = true;
+// 		await topicsController.setResolved(req, res);
+
+// 		assert.deepStrictEqual(res.data, {
+// 			message: 'Topic resolved status updated',
+// 			tid: testTid,
+// 			resolved: true,
+// 		});
+// 	});
+
+// 	it('should successfully unmark a topic as resolved (set unresolved)', async () => {
+// 		req.body.resolved = false;
+// 		await topicsController.setResolved(req, res);
+
+// 		assert.deepStrictEqual(res.data, {
+// 			message: 'Topic resolved status updated',
+// 			tid: testTid,
+// 			resolved: false,
+// 		});
+// 	});
+
+// 	it('should return 400 if "resolved" field is missing', async () => {
+// 		await topicsController.setResolved(req, res);
+
+// 		assert.strictEqual(res.statusCode, 400);
+// 		assert.deepStrictEqual(res.data, { error: "Invalid request. 'resolved' must be a boolean." });
+// 	});
+
+// 	it('should return 400 if "resolved" field is not a boolean', () => {
+// 		req.body.resolved = 'invalid'; // Invalid type
+// 		topicsController.setResolved(req, res);
+
+// 		assert(res.status.calledWith(400));
+// 		assert(res.json.calledWithMatch({ error: "Invalid request. 'resolved' must be a boolean." }));
+// 	});
+
+// 	it('should update the database with the correct resolved status', async () => {
+// 		req.body.resolved = true;
+// 		await topicsController.setResolved(req, res);
+
+// 		const resolvedStatus = await topics.getTopicField(req.params.tid, 'resolved');
+// 		assert.strictEqual(resolvedStatus, 'true');
+// 	});
+
+// 	it('should not update the resolved status if the topic does not exist', async () => {
+// 		req.params.tid = 999999; // Non-existent topic
+// 		req.body.resolved = true;
+// 		await topicsController.setResolved(req, res);
+
+// 		assert(res.status.calledWith(404));
+// 		assert(res.json.calledWithMatch({ error: 'Topic not found' }));
+// 	});
+// });
+
 // Unit Tests Marking Question Resolved/Unresolved
 const topicsController = require('../src/controllers/topics');
 
 describe('topicsController.setResolved - Unit Test', () => {
-	let req;
-	let res;
-	let testTid;
-	let adminUid;
-	let adminJar;
-	let csrf_token;
+    let req;
+    let res;
+    let testTid;
+    let adminUid;
+    let adminJar;
+    let csrf_token;
 
-	beforeEach(async () => {
-		adminUid = await User.create({ username: 'admin', password: '123456' });
-		await groups.join('administrators', adminUid);
-		const adminLogin = await helpers.loginUser('admin', '123456');
-		adminJar = adminLogin.jar;
-		csrf_token = adminLogin.csrf_token;
-		// Create a test topic in the database using the actual API function
-		const categoryObj = await categories.create({
-			name: 'Resolved Topics Test',
-			description: 'Category for testing resolved topics',
-		});
-		const topic = await topics.post({
-			uid: adminUid,
-			title: 'Test Topic',
-			content: 'This is a test topic.',
-			cid: categoryObj.cid, // Assuming category ID 1 exists in test DB
-		});
-		testTid = topic.topicData.tid; // Get the actual created topic ID
-		req = { params: { tid: testTid }, body: {}, uid: 1 };
-		res = {
-			data: null,
-			statusCode: null,
-			json: function (data) { this.data = data; return this; },
-			status: function (code) { this.statusCode = code; return this; },
-		};
-	});
+    beforeEach(async () => {
+        adminUid = await User.create({ username: 'admin', password: '123456' });
+        await groups.join('administrators', adminUid);
+        const adminLogin = await helpers.loginUser('admin', '123456');
+        adminJar = adminLogin.jar;
+        csrf_token = adminLogin.csrf_token;
+        
+        // Create a test topic in the database using the actual API function
+        const categoryObj = await categories.create({
+            name: 'Resolved Topics Test',
+            description: 'Category for testing resolved topics',
+        });
+        const topic = await topics.post({
+            uid: adminUid,
+            title: 'Test Topic',
+            content: 'This is a test topic.',
+            cid: categoryObj.cid,
+        });
+        testTid = topic.topicData.tid;
 
-	afterEach(async () => {
-		// Clean up the test topic
-		await topics.purge(testTid, 1);
-	});
+        req = { params: { tid: testTid }, body: {}, uid: 1 };
+        res = {
+            data: null,
+            statusCode: null,
+            statusHistory: [],
+            jsonHistory: [],
+            json: function (data) { 
+                this.data = data; 
+                this.jsonHistory.push(data); 
+                return this; 
+            },
+            status: function (code) { 
+                this.statusCode = code; 
+                this.statusHistory.push(code); 
+                return this; 
+            },
+        };
+    });
 
-	it('should successfully mark a topic as resolved', async () => {
-		req.body.resolved = true;
-		await topicsController.setResolved(req, res);
+    afterEach(async () => {
+        // Clean up the test topic
+        await topics.purge(testTid, 1);
+    });
 
-		assert.deepStrictEqual(res.data, {
-			message: 'Topic resolved status updated',
-			tid: testTid,
-			resolved: true,
-		});
-	});
+    it('should successfully mark a topic as resolved', async () => {
+        req.body.resolved = true;
+        await topicsController.setResolved(req, res);
 
-	it('should successfully unmark a topic as resolved (set unresolved)', async () => {
-		req.body.resolved = false;
-		await topicsController.setResolved(req, res);
+        assert.deepStrictEqual(res.data, {
+            message: 'Topic resolved status updated',
+            tid: testTid,
+            resolved: true,
+        });
+    });
 
-		assert.deepStrictEqual(res.data, {
-			message: 'Topic resolved status updated',
-			tid: testTid,
-			resolved: false,
-		});
-	});
+    it('should successfully unmark a topic as resolved (set unresolved)', async () => {
+        req.body.resolved = false;
+        await topicsController.setResolved(req, res);
 
-	it('should return 400 if "resolved" field is missing', async () => {
-		await topicsController.setResolved(req, res);
+        assert.deepStrictEqual(res.data, {
+            message: 'Topic resolved status updated',
+            tid: testTid,
+            resolved: false,
+        });
+    });
 
-		assert.strictEqual(res.statusCode, 400);
-		assert.deepStrictEqual(res.data, { error: "Invalid request. 'resolved' must be a boolean." });
-	});
+    it('should return 400 if "resolved" field is missing', async () => {
+        await topicsController.setResolved(req, res);
 
-	it('should return 400 if "resolved" field is not a boolean', () => {
-		req.body.resolved = 'invalid'; // Invalid type
-		topicsController.setResolved(req, res);
+        assert.strictEqual(res.statusHistory[0], 400);
+        assert.deepStrictEqual(res.jsonHistory[0], { error: "Invalid request. 'resolved' must be a boolean." });
+    });
 
-		assert(res.status.calledWith(400));
-		assert(res.json.calledWithMatch({ error: "Invalid request. 'resolved' must be a boolean." }));
-	});
+    it('should return 400 if "resolved" field is not a boolean', async () => {
+        req.body.resolved = 'invalid'; // Invalid type
+        await topicsController.setResolved(req, res);
 
-	it('should update the database with the correct resolved status', async () => {
-		req.body.resolved = true;
-		await topicsController.setResolved(req, res);
+        assert.strictEqual(res.statusHistory[0], 400);
+        assert.deepStrictEqual(res.jsonHistory[0], { error: "Invalid request. 'resolved' must be a boolean." });
+    });
 
-		const resolvedStatus = await topics.getTopicField(req.params.tid, 'resolved');
-		assert.strictEqual(resolvedStatus, 'true');
-	});
+    it('should update the database with the correct resolved status', async () => {
+        req.body.resolved = true;
+        await topicsController.setResolved(req, res);
 
-	it('should not update the resolved status if the topic does not exist', async () => {
-		req.params.tid = 999999; // Non-existent topic
-		req.body.resolved = true;
-		await topicsController.setResolved(req, res);
+        const resolvedStatus = await topics.getTopicField(req.params.tid, 'resolved');
+        assert.strictEqual(resolvedStatus, 'true'); // Ensure value is stored as string
+    });
 
-		assert(res.status.calledWith(404));
-		assert(res.json.calledWithMatch({ error: 'Topic not found' }));
-	});
+    it('should not update the resolved status if the topic does not exist', async () => {
+        req.params.tid = 999999; // Non-existent topic
+        req.body.resolved = true;
+        await topicsController.setResolved(req, res);
+
+        assert.strictEqual(res.statusHistory[0], 404);
+        assert.deepStrictEqual(res.jsonHistory[0], { error: 'Topic not found' });
+    });
 });
+
 
 
 
