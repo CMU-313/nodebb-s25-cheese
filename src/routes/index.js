@@ -38,6 +38,34 @@ _mounts.main = (app, middleware, controllers) => {
 	setupPageRoute(app, '/tos', [], controllers.termsOfUse);
 
 	setupPageRoute(app, '/email/unsubscribe/:token', [], controllers.accounts.settings.unsubscribe);
+
+	// Render unanswered topics
+	setupPageRoute(app, '/unanswered', [], async (req, res, next) => {
+		try {
+		  const limit = parseInt(req.query.limit, 10) || 10;
+		  const offset = parseInt(req.query.offset, 10) || 0;
+	  
+		  // Call the API endpoint to fetch unanswered topics
+		  const response = await app.api.get(`/api/topics/unanswered?limit=${limit}&offset=${offset}`, req.user); // Pass the user if authentication is needed
+		  const topics = response.topics || [];
+	  
+		  // Render the custom topic list template
+		  res.render('partials/topic_list', {
+			topics, // Pass the topics to the template
+			title: 'Unanswered Questions', // Title for the page
+			breadcrumbs: [{ text: 'Unanswered Questions', url: '/unanswered' }],
+			pagination: {
+			  prev: offset > 0 ? `/unanswered?limit=${limit}&offset=${offset - limit}` : null,
+			  next: topics.length === limit ? `/unanswered?limit=${limit}&offset=${offset + limit}` : null,
+			},
+		  });
+		} catch (err) {
+		  console.error('Error fetching unanswered topics:', err);
+		  next(err);
+		}
+	  }
+	);
+
 	app.post('/email/unsubscribe/:token', controllers.accounts.settings.unsubscribePost);
 
 	app.post('/compose', middleware.applyCSRF, controllers.composer.post);

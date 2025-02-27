@@ -8,10 +8,21 @@
 				<!-- IMPORT partials/category/sort.tpl -->
 
 				<!-- Add Unanswered Questions Button -->
-				<a href="{config.relative_path}/unanswered" class="btn-ghost-sm ff-secondary d-flex gap-2 align-items-center">
+				<a href="{config.relative_path}/unanswered" id="unanswered-button" class="btn-ghost-sm ff-secondary d-flex gap-2 align-items-center">
 					<i class="fa fa-question-circle me-1"></i>
 					<span>[[topic:unanswered-questions]]</span>
 				</a>
+				
+				<script>
+					document.addEventListener('DOMContentLoaded', () => {
+						const unansweredButton = document.getElementById('unanswered-button');
+						if (unansweredButton) {
+							unansweredButton.addEventListener('click', (event) => {
+								console.log('Unanswered Questions button clicked!');
+							});
+						}
+					});
+				</script>
 				
 				{{{ end }}}
 				{{{ if (template.popular || template.top)}}}
