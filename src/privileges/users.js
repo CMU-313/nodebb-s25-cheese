@@ -157,12 +157,12 @@ async function hasGlobalPrivilege(privilege, uid) {
 }
 
 privsUsers.isAdminOrGlobalMod = async function (uid) {
-    if (!uid) {
-        return false;
-    }
-    const [isAdmin, isGlobalMod] = await Promise.all([
-        privsUsers.isAdministrator(uid),
-        privsUsers.isGlobalModerator(uid),
-    ]);
-    return isAdmin || isGlobalMod;
+	if (!uid) {
+		return false;
+	}
+	const [isAdmin, isGlobalMod] = await Promise.all([
+		privsUsers.isAdministrator(uid),
+		privsUsers.isGlobalModerator(uid),
+	]);
+	return isAdmin || isGlobalMod;
 };

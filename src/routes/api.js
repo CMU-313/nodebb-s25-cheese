@@ -54,13 +54,13 @@ module.exports = function (app, middleware, controllers) {
 		try {
 			const uid = req.user ? req.user.uid : req.query.uid; // Get UID from session or query parameter
 			if (!uid) {
-				return res.status(403).json({ error: "Forbidden: Missing user ID" });
+				return res.status(403).json({ error: 'Forbidden: Missing user ID' });
 			}
-	
+
 			const unansweredTopics = await topicsController.getUnansweredTopics(uid, req.query.limit, req.query.offset);
 			res.json(unansweredTopics);
 		} catch (err) {
 			res.status(500).json({ error: err.message });
 		}
-	});	
+	});
 };

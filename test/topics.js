@@ -2727,25 +2727,25 @@ describe('Marking Topics as Resolved', () => {
 });
 
 describe('Filtering Unanswered Topics', () => {
-    let adminUid;
-    let categoryObj;
-    let unansweredTopic;
-    let answeredTopic;
-    let answeredTid;
-    let adminLogin;
-    let csrf_token;
+	let adminUid;
+	let categoryObj;
+	let unansweredTopic;
+	let answeredTopic;
+	let answeredTid;
+	let adminLogin;
+	let csrf_token;
 
-    before(async () => {
-        adminUid = await User.create({ username: 'admin', password: '123456' });
-        await groups.join('administrators', adminUid);
+	before(async () => {
+		adminUid = await User.create({ username: 'admin', password: '123456' });
+		await groups.join('administrators', adminUid);
 
-        adminLogin = await helpers.loginUser('admin', '123456');
-        csrf_token = adminLogin.csrf_token;
+		adminLogin = await helpers.loginUser('admin', '123456');
+		csrf_token = adminLogin.csrf_token;
 
-        categoryObj = await categories.create({
-            name: 'Unanswered Topics Test',
-            description: 'Category for testing unanswered topics',
-        });
+		categoryObj = await categories.create({
+			name: 'Unanswered Topics Test',
+			description: 'Category for testing unanswered topics',
+		});
 
 		async function postTopic(cid, title, content, csrf, jar) {
 			try {
@@ -2755,22 +2755,20 @@ describe('Filtering Unanswered Topics', () => {
 					content: content,
 					_csrf: csrf,
 				}, jar);
-		
-				console.log("API Response:", response); // Log the API response
-		
+
+				console.log('API Response:', response); // Log the API response
+
 				if (response && response.response) {
 					return response.response; // Return response.response if it exists
-				} else {
-					console.error("API Response missing data:", response);
-					throw new Error("API Response missing data"); // Throw an error
 				}
-		
+				console.error('API Response missing data:', response);
+				throw new Error('API Response missing data'); // Throw an error
 			} catch (error) {
 				console.error('Error posting topic:', error);
 				throw error; // Re-throw the error
 			}
 		}
-		
+
 		async function replyToTopic(tid, content, csrf, jar) {
 			try {
 				const response = await api.post(`http://localhost:4567/api/v3/topics/${tid}`, { // Absolute URL
@@ -2784,68 +2782,68 @@ describe('Filtering Unanswered Topics', () => {
 			}
 		}
 
-        unansweredTopic = await postTopic(categoryObj.cid, 'Unanswered Topic', 'This topic has no replies yet.', csrf_token, adminLogin.jar);
+		unansweredTopic = await postTopic(categoryObj.cid, 'Unanswered Topic', 'This topic has no replies yet.', csrf_token, adminLogin.jar);
 
-        answeredTopic = await postTopic(categoryObj.cid, 'Answered Topic', 'This topic has replies.', csrf_token, adminLogin.jar);
+		answeredTopic = await postTopic(categoryObj.cid, 'Answered Topic', 'This topic has replies.', csrf_token, adminLogin.jar);
 
-        answeredTid = answeredTopic.tid; //use tid from the created topic.
+		answeredTid = answeredTopic.tid; // use tid from the created topic.
 
-        await replyToTopic(answeredTid, "This is a reply", csrf_token, adminLogin.jar);
-    });
+		await replyToTopic(answeredTid, 'This is a reply', csrf_token, adminLogin.jar);
+	});
 
-    // Mock response function
-    function mockResponse() {
-        return {
-            statusCode: 200,
-            status: function (code) {
-                this.statusCode = code;
-                return this;
-            },
-            json: function (data) {
-                this.data = data;
-                return this;
-            },
-        };
-    }
+	// Mock response function
+	function mockResponse() {
+		return {
+			statusCode: 200,
+			status: function (code) {
+				this.statusCode = code;
+				return this;
+			},
+			json: function (data) {
+				this.data = data;
+				return this;
+			},
+		};
+	}
 
-    it('should return unanswered topics for an admin user', async () => {
-        const res = mockResponse();
+	it('should return unanswered topics for an admin user', async () => {
+		const res = mockResponse();
 
-        await topicsController.getUnansweredTopics(adminUid, 10, 0).then((data) => {
-            res.json({topics: data});
-        }).catch((err) => {
-            res.status(500).json({error: err.message});
-        });
+		await topicsController.getUnansweredTopics(adminUid, 10, 0).then((data) => {
+			res.json({ topics: data });
+		}).catch((err) => {
+			res.status(500).json({ error: err.message });
+		});
 
-        console.log("Unanswered Topic TID: ", unansweredTopic.tid);
-        console.log("Retrieved TIDs: ", res.data.topics.map(topic => topic.tid));
-        console.log("Retrieved Topics: ", res.data.topics);
+		console.log('Unanswered Topic TID: ', unansweredTopic.tid);
+		console.log('Retrieved TIDs: ', res.data.topics.map(topic => topic.tid));
+		console.log('Retrieved Topics: ', res.data.topics);
 
-        assert.strictEqual(res.statusCode, 200);
-        assert.strictEqual(Array.isArray(res.data.topics), true);
-        assert.strictEqual(res.data.topics.some(topic => topic.tid === unansweredTopic.tid), true);
-        assert.strictEqual(res.data.topics.some(topic => topic.tid === answeredTopic.tid), false);
-    });
+		assert.strictEqual(res.statusCode, 200);
+		assert.strictEqual(Array.isArray(res.data.topics), true);
+		assert.strictEqual(res.data.topics.some(topic => topic.tid === unansweredTopic.tid), true);
+		assert.strictEqual(res.data.topics.some(topic => topic.tid === answeredTopic.tid), false);
+	});
 
-    it('should handle database errors gracefully', async () => {
-        const res = mockResponse();
+	it('should handle database errors gracefully', async () => {
+		const res = mockResponse();
 
-        // Simulate database error by mocking the db.getSortedSetRevRange function
-        const originalGetSortedSetRevRange = db.getSortedSetRevRange;
-        db.getSortedSetRevRange = async () => {
-            throw new Error('Simulated database error');
-        };
+		// Simulate database error by mocking the db.getSortedSetRevRange function
+		const originalGetSortedSetRevRange = db.getSortedSetRevRange;
+		db.getSortedSetRevRange = async () => {
+			throw new Error('Simulated database error');
+		};
 
-        await topicsController.getUnansweredTopics(adminUid, 10, 0).then((data) => {
-            res.json({topics: data});
-        }).catch((err) => {
-            res.status(500).json({error: err.message});
-        });
+		await topicsController.getUnansweredTopics(adminUid, 10, 0).then((data) => {
+			res.json({ topics: data });
+		}).catch((err) => {
+			res.status(500).json({ error: err.message });
+		});
 
-        assert.strictEqual(res.statusCode, 500);
-        assert.strictEqual(res.data.error, 'Error fetching unanswered topics');
+		assert.strictEqual(res.statusCode, 500);
+		assert.strictEqual(res.data.error, 'Error fetching unanswered topics');
 
-        // Restore the original function
-        db.getSortedSetRevRange = originalGetSortedSetRevRange;
-    });
+		// Restore the original function
+		db.getSortedSetRevRange = originalGetSortedSetRevRange;
+	});
 });
