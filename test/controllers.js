@@ -1896,8 +1896,8 @@ describe('Controllers', () => {
 
 			const result = await topicsController.getUnansweredTopics(adminUid, 10, 0);
 
-			assert.strictEqual(result.length, 2);
-			assert.strictEqual(result[0].title, 'Unanswered Topic 1');
+			assert.strictEqual(result.topics.length, 2);
+			assert.strictEqual(result.topics[0].title, 'Unanswered Topic 1');
 		});
 
 		/** 🔴 2. Non-Admin User Gets 403 Forbidden */
@@ -1922,7 +1922,7 @@ describe('Controllers', () => {
 			]);
 
 			const result = await topicsController.getUnansweredTopics(adminUid, 10, 0);
-			assert.strictEqual(result.length, 0);
+			assert.strictEqual(result.topics.length, 0);
 		});
 
 		/** 🔴 4. Handles Database Errors Gracefully */
@@ -1949,10 +1949,12 @@ describe('Controllers', () => {
 
 			const result = await topicsController.getUnansweredTopics(adminUid, 10, 0);
 
-			assert.strictEqual(result[0].numThumbs, 0);
-			assert.deepStrictEqual(result[0].thumbs, []);
-			assert.strictEqual(result[1].numThumbs, 5);
-			assert.deepStrictEqual(result[1].thumbs, ['user1']);
+			console.log('RESULT --> ', result);
+
+			assert.strictEqual(result.topics[0].numThumbs, 0);
+			assert.deepStrictEqual(result.topics[0].thumbs, []);
+			assert.strictEqual(result.topics[1].numThumbs, 5);
+			assert.deepStrictEqual(result.topics[1].thumbs, ['user1']);
 		});
 	});
 

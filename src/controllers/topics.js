@@ -463,7 +463,16 @@ topicsController.getUnansweredTopics = async function (uid, limit = 10, offset =
 		console.log('Fetched Topic Data:', topicData);
 
 		// Filter topics with postcount === 1 (indicating unanswered)
-		const unansweredTopics = topicData.filter(topic => parseInt(topic.postcount, 10) === 1).slice(0, limit);
+		// const unansweredTopics = topicData.filter(topic => parseInt(topic.postcount, 10) === 1).slice(0, limit);
+		// Filter topics with postcount === 1 (indicating unanswered)
+		const unansweredTopics = topicData
+			.filter(topic => parseInt(topic.postcount, 10) === 1)
+			.slice(0, limit)
+			.map(topic => ({
+				...topic,
+				numThumbs: topic.numThumbs || 0, // Ensure numThumbs is always present
+				thumbs: topic.thumbs || [], // Ensure thumbs is always an array
+			}));
 
 		// 🔍 Debug: Ensure filtering logic is correct
 		console.log('Filtered Unanswered Topics:', unansweredTopics);
