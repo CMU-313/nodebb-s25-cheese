@@ -409,31 +409,31 @@ topicsController.pagination = async function (req, res, next) {
 const db = require('../database');
 
 topicsController.setResolved = async function (req, res) {
-    try {
-        const { tid } = req.params;
-        let { resolved } = req.body;
+	try {
+		const { tid } = req.params;
+		let { resolved } = req.body;
 
-        if (typeof resolved !== 'boolean') {
-            return res.status(400).json({ error: "Invalid request. 'resolved' must be a boolean." });
-        }
+		if (typeof resolved !== 'boolean') {
+			return res.status(400).json({ error: "Invalid request. 'resolved' must be a boolean." });
+		}
 
-        // Fetch topic tags
-        const topicTags = await Topics.getTopicTags(tid);
-        if (topicTags.includes('resolved')) {
-            resolved = true; // Auto-set resolved if tag is present
-        }
+		// Fetch topic tags
+		const topicTags = await topics.getTopicTags(tid);
+		if (topicTags.includes('resolved')) {
+			resolved = true; // Auto-set resolved if tag is present
+		}
 
-        // Check user permissions
-        const canEdit = await privileges.topics.canEdit(tid, req.uid);
-        if (!canEdit) {
-            return res.status(403).json({ error: '[[error:no-privileges]]' });
-        }
+		// Check user permissions
+		const canEdit = await privileges.topics.canEdit(tid, req.uid);
+		if (!canEdit) {
+			return res.status(403).json({ error: '[[error:no-privileges]]' });
+		}
 
-        // Update the resolved status in the database
-        await db.setObjectField(`topic:${tid}`, 'resolved', resolved.toString());
+		// Update the resolved status in the database
+		await db.setObjectField(`topic:${tid}`, 'resolved', resolved.toString());
 
-        res.json({ message: 'Topic resolved status updated', tid, resolved });
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
+		res.json({ message: 'Topic resolved status updated', tid, resolved });
+	} catch (error) {
+		res.status(500).json({ error: error.message });
+	}
 };

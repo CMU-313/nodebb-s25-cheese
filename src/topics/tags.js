@@ -413,10 +413,10 @@ module.exports = function (Topics) {
 	Topics.updateTopicTags = async function (tid, tags) {
 		await Topics.deleteTopicTags(tid);
 		const cid = await Topics.getTopicField(tid, 'cid');
-	
+
 		tags = await Topics.filterTags(tags, cid);
 		await Topics.addTags(tags, [tid]);
-	
+
 		// Auto-update resolved status if the "resolved" tag is present
 		if (tags.includes('resolved')) {
 			await db.setObjectField(`topic:${tid}`, 'resolved', 'true');
@@ -424,10 +424,10 @@ module.exports = function (Topics) {
 		if (!tags.includes('resolved')) {
 			await db.setObjectField(`topic:${tid}`, 'resolved', 'false');
 		}
-	
+
 		plugins.hooks.fire('action:topic.updateTags', { tags, tid });
 	};
-	
+
 	Topics.deleteTopicTags = async function (tid) {
 		const topicData = await Topics.getTopicFields(tid, ['cid', 'tags']);
 		const { cid } = topicData;
