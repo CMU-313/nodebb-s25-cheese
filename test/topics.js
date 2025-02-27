@@ -2589,6 +2589,12 @@ describe('topicsController.setResolved - Unit Test', () => {
 		notifications.create = function (...args) {
 			notifications.createCalls.push(args);
 		};
+
+		// Mock socket.emit
+		socket.emitCalls = [];
+		socket.emit = function (...args) {
+			socket.emitCalls.push(args);
+		};
 	});
 
 	afterEach(async () => {
@@ -2606,7 +2612,7 @@ describe('topicsController.setResolved - Unit Test', () => {
 		});
 	});
 
-	it('should successfully unmark a topic as resolved', async () => {
+	it('should successfully unmark a topic as resolved (set unresolved)', async () => {
 		req.body.resolved = false;
 		await topicsController.setResolved(req, res);
 
@@ -2670,6 +2676,26 @@ describe('topicsController.setResolved - Unit Test', () => {
 		assert.strictEqual(notification.nid, `topic_unresolved:${req.params.tid}`, 'Notification should have correct nid');
 		assert.strictEqual(notification.tid, req.params.tid, 'Notification should reference the correct topic ID');
 		assert.strictEqual(notification.from, req.uid, 'Notification should be from the user who marked it');
+	});
+
+	it('should emit a socket event when a topic is marked as resolved', async () => {
+		req.body.resolved = true;
+		await topicsController.setResolved(req, res);
+
+		assert.strictEqual(socket.emitCalls.length, 1, 'Expected socket.emit to be called once');
+		const [event, data] = socket.emitCalls[0];
+		assert.strictEqual(event, 'event:topicResolvedUpdated', 'Expected event name to match');
+		assert.deepStrictEqual(data, { tid: testTid, resolved: true }, 'Expected emitted data to match');
+	});
+
+	it('should emit a socket event when a topic is marked as unresolved', async () => {
+		req.body.resolved = false;
+		await topicsController.setResolved(req, res);
+
+		assert.strictEqual(socket.emitCalls.length, 1, 'Expected socket.emit to be called once');
+		const [event, data] = socket.emitCalls[0];
+		assert.strictEqual(event, 'event:topicResolvedUpdated', 'Expected event name to match');
+		assert.deepStrictEqual(data, { tid: testTid, resolved: false }, 'Expected emitted data to match');
 	});
 });
 
