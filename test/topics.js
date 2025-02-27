@@ -2731,4 +2731,3 @@ describe('Marking Topics as Resolved', () => {
 	});
 });
 
-

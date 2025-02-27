@@ -440,21 +440,21 @@ topicsController.setResolved = async function (req, res) {
 
 // adding topics.Controller.getUnansweredTopics function method for filtering unanswered questions
 topicsController.getUnansweredTopics = async function (limit = 10, offset = 0) {
-    try {
-        // Fetch topic IDs from Redis
-        let tids = await db.getSortedSetRevRange('topics:tid', offset, offset + limit * 2 - 1); // Fetch extra in case of filtering
+	try {
+		// Fetch topic IDs from Redis
+		const tids = await db.getSortedSetRevRange('topics:tid', offset, offset + (limit * 2) - 1); // Fetch extra in case of filtering
 
-        // Retrieve topic details
-        let topicData = await topics.getTopicsByTids(tids, 0);
+		// Retrieve topic details
+		const topicData = await topics.getTopicsByTids(tids, 0);
 
-        // Filter topics with postcount === 1 (indicating unanswered)
-        let unansweredTopics = topicData.filter(topic => parseInt(topic.postcount, 10) === 1).slice(0, limit);
+		// Filter topics with postcount === 1 (indicating unanswered)
+		const unansweredTopics = topicData.filter(topic => parseInt(topic.postcount, 10) === 1).slice(0, limit);
 
-        console.log("Fetched Topic Data:", topicData);
-        console.log("Filtered Unanswered Topics:", unansweredTopics);
+		console.log('Fetched Topic Data:', topicData);
+		console.log('Filtered Unanswered Topics:', unansweredTopics);
 
-        return unansweredTopics;
-    } catch (err) {
-        throw new Error('Error fetching unanswered topics: ' + err.message);
-    }
+		return unansweredTopics;
+	} catch (err) {
+		throw new Error('Error fetching unanswered topics');
+	}
 };
