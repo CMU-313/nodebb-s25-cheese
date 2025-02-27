@@ -1,5 +1,11 @@
 'use strict';
 
+const chai = require('chai');
+
+const sinon = require('sinon');
+
+const { expect } = chai;
+
 const assert = require('assert');
 const nconf = require('nconf');
 const fs = require('fs');
@@ -21,6 +27,7 @@ const plugins = require('../src/plugins');
 const utils = require('../src/utils');
 const slugify = require('../src/slugify');
 const helpers = require('./helpers');
+const topicsController = require('../src/controllers/topics');
 
 const sleep = util.promisify(setTimeout);
 
@@ -1863,6 +1870,66 @@ describe('Controllers', () => {
 				assert(body);
 			});
 		}
+	});
+
+	describe('topics', () => {
+		describe('getUnansweredTopics', () => {
+			it('should return only unanswered topics', async () => {
+				// Mock database response: 3 topics, only 2 are unanswered (postcount === 1)
+				const mockTopics = [
+					{ tid: 1, postcount: 1, title: 'Unanswered Topic 1' },
+					{ tid: 2, postcount: 2, title: 'Answered Topic' },
+					{ tid: 3, postcount: 1, title: 'Unanswered Topic 2' },
+				];
+
+				// Stub database and topics methods
+				sinon.stub(db, 'getSortedSetRevRange').resolves([1, 2, 3]);
+				sinon.stub(topics, 'getTopicsByTids').resolves(mockTopics);
+
+				// Call the function
+				const result = await topicsController.getUnansweredTopics(10, 0);
+
+				// Verify response
+				assert.strictEqual(result.length, 2);
+				assert.strictEqual(result[0].title, 'Unanswered Topic 1');
+				assert.strictEqual(result[1].title, 'Unanswered Topic 2');
+
+				// Restore original methods
+				db.getSortedSetRevRange.restore();
+				topics.getTopicsByTids.restore();
+			});
+
+			it('should return an empty array if there are no unanswered topics', async () => {
+				// Mock database response: all topics have replies
+				const mockTopics = [
+					{ tid: 1, postcount: 2, title: 'Answered Topic 1' },
+					{ tid: 2, postcount: 3, title: 'Answered Topic 2' },
+				];
+
+				sinon.stub(db, 'getSortedSetRevRange').resolves([1, 2]);
+				sinon.stub(topics, 'getTopicsByTids').resolves(mockTopics);
+
+				const result = await topicsController.getUnansweredTopics(10, 0);
+
+				assert.strictEqual(result.length, 0); // Should return an empty array
+
+				db.getSortedSetRevRange.restore();
+				topics.getTopicsByTids.restore();
+			});
+
+			it('should handle errors gracefully', async () => {
+				sinon.stub(db, 'getSortedSetRevRange').rejects(new Error('Database error'));
+
+				try {
+					await topicsController.getUnansweredTopics(10, 0);
+					assert.fail('Expected function to throw an error');
+				} catch (err) {
+					assert.strictEqual(err.message, 'Error fetching unanswered topics');
+				}
+
+				db.getSortedSetRevRange.restore();
+			});
+		});
 	});
 
 	after((done) => {

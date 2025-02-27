@@ -328,3 +328,240 @@ paths:
     $ref: 'read/groups/slug/members.yaml'
   /api/outgoing:
     $ref: 'read/outgoing.yaml'
+  /api/topics/unanswered:
+    get:
+      summary: Get Unanswered Topics
+      description: Returns a list of topics that have not been answered (postcount === 1).
+      tags:
+        - Topics
+      parameters:
+        - name: limit
+          in: query
+          description: Number of topics to return
+          required: false
+          schema:
+            type: integer
+            default: 10
+          example: 20
+        - name: offset
+          in: query
+          description: Number of topics to skip
+          required: false
+          schema:
+            type: integer
+            default: 0
+          example: 5
+      responses:
+        "200":
+          description: A list of unanswered topics
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  topics:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        tid:
+                          type: integer
+                          description: Topic ID
+                        uid:
+                          type: integer
+                          description: User ID of the topic creator
+                        cid:
+                          type: integer
+                          description: Category ID of the topic
+                        mainPid:
+                          type: integer
+                          description: Post ID of the main post of the topic
+                        title:
+                          type: string
+                          description: Topic title
+                        slug:
+                          type: string
+                          description: Topic slug
+                        timestamp:
+                          type: integer
+                          description: Topic creation timestamp (milliseconds)
+                        lastposttime:
+                          type: integer
+                          description: Last post timestamp (milliseconds)
+                        postcount:
+                          type: integer
+                          description: Number of posts in the topic
+                        viewcount:
+                          type: integer
+                          description: Number of views
+                        resolved:
+                          type: string
+                          description: Resolved status (string representation)
+                        postercount:
+                          type: integer
+                          description: Number of posters
+                        deleted:
+                          type: integer
+                          description: Deleted status (0 or 1)
+                        locked:
+                          type: integer
+                          description: Locked status (0 or 1)
+                        pinned:
+                          type: integer
+                          description: Pinned status (0 or 1)
+                        pinExpiry:
+                          type: integer
+                          description: Pin expiry timestamp (milliseconds)
+                        upvotes:
+                          type: integer
+                          description: Number of upvotes
+                        downvotes:
+                          type: integer
+                          description: Number of downvotes
+                        deleterUid:
+                          type: integer
+                          description: User ID of the deleter
+                        titleRaw:
+                          type: string
+                          description: Raw topic title
+                        timestampISO:
+                          type: string
+                          format: date-time
+                          description: Topic creation timestamp (ISO 8601)
+                        scheduled:
+                          type: boolean
+                          description: Scheduled status
+                        lastposttimeISO:
+                          type: string
+                          format: date-time
+                          description: Last post timestamp (ISO 8601)
+                        pinExpiryISO:
+                          type: string
+                          format: date-time
+                          description: Pin expiry timestamp (ISO 8601)
+                        votes:
+                          type: integer
+                          description: Total votes
+                        teaserPid:
+                          type: integer
+                          nullable: true
+                          description: Post ID of the teaser post
+                        tags:
+                          type: array
+                          items:
+                            type: string
+                          description: Array of tags
+                        thumbs:
+                          type: array
+                          nullable: true
+                          items:
+                            type: string
+                          description: Array of thumbnail URLs
+                        numThumbs:  # Correct placement of numThumbs
+                          type: integer
+                          description: Number of thumbnails
+                          nullable: true
+                        category:
+                          type: object
+                          properties:
+                            cid:
+                              type: integer
+                              description: Category ID
+                            name:
+                              type: string
+                              description: Category name
+                            slug:
+                              type: string
+                              description: Category slug
+                            icon:
+                              type: string
+                              description: Category icon
+                            backgroundImage:
+                              type: string
+                              description: Background image URL
+                            imageClass:
+                              type: string
+                              description: Image class
+                            bgColor:
+                              type: string
+                              description: Background color
+                            color:
+                              type: string
+                              description: Text color
+                            disabled:
+                              type: integer
+                              description: Disabled status (0 or 1)
+                        user:
+                          type: object
+                          properties:
+                            uid:
+                              type: integer
+                              description: User ID
+                            username:
+                              type: string
+                              description: Username
+                            userslug:
+                              type: string
+                              description: User slug
+                            reputation:
+                              type: integer
+                              description: User reputation
+                            postcount:
+                              type: integer
+                              description: User post count
+                            picture:
+                              type: string
+                              nullable: true
+                              description: User picture URL
+                            signature:
+                              type: string
+                              nullable: true
+                              description: User signature
+                            banned:
+                              type: boolean
+                              description: Banned status
+                            status:
+                              type: string
+                              description: User status
+                            displayname:
+                              type: string
+                              description: User display name
+                            icon:bgColor:
+                              type: string
+                              description: Icon background color
+                            icon:text:
+                              type: string
+                              description: Icon text
+                            banned_until_readable:
+                              type: string
+                              description: Banned until readable
+                        teaser:
+                          type: string
+                          nullable: true
+                          description: Teaser content
+                        isOwner:
+                          type: boolean
+                          description: Is owner status
+                        ignored:
+                          type: boolean
+                          description: Ignored status
+                        followed:
+                          type: boolean
+                          description: Followed status
+                        unread:
+                          type: boolean
+                          description: Unread status
+                        bookmark:
+                          type: string
+                          nullable: true
+                          description: Bookmark status
+                        unreplied:
+                          type: boolean
+                          description: Unreplied status
+                        icons:
+                          type: array
+                          items:
+                            type: string
+                          description: Array of icon URLs
+        "500":
+          description: Internal server error

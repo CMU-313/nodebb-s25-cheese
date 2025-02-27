@@ -49,7 +49,7 @@ module.exports = function (app, middleware, controllers) {
 	// API Routing for marking/unmarking resolved field for a question
 	router.put('/topics/:tid/resolved', [...middlewares, middleware.ensureLoggedIn], helpers.tryRoute(controllers.topics.setResolved));
 
-	// API endpoint for filtering unanswered questions – 
+	// API endpoint for filtering unanswered questions –
 	router.get('/topics/unanswered', async (req, res) => {
 		try {
 			const topics = await topicsController.getUnansweredTopics(); // ✅ Correct reference

@@ -1868,7 +1868,6 @@ describe('Topic\'s', () => {
 				});
 			});
 		});
-
 		it('should error if not logged in', async () => {
 			try {
 				await apiTopics.ignore({ uid: 0 }, { tid: tid });
@@ -1877,14 +1876,12 @@ describe('Topic\'s', () => {
 				assert.equal(err.message, '[[error:not-logged-in]]');
 			}
 		});
-
 		it('should filter ignoring uids', async () => {
 			await apiTopics.ignore({ uid: followerUid }, { tid: tid });
 			const uids = await topics.filterIgnoringUids(tid, [adminUid, followerUid]);
 			assert.equal(uids.length, 1);
 			assert.equal(uids[0], adminUid);
 		});
-
 		it('should error with topic that does not exist', async () => {
 			try {
 				await apiTopics.follow({ uid: followerUid }, { tid: -1 });
@@ -1893,7 +1890,6 @@ describe('Topic\'s', () => {
 				assert.equal(err.message, '[[error:no-topic]]');
 			}
 		});
-
 		it('should follow topic', (done) => {
 			topics.toggleFollow(tid, followerUid, (err, isFollowing) => {
 				assert.ifError(err);
@@ -1916,7 +1912,6 @@ describe('Topic\'s', () => {
 				assert.equal(err.message, '[[error:invalid-data]]');
 			}
 		});
-
 		it('should return results', async () => {
 			const plugins = require('../src/plugins');
 			plugins.hooks.register('myTestPlugin', {
@@ -1929,7 +1924,6 @@ describe('Topic\'s', () => {
 			assert.deepEqual(results, [1, 2, 3]);
 		});
 	});
-
 	it('should check if user is moderator', (done) => {
 		socketTopics.isModerator({ uid: adminUid }, topic.tid, (err, isModerator) => {
 			assert.ifError(err);
@@ -2730,5 +2724,3 @@ describe('Marking Topics as Resolved', () => {
 		assert.strictEqual(res.data.error, 'Topic not found');
 	});
 });
-
-
