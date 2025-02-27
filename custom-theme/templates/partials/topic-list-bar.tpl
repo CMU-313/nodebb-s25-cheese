@@ -8,7 +8,7 @@
 				<!-- IMPORT partials/category/sort.tpl -->
 
 				<!-- Add Unanswered Questions Button -->
-				<a href="{config.relative_path}/unanswered" class="btn btn-outline-secondary btn-sm d-flex align-items-center">
+				<a href="{config.relative_path}/unanswered" class="btn-ghost-sm ff-secondary d-flex gap-2 align-items-center">
 					<i class="fa fa-question-circle me-1"></i>
 					<span>[[topic:unanswered-questions]]</span>
 				</a>
