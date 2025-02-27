@@ -437,7 +437,6 @@ topicsController.setResolved = async function (req, res) {
 		res.status(500).json({ error: error.message });
 	}
 };
-
 // Adding topics.Controller.getUnansweredTopics function method for filtering unanswered questions
 topicsController.getUnansweredTopics = async function (uid, limit = 10, offset = 0) {
 	try {
@@ -454,7 +453,7 @@ topicsController.getUnansweredTopics = async function (uid, limit = 10, offset =
 		console.log('Retrieved TIDs from DB:', tids);
 
 		if (!tids || tids.length === 0) {
-			return []; // Return an empty array if no topics exist
+			return { topics: [] }; // Return an object with empty topics array
 		}
 
 		// Retrieve topic details
@@ -469,7 +468,8 @@ topicsController.getUnansweredTopics = async function (uid, limit = 10, offset =
 		// 🔍 Debug: Ensure filtering logic is correct
 		console.log('Filtered Unanswered Topics:', unansweredTopics);
 
-		return unansweredTopics;
+		// Return object with topics property
+		return { topics: unansweredTopics };
 	} catch (err) {
 		console.error('Error fetching unanswered topics:', err);
 		throw new Error('Error fetching unanswered topics');
