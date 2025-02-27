@@ -2673,7 +2673,7 @@ describe('topicsController.setResolved - Unit Test', () => {
 
 		const [notification, uids] = call;
 		assert.strictEqual(uids[0], adminUid, 'Notification should be sent to topic owner');
-		assert.strictEqual(notification.nid, `topic:unresolved-status:${req.params.tid}`, 'Notification should have correct nid');
+		assert.strictEqual(notification.nid, `topic:resolved-status:${req.params.tid}`, 'Notification should have correct nid');
 		assert.strictEqual(notification.tid, req.params.tid, 'Notification should reference the correct topic ID');
 		assert.strictEqual(notification.from, req.uid, 'Notification should be from the user who marked it');
 	});
