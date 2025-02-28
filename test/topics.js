@@ -2914,3 +2914,92 @@ describe('Filtering Unanswered Topics', () => {
 		db.getSortedSetRevRange = originalGetSortedSetRevRange;
 	});
 });
+
+
+// ORIGINAL TESTS FOR UNANSWERED API MADE BY SOPHIA --> COMMENTED OUT IN ATTEMPTING TO
+// REWORK THE TESTS WITHOUT EXTERNAL MODULES
+// describe('topicsController.getUnansweredTopics', () => {
+// let mockDb; let mockPrivileges; let
+// mockTopics;
+// const adminUid = 1;
+// const nonAdminUid = 2;
+
+// afterEach(() => {
+// sinon.restore();
+// });
+
+// /** 🟢 1. Admin User Can Retrieve Unanswered Topics */
+// it('should return unanswered topics for an admin user', async () => {
+// sinon.stub(privileges.users, 'isAdministrator').resolves(true);
+
+// const mockTopics = [
+// { tid: 1, postcount: 1, title: 'Unanswered Topic 1' },
+// { tid: 2, postcount: 1, title: 'Unanswered Topic 2' },
+// ];
+
+// sinon.stub(db, 'getSortedSetRevRange').resolves([1, 2]);
+// sinon.stub(topics, 'getTopicsByTids').resolves(mockTopics);
+
+// const result = await topicsController.getUnansweredTopics(adminUid, 10, 0);
+
+// assert.strictEqual(result.topics.length, 2);
+// assert.strictEqual(result.topics[0].title, 'Unanswered Topic 1');
+// });
+
+// /** 🔴 2. Non-Admin User Gets 403 Forbidden */
+// it('should return 403 if user is not an administrator', async () => {
+// sinon.stub(privileges.users, 'isAdministrator').resolves(false);
+
+// try {
+// await topicsController.getUnansweredTopics(nonAdminUid, 10, 0);
+// assert.fail('Expected function to throw an error');
+// } catch (err) {
+// assert.strictEqual(err.message, 'Error fetching unanswered topics'); // Matches catch block behavior
+// }
+// });
+
+// /** 🟢 3. Returns Empty Array When No Unanswered Topics Exist */
+// it('should return an empty array if there are no unanswered topics', async () => {
+// sinon.stub(privileges.users, 'isAdministrator').resolves(true);
+// sinon.stub(db, 'getSortedSetRevRange').resolves([1, 2]);
+// sinon.stub(topics, 'getTopicsByTids').resolves([
+// { tid: 1, postcount: 2, title: 'Answered Topic 1' },
+// { tid: 2, postcount: 3, title: 'Answered Topic 2' },
+// ]);
+
+// const result = await topicsController.getUnansweredTopics(adminUid, 10, 0);
+// assert.strictEqual(result.topics.length, 0);
+// });
+
+// /** 🔴 4. Handles Database Errors Gracefully */
+// it('should handle database errors gracefully', async () => {
+// sinon.stub(privileges.users, 'isAdministrator').resolves(true);
+// sinon.stub(db, 'getSortedSetRevRange').rejects(new Error('Database error'));
+
+// try {
+// await topicsController.getUnansweredTopics(adminUid, 10, 0);
+// assert.fail('Expected function to throw an error');
+// } catch (err) {
+// assert.strictEqual(err.message, 'Error fetching unanswered topics');
+// }
+// });
+
+// /** 🟢 5. Ensures numThumbs and thumbs Default Values */
+// it('should ensure numThumbs and thumbs are correctly set in API response', async () => {
+// sinon.stub(privileges.users, 'isAdministrator').resolves(true);
+// sinon.stub(db, 'getSortedSetRevRange').resolves([107, 108]);
+// sinon.stub(topics, 'getTopicsByTids').resolves([
+// { tid: 107, postcount: 1, title: 'Topic 1' },
+// { tid: 108, postcount: 1, title: 'Topic 2', numThumbs: 5, thumbs: ['user1'] },
+// ]);
+
+// const result = await topicsController.getUnansweredTopics(adminUid, 10, 0);
+
+// console.log('RESULT --> ', result);
+
+// assert.strictEqual(result.topics[0].numThumbs, 0);
+// assert.deepStrictEqual(result.topics[0].thumbs, []);
+// assert.strictEqual(result.topics[1].numThumbs, 5);
+// assert.deepStrictEqual(result.topics[1].thumbs, ['user1']);
+// });
+// });
