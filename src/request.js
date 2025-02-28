@@ -61,10 +61,23 @@ async function call(url, method, { body, timeout, jar, ...config } = {}) {
 }
 
 /*
+  Define createUser and deleteUser functions
+*/
+
+exports.createUser = async function (userData) {
+	const url = 'https://your-api.com/users'; // Replace with actual endpoint
+	return call(url, 'POST', { body: userData });
+};
+
+exports.deleteUser = async function (userId) {
+	const url = `https://your-api.com/users/${userId}`; // Replace with actual endpoint
+	return call(url, 'DELETE');
+};
+
+/*
 const { body, response } = await request.get('someurl?foo=1&baz=2')
 */
 exports.get = async (url, config) => call(url, 'GET', config);
-
 exports.head = async (url, config) => call(url, 'HEAD', config);
 exports.del = async (url, config) => call(url, 'DELETE', config);
 exports.delete = exports.del;
@@ -76,5 +89,7 @@ const { body, response } = await request.post('someurl', { body: { foo: 1, baz: 
 exports.post = async (url, config) => call(url, 'POST', config);
 exports.put = async (url, config) => call(url, 'PUT', config);
 exports.patch = async (url, config) => call(url, 'PATCH', config);
-
-
+exports.loginUser = async function (credentials) {
+	const url = 'https://your-api.com/auth/login'; // Replace with actual login endpoint
+	return call(url, 'POST', { body: credentials });
+};

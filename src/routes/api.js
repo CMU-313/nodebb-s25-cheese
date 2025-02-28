@@ -5,6 +5,9 @@ const express = require('express');
 const uploadsController = require('../controllers/uploads');
 const helpers = require('./helpers');
 
+// importing topicsController
+const topicsController = require('../controllers/topics');
+
 module.exports = function (app, middleware, controllers) {
 	const middlewares = [middleware.autoLocale, middleware.authenticateRequest];
 	const router = express.Router();
@@ -45,4 +48,22 @@ module.exports = function (app, middleware, controllers) {
 
 	// API Routing for marking/unmarking resolved field for a question
 	router.put('/topics/:tid/resolved', [...middlewares, middleware.ensureLoggedIn], helpers.tryRoute(controllers.topics.setResolved));
+
+	// API endpoint for filtering unanswered questions –
+	// Fix: Use spread syntax [...middlewares] instead of just middlewares
+	router.get('/topics/unanswered', [...middlewares], (req, res, next) => {
+		const limit = parseInt(req.query.limit, 10) || 10; // Added radix parameter
+		const offset = parseInt(req.query.offset, 10) || 0; // Added radix parameter
+
+		topicsController.getUnansweredTopics(req.uid, limit, offset)
+			.then((result) => {
+				res.json(result);
+			})
+			.catch((err) => {
+				if (err.message === 'Forbidden') {
+					return res.status(403).json({ error: 'Not authorized' });
+				}
+				next(err);
+			});
+	});
 };
