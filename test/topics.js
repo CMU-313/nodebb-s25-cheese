@@ -2810,6 +2810,7 @@ describe('Filtering Unanswered Topics', () => {
 			description: 'Category for testing unanswered topics',
 		});
 
+
 		async function postTopic(cid, title, content, csrf, jar) {
 			try {
 				const response = await api.post(`http://localhost:4567/api/v3/topics`, {
@@ -2846,7 +2847,7 @@ describe('Filtering Unanswered Topics', () => {
 			}
 		}
 
-		unansweredTopic = await postTopic(categoryObj.cid, 'Unanswered Topic', 'This topic has no replies yet.', csrf_token, adminLogin.jar);
+		unansweredTopic = await postTopic(1, 'Unanswered Topic', 'This topic has no replies yet.', csrf_token, adminLogin.jar);
 
 		answeredTopic = await postTopic(categoryObj.cid, 'Answered Topic', 'This topic has replies.', csrf_token, adminLogin.jar);
 
@@ -2883,11 +2884,12 @@ describe('Filtering Unanswered Topics', () => {
 				res.status(500).json({ error: err.message });
 			});
 
-		console.log('Final Test Response:', res.data);
+		console.log('Final Test Response:', JSON.stringify(res.data, null, 2));
+
 
 		assert.strictEqual(res.statusCode, 200);
-		assert.strictEqual(Array.isArray(res.data.topics), true); // Updated assertion
-		assert.strictEqual(res.data.topics.length, 1); // Check the length of the topics array
+		assert.strictEqual(Array.isArray(res.data.topics.topics), true); // Updated assertion
+		assert.strictEqual(res.data.topics.topics.length, 1); // Check the length of the topics array
 	});
 
 	it('should handle database errors gracefully', async () => {
