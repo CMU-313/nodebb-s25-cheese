@@ -2799,10 +2799,10 @@ describe('Filtering Unanswered Topics', () => {
 		adminLogin = await helpers.loginUser('admin', '123456');
 		csrf_token = adminLogin.csrf_token;
 
-		console.log("Admin Login Response:", adminLogin);
+		console.log('Admin Login Response:', adminLogin);
 
 		const isAdmin = await privileges.users.isAdministrator(adminUid);
-		console.log("Is Admin:", isAdmin);
+		console.log('Is Admin:', isAdmin);
 
 
 		categoryObj = await categories.create({
@@ -2838,7 +2838,7 @@ describe('Filtering Unanswered Topics', () => {
 					content: content,
 					_csrf: csrf,
 				}, jar);
-				console.log("CSRF Token:", csrf_token);
+				console.log('CSRF Token:', csrf_token);
 				return response.data;
 			} catch (error) {
 				console.error('Error replying to topic:', error);
