@@ -8,7 +8,7 @@ const nconf = require('nconf');
 const util = require('util');
 
 const sleep = util.promisify(setTimeout);
-// const sinon = require('sinon');
+const sinon = require('sinon');
 
 const db = require('./mocks/databasemock');
 const file = require('../src/file');
@@ -25,8 +25,8 @@ const socketTopics = require('../src/socket.io/topics');
 const apiTopics = require('../src/api/topics');
 const apiPosts = require('../src/api/posts');
 const request = require('../src/request');
-// const api = require('../src/api/unanswered');
-const api = require('../src/api/topics'); // ✅ Use the correct module
+const api = require('../src/api/unanswered');
+// const api = require('../src/api/topics'); // ✅ Use the correct module
 const notificationService = require('../src/notifications');
 const socket = require('../src/socket.io');
 
