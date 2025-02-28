@@ -2870,4 +2870,47 @@ describe('Filtering Unanswered Topics', () => {
 			},
 		};
 	}
+
+	it('should return unanswered topics for an admin user', async () => {
+		const res = mockResponse();
+
+		await topicsController.getUnansweredTopics(adminUid, 10, 0)
+			.then((data) => {
+				console.log('Raw API response:', data); // Log actual response
+				res.json({ topics: data });
+			})
+			.catch((err) => {
+				console.error('Error fetching unanswered topics:', err);
+				res.status(500).json({ error: err.message });
+			});
+
+		console.log('Final Test Response:', JSON.stringify(res.data, null, 2));
+
+
+		assert.strictEqual(res.statusCode, 200);
+		assert.strictEqual(Array.isArray(res.data.topics.topics), true); // Updated assertion
+		assert.strictEqual(res.data.topics.topics.length, 1); // Check the length of the topics array
+	});
+
+	it('should handle database errors gracefully', async () => {
+		const res = mockResponse();
+
+		// Simulate database error by mocking the db.getSortedSetRevRange function
+		const originalGetSortedSetRevRange = db.getSortedSetRevRange;
+		db.getSortedSetRevRange = async () => {
+			throw new Error('Simulated database error');
+		};
+
+		await topicsController.getUnansweredTopics(adminUid, 10, 0).then((data) => {
+			res.json({ topics: data });
+		}).catch((err) => {
+			res.status(500).json({ error: err.message });
+		});
+
+		assert.strictEqual(res.statusCode, 500);
+		assert.strictEqual(res.data.error, 'Error fetching unanswered topics');
+
+		// Restore the original function
+		db.getSortedSetRevRange = originalGetSortedSetRevRange;
+	});
 });
