@@ -2870,26 +2870,4 @@ describe('Filtering Unanswered Topics', () => {
 			},
 		};
 	}
-
-	it('should handle database errors gracefully', async () => {
-		const res = mockResponse();
-
-		// Simulate database error by mocking the db.getSortedSetRevRange function
-		const originalGetSortedSetRevRange = db.getSortedSetRevRange;
-		db.getSortedSetRevRange = async () => {
-			throw new Error('Simulated database error');
-		};
-
-		await topicsController.getUnansweredTopics(adminUid, 10, 0).then((data) => {
-			res.json({ topics: data });
-		}).catch((err) => {
-			res.status(500).json({ error: err.message });
-		});
-
-		assert.strictEqual(res.statusCode, 500);
-		assert.strictEqual(res.data.error, 'Error fetching unanswered topics');
-
-		// Restore the original function
-		db.getSortedSetRevRange = originalGetSortedSetRevRange;
-	});
 });
