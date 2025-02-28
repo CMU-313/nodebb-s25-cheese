@@ -2783,223 +2783,223 @@ describe('Marking Topics as Resolved', () => {
 });
 
 // Integration Tests For Filtering Unanswered Topics (admin only)
-describe('Filtering Unanswered Topics', () => {
-	let adminUid;
-	let categoryObj;
-	let unansweredTopic;
-	let answeredTopic;
-	let answeredTid;
-	let adminLogin;
-	let csrf_token;
+// describe('Filtering Unanswered Topics', () => {
+// let adminUid;
+// let categoryObj;
+// let unansweredTopic;
+// let answeredTopic;
+// let answeredTid;
+// let adminLogin;
+// let csrf_token;
 
-	before(async () => {
-		adminUid = await User.create({ username: 'admin', password: '123456' });
-		await groups.join('administrators', adminUid);
+// before(async () => {
+// adminUid = await User.create({ username: 'admin', password: '123456' });
+// await groups.join('administrators', adminUid);
 
-		adminLogin = await helpers.loginUser('admin', '123456');
-		csrf_token = adminLogin.csrf_token;
+// adminLogin = await helpers.loginUser('admin', '123456');
+// csrf_token = adminLogin.csrf_token;
 
-		console.log('Admin Login Response:', adminLogin);
+// console.log('Admin Login Response:', adminLogin);
 
-		const isAdmin = await privileges.users.isAdministrator(adminUid);
-		console.log('Is Admin:', isAdmin);
-
-
-		categoryObj = await categories.create({
-			name: 'Unanswered Topics Test',
-			description: 'Category for testing unanswered topics',
-		});
+// const isAdmin = await privileges.users.isAdministrator(adminUid);
+// console.log('Is Admin:', isAdmin);
 
 
-		async function postTopic(cid, title, content, csrf, jar) {
-			try {
-				const response = await api.post(`http://localhost:4567/api/v3/topics`, {
-					cid: cid,
-					title: title,
-					content: content,
-					_csrf: csrf,
-				}, jar);
-
-				console.log('API Response:', response); // Log the API response
-
-				if (response && response.response) {
-					return response.response; // Return response.response if it exists
-				}
-				console.error('API Response missing data:', response);
-				throw new Error('API Response missing data'); // Throw an error
-			} catch (error) {
-				console.error('Error posting topic:', error);
-				throw error; // Re-throw the error
-			}
-		}
-
-		async function replyToTopic(tid, content, csrf, jar) {
-			try {
-				const response = await api.post(`http://localhost:4567/api/v3/topics/${tid}`, { // Absolute URL
-					content: content,
-					_csrf: csrf,
-				}, jar);
-				console.log('CSRF Token:', csrf_token);
-				return response.data;
-			} catch (error) {
-				console.error('Error replying to topic:', error);
-				throw error;
-			}
-		}
-
-		unansweredTopic = await postTopic(1, 'Unanswered Topic', 'This topic has no replies yet.', csrf_token, adminLogin.jar);
-
-		answeredTopic = await postTopic(categoryObj.cid, 'Answered Topic', 'This topic has replies.', csrf_token, adminLogin.jar);
-
-		answeredTid = answeredTopic.tid; // use tid from the created topic.
-
-		await replyToTopic(answeredTid, 'This is a reply', csrf_token, adminLogin.jar);
-	});
-
-	// Mock response function
-	function mockResponse() {
-		return {
-			statusCode: 200,
-			status: function (code) {
-				this.statusCode = code;
-				return this;
-			},
-			json: function (data) {
-				this.data = data;
-				return this;
-			},
-		};
-	}
-
-	it('should return unanswered topics for an admin user', async () => {
-		const res = mockResponse();
-
-		await topicsController.getUnansweredTopics(adminUid, 10, 0)
-			.then((data) => {
-				console.log('Raw API response:', data); // Log actual response
-				res.json({ topics: data });
-			})
-			.catch((err) => {
-				console.error('Error fetching unanswered topics:', err);
-				res.status(500).json({ error: err.message });
-			});
-
-		console.log('Final Test Response:', JSON.stringify(res.data, null, 2));
+// categoryObj = await categories.create({
+// name: 'Unanswered Topics Test',
+// description: 'Category for testing unanswered topics',
+// });
 
 
-		assert.strictEqual(res.statusCode, 200);
-		assert.strictEqual(Array.isArray(res.data.topics.topics), true); // Updated assertion
-		assert.strictEqual(res.data.topics.topics.length, 1); // Check the length of the topics array
-	});
+// async function postTopic(cid, title, content, csrf, jar) {
+// try {
+// const response = await api.post(`http://localhost:4567/api/v3/topics`, {
+// cid: cid,
+// title: title,
+// content: content,
+// _csrf: csrf,
+// }, jar);
 
-	it('should handle database errors gracefully', async () => {
-		const res = mockResponse();
+// console.log('API Response:', response); // Log the API response
 
-		// Simulate database error by mocking the db.getSortedSetRevRange function
-		const originalGetSortedSetRevRange = db.getSortedSetRevRange;
-		db.getSortedSetRevRange = async () => {
-			throw new Error('Simulated database error');
-		};
+// if (response && response.response) {
+// return response.response; // Return response.response if it exists
+// }
+// console.error('API Response missing data:', response);
+// throw new Error('API Response missing data'); // Throw an error
+// } catch (error) {
+// console.error('Error posting topic:', error);
+// throw error; // Re-throw the error
+// }
+// }
 
-		await topicsController.getUnansweredTopics(adminUid, 10, 0).then((data) => {
-			res.json({ topics: data });
-		}).catch((err) => {
-			res.status(500).json({ error: err.message });
-		});
+// async function replyToTopic(tid, content, csrf, jar) {
+// try {
+// const response = await api.post(`http://localhost:4567/api/v3/topics/${tid}`, { // Absolute URL
+// content: content,
+// _csrf: csrf,
+// }, jar);
+// console.log('CSRF Token:', csrf_token);
+// return response.data;
+// } catch (error) {
+// console.error('Error replying to topic:', error);
+// throw error;
+// }
+// }
 
-		assert.strictEqual(res.statusCode, 500);
-		assert.strictEqual(res.data.error, 'Error fetching unanswered topics');
+// unansweredTopic = await postTopic(1, 'Unanswered Topic', 'This topic has no replies yet.', csrf_token, adminLogin.jar);
 
-		// Restore the original function
-		db.getSortedSetRevRange = originalGetSortedSetRevRange;
-	});
-});
+// answeredTopic = await postTopic(categoryObj.cid, 'Answered Topic', 'This topic has replies.', csrf_token, adminLogin.jar);
+
+// answeredTid = answeredTopic.tid; // use tid from the created topic.
+
+// await replyToTopic(answeredTid, 'This is a reply', csrf_token, adminLogin.jar);
+// });
+
+// // Mock response function
+// function mockResponse() {
+// return {
+// statusCode: 200,
+// status: function (code) {
+// this.statusCode = code;
+// return this;
+// },
+// json: function (data) {
+// this.data = data;
+// return this;
+// },
+// };
+// }
+
+// it('should return unanswered topics for an admin user', async () => {
+// const res = mockResponse();
+
+// await topicsController.getUnansweredTopics(adminUid, 10, 0)
+// .then((data) => {
+// console.log('Raw API response:', data); // Log actual response
+// res.json({ topics: data });
+// })
+// .catch((err) => {
+// console.error('Error fetching unanswered topics:', err);
+// res.status(500).json({ error: err.message });
+// });
+
+// console.log('Final Test Response:', JSON.stringify(res.data, null, 2));
+
+
+// assert.strictEqual(res.statusCode, 200);
+// assert.strictEqual(Array.isArray(res.data.topics.topics), true); // Updated assertion
+// assert.strictEqual(res.data.topics.topics.length, 1); // Check the length of the topics array
+// });
+
+// it('should handle database errors gracefully', async () => {
+// const res = mockResponse();
+
+// // Simulate database error by mocking the db.getSortedSetRevRange function
+// const originalGetSortedSetRevRange = db.getSortedSetRevRange;
+// db.getSortedSetRevRange = async () => {
+// throw new Error('Simulated database error');
+// };
+
+// await topicsController.getUnansweredTopics(adminUid, 10, 0).then((data) => {
+// res.json({ topics: data });
+// }).catch((err) => {
+// res.status(500).json({ error: err.message });
+// });
+
+// assert.strictEqual(res.statusCode, 500);
+// assert.strictEqual(res.data.error, 'Error fetching unanswered topics');
+
+// // Restore the original function
+// db.getSortedSetRevRange = originalGetSortedSetRevRange;
+// });
+// });
 
 
 // ORIGINAL TESTS FOR UNANSWERED API MADE BY SOPHIA --> COMMENTED OUT IN ATTEMPTING TO
 // REWORK THE TESTS WITHOUT EXTERNAL MODULES
-// describe('topicsController.getUnansweredTopics', () => {
-// let mockDb; let mockPrivileges; let
-// mockTopics;
-// const adminUid = 1;
-// const nonAdminUid = 2;
+describe('topicsController.getUnansweredTopics', () => {
+		let mockDb; let mockPrivileges; let
+		mockTopics;
+	const adminUid = 1;
+	const nonAdminUid = 2;
 
-// afterEach(() => {
-// sinon.restore();
-// });
+	afterEach(() => {
+		sinon.restore();
+	});
 
-// /** 🟢 1. Admin User Can Retrieve Unanswered Topics */
-// it('should return unanswered topics for an admin user', async () => {
-// sinon.stub(privileges.users, 'isAdministrator').resolves(true);
+	/** 🟢 1. Admin User Can Retrieve Unanswered Topics */
+	it('should return unanswered topics for an admin user', async () => {
+		sinon.stub(privileges.users, 'isAdministrator').resolves(true);
 
-// const mockTopics = [
-// { tid: 1, postcount: 1, title: 'Unanswered Topic 1' },
-// { tid: 2, postcount: 1, title: 'Unanswered Topic 2' },
-// ];
+		const mockTopics = [
+			{ tid: 1, postcount: 1, title: 'Unanswered Topic 1' },
+			{ tid: 2, postcount: 1, title: 'Unanswered Topic 2' },
+		];
 
-// sinon.stub(db, 'getSortedSetRevRange').resolves([1, 2]);
-// sinon.stub(topics, 'getTopicsByTids').resolves(mockTopics);
+		sinon.stub(db, 'getSortedSetRevRange').resolves([1, 2]);
+		sinon.stub(topics, 'getTopicsByTids').resolves(mockTopics);
 
-// const result = await topicsController.getUnansweredTopics(adminUid, 10, 0);
+		const result = await topicsController.getUnansweredTopics(adminUid, 10, 0);
 
-// assert.strictEqual(result.topics.length, 2);
-// assert.strictEqual(result.topics[0].title, 'Unanswered Topic 1');
-// });
+		assert.strictEqual(result.topics.length, 2);
+		assert.strictEqual(result.topics[0].title, 'Unanswered Topic 1');
+	});
 
-// /** 🔴 2. Non-Admin User Gets 403 Forbidden */
-// it('should return 403 if user is not an administrator', async () => {
-// sinon.stub(privileges.users, 'isAdministrator').resolves(false);
+	/** 🔴 2. Non-Admin User Gets 403 Forbidden */
+	it('should return 403 if user is not an administrator', async () => {
+		sinon.stub(privileges.users, 'isAdministrator').resolves(false);
 
-// try {
-// await topicsController.getUnansweredTopics(nonAdminUid, 10, 0);
-// assert.fail('Expected function to throw an error');
-// } catch (err) {
-// assert.strictEqual(err.message, 'Error fetching unanswered topics'); // Matches catch block behavior
-// }
-// });
+		try {
+			await topicsController.getUnansweredTopics(nonAdminUid, 10, 0);
+			assert.fail('Expected function to throw an error');
+		} catch (err) {
+			assert.strictEqual(err.message, 'Error fetching unanswered topics'); // Matches catch block behavior
+		}
+	});
 
-// /** 🟢 3. Returns Empty Array When No Unanswered Topics Exist */
-// it('should return an empty array if there are no unanswered topics', async () => {
-// sinon.stub(privileges.users, 'isAdministrator').resolves(true);
-// sinon.stub(db, 'getSortedSetRevRange').resolves([1, 2]);
-// sinon.stub(topics, 'getTopicsByTids').resolves([
-// { tid: 1, postcount: 2, title: 'Answered Topic 1' },
-// { tid: 2, postcount: 3, title: 'Answered Topic 2' },
-// ]);
+	/** 🟢 3. Returns Empty Array When No Unanswered Topics Exist */
+	it('should return an empty array if there are no unanswered topics', async () => {
+		sinon.stub(privileges.users, 'isAdministrator').resolves(true);
+		sinon.stub(db, 'getSortedSetRevRange').resolves([1, 2]);
+		sinon.stub(topics, 'getTopicsByTids').resolves([
+			{ tid: 1, postcount: 2, title: 'Answered Topic 1' },
+			{ tid: 2, postcount: 3, title: 'Answered Topic 2' },
+		]);
 
-// const result = await topicsController.getUnansweredTopics(adminUid, 10, 0);
-// assert.strictEqual(result.topics.length, 0);
-// });
+		const result = await topicsController.getUnansweredTopics(adminUid, 10, 0);
+		assert.strictEqual(result.topics.length, 0);
+	});
 
-// /** 🔴 4. Handles Database Errors Gracefully */
-// it('should handle database errors gracefully', async () => {
-// sinon.stub(privileges.users, 'isAdministrator').resolves(true);
-// sinon.stub(db, 'getSortedSetRevRange').rejects(new Error('Database error'));
+	/** 🔴 4. Handles Database Errors Gracefully */
+	it('should handle database errors gracefully', async () => {
+		sinon.stub(privileges.users, 'isAdministrator').resolves(true);
+		sinon.stub(db, 'getSortedSetRevRange').rejects(new Error('Database error'));
 
-// try {
-// await topicsController.getUnansweredTopics(adminUid, 10, 0);
-// assert.fail('Expected function to throw an error');
-// } catch (err) {
-// assert.strictEqual(err.message, 'Error fetching unanswered topics');
-// }
-// });
+		try {
+			await topicsController.getUnansweredTopics(adminUid, 10, 0);
+			assert.fail('Expected function to throw an error');
+		} catch (err) {
+			assert.strictEqual(err.message, 'Error fetching unanswered topics');
+		}
+	});
 
-// /** 🟢 5. Ensures numThumbs and thumbs Default Values */
-// it('should ensure numThumbs and thumbs are correctly set in API response', async () => {
-// sinon.stub(privileges.users, 'isAdministrator').resolves(true);
-// sinon.stub(db, 'getSortedSetRevRange').resolves([107, 108]);
-// sinon.stub(topics, 'getTopicsByTids').resolves([
-// { tid: 107, postcount: 1, title: 'Topic 1' },
-// { tid: 108, postcount: 1, title: 'Topic 2', numThumbs: 5, thumbs: ['user1'] },
-// ]);
+	/** 🟢 5. Ensures numThumbs and thumbs Default Values */
+	it('should ensure numThumbs and thumbs are correctly set in API response', async () => {
+		sinon.stub(privileges.users, 'isAdministrator').resolves(true);
+		sinon.stub(db, 'getSortedSetRevRange').resolves([107, 108]);
+		sinon.stub(topics, 'getTopicsByTids').resolves([
+			{ tid: 107, postcount: 1, title: 'Topic 1' },
+			{ tid: 108, postcount: 1, title: 'Topic 2', numThumbs: 5, thumbs: ['user1'] },
+		]);
 
-// const result = await topicsController.getUnansweredTopics(adminUid, 10, 0);
+		const result = await topicsController.getUnansweredTopics(adminUid, 10, 0);
 
-// console.log('RESULT --> ', result);
+		console.log('RESULT --> ', result);
 
-// assert.strictEqual(result.topics[0].numThumbs, 0);
-// assert.deepStrictEqual(result.topics[0].thumbs, []);
-// assert.strictEqual(result.topics[1].numThumbs, 5);
-// assert.deepStrictEqual(result.topics[1].thumbs, ['user1']);
-// });
-// });
+		assert.strictEqual(result.topics[0].numThumbs, 0);
+		assert.deepStrictEqual(result.topics[0].thumbs, []);
+		assert.strictEqual(result.topics[1].numThumbs, 5);
+		assert.deepStrictEqual(result.topics[1].thumbs, ['user1']);
+	});
+});
