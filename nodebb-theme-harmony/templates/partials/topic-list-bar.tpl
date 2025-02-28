@@ -8,10 +8,66 @@
 				<!-- IMPORT partials/category/sort.tpl -->
 
 				<!-- Add Unanswered Questions Button -->
-				<a href="{config.relative_path}/unanswered" class="btn btn-outline-secondary btn-sm d-flex align-items-center">
-					<i class="fa fa-question-circle me-1"></i>
+				<button id="unanswered-button" class="btn-ghost-sm ff-secondary d-flex gap-2 align-items-center" data-filter="unanswered">
+					<i class="fa fa-question-circle me-1 text-primary"></i>
 					<span>[[topic:unanswered-questions]]</span>
-				</a>
+				</button>
+
+				<script>
+				$(document).ready(function() {
+					$('#unanswered-button').on('click', function() {
+						// Add active class to this button and remove from others
+						$(this).addClass('active').siblings('.active').removeClass('active');
+						
+						// Show loading indicator if available
+						if (app.loadingIndicator) {
+							app.loadingIndicator.show();
+						}
+						
+						// Make AJAX request to get unanswered topics
+						$.ajax({
+							url: config.relative_path + '/api/topics/unanswered',
+							type: 'GET',
+							data: {
+								limit: 20
+							},
+							success: function(response) {
+								// Get the topics container
+								var $topicsContainer = $('[component="category"]').find('[component="category/topic"]').parent();
+								$topicsContainer.empty();
+								
+								if (response && response.topics && response.topics.length) {
+									// Use NodeBB's template system to render the topics
+									app.parseAndTranslate('partials/topics_list', 'topics', {
+										topics: response.topics
+									}, function(html) {
+										$topicsContainer.append(html);
+									});
+								} else {
+									// Show "no topics" message
+									$topicsContainer.append('<div class="alert alert-info">No unanswered topics found</div>');
+								}
+								
+								// Hide loading indicator
+								if (app.loadingIndicator) {
+									app.loadingIndicator.hide();
+								}
+							},
+							error: function(error) {
+								console.error('Error fetching unanswered topics:', error);
+								if (app.alertError) {
+									app.alertError('Error loading unanswered topics: ' + (error.responseJSON ? error.responseJSON.error : 'Unknown error'));
+								}
+								if (app.loadingIndicator) {
+									app.loadingIndicator.hide();
+								}
+							}
+						});
+						
+						return false; // Prevent default action
+					});
+				});
+				</script>
 				
 				{{{ end }}}
 				{{{ if (template.popular || template.top)}}}
