@@ -33,11 +33,11 @@ module.exports = function (Topics) {
 			lastposttime: 0,
 			postcount: 0,
 			viewcount: 0,
-			
-			//Newly added fields:
+
+			// Newly added fields:
 			resolved: false,
 
-			//unanswered field
+			// unanswered field
 			unanswered: 1
 		};
 
