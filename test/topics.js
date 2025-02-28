@@ -25,7 +25,8 @@ const socketTopics = require('../src/socket.io/topics');
 const apiTopics = require('../src/api/topics');
 const apiPosts = require('../src/api/posts');
 const request = require('../src/request');
-const api = require('../src/api/unanswered');
+// const api = require('../src/api/unanswered');
+const api = require('../src/api/topics'); // ✅ Use the correct module
 const notificationService = require('../src/notifications');
 const socket = require('../src/socket.io');
 
