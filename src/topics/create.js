@@ -38,7 +38,7 @@ module.exports = function (Topics) {
 			resolved: false,
 
 			// unanswered field
-			unanswered: 1
+			unanswered: 1,
 		};
 
 		if (Array.isArray(data.tags) && data.tags.length) {

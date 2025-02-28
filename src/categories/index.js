@@ -37,7 +37,7 @@ Categories.getCategoryById = async function (data) {
 	}
 	const category = categories[0];
 	data.category = category;
-	
+
 	const promises = [
 		Categories.getCategoryTopics(data),
 		Categories.getTopicCount(data),
