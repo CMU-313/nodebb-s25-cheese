@@ -1962,8 +1962,6 @@ describe('Controllers', () => {
 
 			const result = await topicsController.getUnansweredTopics(adminUid, 10, 0);
 
-			console.log('RESULT --> ', result);
-
 			strictEqual(result.topics[0].numThumbs, 0);
 			deepStrictEqual(result.topics[0].thumbs, []);
 			strictEqual(result.topics[1].numThumbs, 5);
