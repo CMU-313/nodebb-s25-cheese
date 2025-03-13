@@ -1,0 +1,71 @@
+src/api/users.js: line 707, col 33, Confusing use of '!'.
+
+src/categories/watch.js: line 15, col 13, Confusing use of '!'.
+src/categories/watch.js: line 23, col 13, Confusing use of '!'.
+
+src/controllers/accounts/chats.js: line 104, col 9, Confusing use of '!'.
+
+src/controllers/errors.js: line 43, col 67, 'next' is defined but never used.
+
+src/controllers/helpers.js: line 486, col 75, Expected a 'break' statement before 'case'.
+
+src/database/mongo/sorted/intersect.js: line 143, col 67, Functions declared within loops referencing an outer scoped variable may lead to confusing semantics. (module)
+
+src/database/redis/connection.js: line 42, col 13, Confusing use of '!'.
+
+src/flags.js: line 870, col 17, Confusing use of '!'.
+
+src/groups/ownership.js: line 10, col 13, Confusing use of '!'.
+
+src/messaging/rooms.js: line 236, col 13, Confusing use of '!'.
+
+src/messaging/unread.js: line 8, col 13, Confusing use of '!'.
+
+src/meta/configs.js: line 191, col 13, Confusing use of '!'.
+
+src/notifications.js: line 332, col 9, Confusing use of '!'.
+src/notifications.js: line 349, col 49, Confusing use of '!'.
+
+src/privileges/helpers.js: line 195, col 22, Functions declared within loops referencing an outer scoped variable may lead to confusing semantics. (privileges)
+
+src/request.js: line 11, col 21, 'fetch' is not defined.
+src/request.js: line 13, col 33, 'fetch' is not defined.
+src/request.js: line 26, col 23, 'AbortSignal' is not defined.
+
+src/routes/write/users.js: line 11, col 10, 'guestRoutes' is defined but never used.
+
+src/socket.io/categories.js: line 145, col 31, Confusing use of '!'.
+
+src/socket.io/modules.js: line 115, col 9, Confusing use of '!'.
+
+src/topics/follow.js: line 38, col 13, Confusing use of '!'.
+
+src/topics/tags.js: line 599, col 13, Confusing use of '!'.
+src/topics/tags.js: line 611, col 13, Confusing use of '!'.
+
+src/topics/unread.js: line 205, col 13, Confusing use of '!'.
+src/topics/unread.js: line 261, col 45, Functions declared within loops referencing an outer scoped variable may lead to confusing semantics. (params)
+src/topics/unread.js: line 352, col 13, Confusing use of '!'.
+
+src/user/admin.js: line 16, col 13, Confusing use of '!'.
+
+src/user/auth.js: line 15, col 13, Confusing use of '!'.
+src/user/auth.js: line 41, col 13, Confusing use of '!'.
+src/user/auth.js: line 103, col 13, Confusing use of '!'.
+
+src/user/categories.js: line 11, col 13, Confusing use of '!'.
+src/user/categories.js: line 27, col 13, Confusing use of '!'.
+src/user/categories.js: line 37, col 13, Confusing use of '!'.
+src/user/categories.js: line 49, col 13, Confusing use of '!'.
+src/user/categories.js: line 64, col 13, Confusing use of '!'.
+
+src/user/email.js: line 218, col 9, Confusing use of '!'.
+
+src/user/index.js: line 173, col 9, Confusing use of '!'.
+
+src/user/online.js: line 10, col 13, Confusing use of '!'.
+src/user/online.js: line 22, col 13, Confusing use of '!'.
+
+src/user/posts.js: line 133, col 33, Confusing use of '!'.
+
+42 errors
