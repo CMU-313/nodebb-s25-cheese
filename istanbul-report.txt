@@ -1,0 +1,1711 @@
+info: configJSON
+info: {
+    "url": "http://localhost:4567",
+    "secret": "7d5aa871-93bf-4d32-af1f-778c1a9ef468",
+    "database": "redis",
+    "redis": {
+        "host": "127.0.0.1",
+        "port": "6379",
+        "password": "",
+        "database": "0"
+    },
+    "test_database": {
+    "host": "127.0.0.1",
+    "port": "6379",
+    "password": "",
+    "database": "1"
+},
+    "port": "4567"
+}
+info: database config redis {"database":"1","host":"127.0.0.1","password":"","port":"6379"}
+info: environment production
+
+info: test_database flushed
+info: Populating database with default configs, if not already set...
+
+info: Giving default global privileges...
+
+info: Enabling default plugins
+
+info: [install/enableDefaultPlugins] activating default plugins {"0":"nodebb-plugin-dbsearch","1":"nodebb-widget-essentials","2":"nodebb-plugin-composer-default"}
+info: [socket.io] Restricting access to origin: *:*
+info: [api] Adding 0 route(s) to `api/v3/plugins`
+info: [router] Routes added
+info: 🎉 NodeBB Ready
+info: 🤝 Enabling 'trust proxy'
+info: 📡 NodeBB is now listening on: 0.0.0.0:4567
+info: 🔗 Canonical URL: http://localhost:4567
+
+  ........................................................
+  ........................................................
+  ........................................................
+  ........................................................
+  ........................................................
+  ........................................................
+  ........................................................
+  ........................................................
+  ........................................................
+  ........................................................
+  ........................................................
+  ........................................................
+  ........................................................
+  ........................................................
+  ........................................................
+  ........................................................
+  ........................................................
+  ........................................................
+  ........................................................
+  ........................................................
+  ........................................................
+  ........................................................
+  ........................................................
+  ........................................................
+  ........................................................
+  ........................................................
+  ........................................................
+  ........................................................
+  ........................................................
+  ........................................................
+  ........................................................
+  ........................................................
+  ........................................................
+  ........................................................
+  ........................................................
+  ........................................................
+  ........................................................
+  .........  started
+.  started
+.  started
+.  started
+.  started
+.  started
+.  started
+.  started
+........................................
+  ........................................................
+  ........................................................
+  ........................................................
+  ........................................................
+  ........................................................
+  ........................................................
+  ........................................................
+  ........................................................
+  ........................................................
+  ........................................................
+  ................................................cs d2b48ed4798539afcd4af4e99bd2c9a2860b7e7fca4ffe622215cf90784c2f7a6f4d4012455eb355b6e1d97dc33d51d91c16f9256563cc5036a9c0863fad6181
+........
+  ........................................................
+  ........................................................
+  ..............,,........................................
+  ......................................
+
+  Build targets:
+
+     Target                        |  Aliases
+     ------------------------------------------------------
+     "plugin static dirs"          |  staticdirs
+     "requirejs modules"           |  rjs, modules
+     "client js bundle"            |  clientjs, clientscript, clientscripts
+     "admin js bundle"             |  adminjs, adminscript, adminscripts
+     "javascript"                  |  js
+     "client side styles"          |  clientcss, clientscss, clientstyles, clientstyle
+     "admin control panel styles"  |  admincss, adminscss, adminstyles, adminstyle, acpcss, acpscss, acpstyles, acpstyle
+     "styles"                      |  css, scss, style
+     "templates"                   |  tpl
+     "languages"                   |  lang, i18n
+
+..................
+  ........................................................
+  ........................................................
+  ........................................................
+  ........................................................
+  ........................................................
+  ........................................................
+  ........................................................
+  ........................................................
+  ........................................................
+  ..........Related Topics Data: [
+  {
+    tid: 37,
+    uid: 1,
+    cid: 1,
+    mainPid: 91,
+    title: 'topic title 2',
+    slug: '37/topic-title-2',
+    timestamp: 1741919254737,
+    lastposttime: 1741919254738,
+    postcount: 1,
+    viewcount: 0,
+    resolved: 'false',
+    tags: [ [Object], [Object], [Object], [Object] ],
+    postercount: 1,
+    deleted: 0,
+    locked: 0,
+    pinned: 0,
+    pinExpiry: 0,
+    upvotes: 0,
+    downvotes: 0,
+    deleterUid: 0,
+    titleRaw: 'topic title 2',
+    timestampISO: '2025-03-14T02:27:34.737Z',
+    scheduled: false,
+    lastposttimeISO: '2025-03-14T02:27:34.738Z',
+    pinExpiryISO: '',
+    votes: 0,
+    teaserPid: null,
+    thumbs: [],
+    category: {
+      cid: 1,
+      name: 'Test Category',
+      slug: '1/test-category',
+      icon: 'hidden',
+      backgroundImage: '',
+      imageClass: 'cover',
+      bgColor: '#7CAFC2',
+      color: '#ffffff',
+      disabled: 0
+    },
+    user: {
+      uid: 1,
+      username: 'admin',
+      fullname: undefined,
+      userslug: 'admin',
+      reputation: 0,
+      postcount: 77,
+      picture: null,
+      signature: null,
+      banned: false,
+      status: 'online',
+      uploadedpicture: undefined,
+      lastonline: undefined,
+      'banned:expire': undefined,
+      displayname: 'admin',
+      'icon:bgColor': '#673ab7',
+      'icon:text': 'A',
+      lastonlineISO: undefined,
+      banned_until: undefined,
+      banned_until_readable: 'Not Banned'
+    },
+    teaser: null,
+    isOwner: false,
+    ignored: false,
+    followed: false,
+    unread: true,
+    bookmark: null,
+    unreplied: true,
+    icons: []
+  }
+]
+..............................................
+  ........................................................
+  ........................................................
+  ......
+Parsing upgrade scripts... 
+OK | 142 script(s) found
+  → [2015/12/15] Upgrading chats... OK (0.00 seconds)
+  → [2015/12/23] Chat room hashes... OK (0.00 seconds)
+  → [2015/12/23] Adding theme to active plugins sorted set... OK (0.00 seconds)
+  → [2016/1/14] Creating user best post sorted sets... OK (0.00 seconds)
+  → [2016/1/20] Creating users:notvalidated... OK (0.00 seconds)
+  → [2016/1/23] Creating Global moderators group... OK (0.00 seconds)
+  → [2016/2/25] Social: Post Sharing... OK (0.00 seconds)
+  → [2016/4/14] Group title from settings to user profile... OK (0.00 seconds)
+  → [2016/4/19] Users post count per tid... OK (0.00 seconds)
+  → [2016/4/29] Dismiss flags from deleted topics... OK (0.00 seconds)
+  → [2016/5/28] Giving topics:read privs to any group/user that was previously allowed to Find & Access Category... OK (0.00 seconds)
+  → [2016/6/13] Store upvotes/downvotes separately... OK (0.00 seconds)
+  → [2016/7/12] Giving upload privileges... OK (0.00 seconds)
+  → [2016/8/5] Removing best posts with negative scores... OK (0.00 seconds)
+  → [2016/8/7] Granting edit/delete/delete topic on existing categories... OK (0.00 seconds)
+  → [2016/9/22] Category recent tids... OK (0.00 seconds)
+  → [2016/10/8] Favourites to Bookmarks... OK (0.00 seconds)
+  → [2016/10/14] Sorted sets for post replies... OK (0.00 seconds)
+  → [2016/11/22] Update global and user language keys... OK (0.00 seconds)
+  → [2016/11/25] Sorted set for pinned topics... OK (0.00 seconds)
+  → [2017/2/25] Update global and user sound settings... OK (0.00 seconds)
+  → [2017/2/28] Upgrading config urls to use assets route... OK (0.00 seconds)
+  → [2017/4/16] Delete accidentally long-lived sessions... OK (0.00 seconds)
+  → [2016/12/7] Migrating flags to new schema... OK (0.00 seconds)
+  → [2017/2/27] New sorted set posts:votes... OK (0.00 seconds)
+  → [2017/3/22] Update moderation notes to zset... OK (0.00 seconds)
+  → [2017/4/14] Set default allowed file extensions... OK (0.00 seconds)
+  → [2017/4/26] Remove relative_path from uploaded profile cover urls... OK (0.00 seconds)
+  → [2017/5/26] rename user mod privileges group... OK (0.00 seconds)
+  → [2017/6/16] Give tag privilege to registered-users on all categories... OK (0.00 seconds)
+  → [2017/7/5] Wipe all existing RSS tokens... OK (0.00 seconds)
+  → [2017/7/10] Fix incorrect robots.txt schema... OK (0.00 seconds)
+  → [2017/7/17] Generate email logo for use in email header... OK (0.00 seconds)
+  → [2017/9/6] Clearing stale digest templates that were accidentally saved as custom... OK (0.00 seconds)
+  → [2017/9/7] Changing ip blacklist storage to object... OK (0.00 seconds)
+  → [2017/10/30] New sorted set cid:<cid>:tids:lastposttime... OK (0.00 seconds)
+  → [2017/10/12] Generate customHTML block from old customJS setting... OK (0.00 seconds)
+  → [2017/11/15] Convert old notification digest settings... OK (0.00 seconds)
+  → [2017/12/8] Add votes to topics... OK (0.00 seconds)
+  → [2017/12/18] Change the schema of simple keys so they don't use value field (mongodb only)... OK (0.00 seconds)
+  → [2017/12/18] Give chat privilege to registered-users... OK (0.00 seconds)
+  → [2018/1/3] Give upload privilege to registered-users globally if it is given on a category... OK (0.00 seconds)
+  → [2018/1/8] Fix sort by votes for moved topics... OK (0.00 seconds)
+  → [2018/1/9] Give vote privilege to registered-users on all categories... OK (0.00 seconds)
+  → [2018/1/12] Rename privileges:downvote and privileges:flag to min:rep:downvote, min:rep:flag respectively... OK (0.00 seconds)
+  → [2018/1/22] Fix topics in categories per user if they were moved... OK (0.00 seconds)
+  → [2018/2/14] Add default settings for notification delivery types... OK (0.00 seconds)
+  → [2018/2/17] Flatten navigation data... OK (0.00 seconds)
+  → [2018/2/21] Revising minimum password strength to 1 (from 0)... OK (0.00 seconds)
+  → [2018/1/31] Give category access privileges to spiders system group... OK (0.00 seconds)
+  → [2018/2/28] Give registered users signature privilege... OK (0.00 seconds)
+  → [2018/3/15] Reformatting post diffs to be stored in lists and hash instead of single zset... OK (0.00 seconds)
+  → [2018/4/16] Refresh post-upload associations... OK (0.00 seconds)
+  → [2018/5/28] Give global search privileges... OK (0.00 seconds)
+  → [2018/6/7] Give post history viewing privilege to registered-users on all categories... OK (0.00 seconds)
+  → [2018/6/8] Give deleted post viewing privilege to moderators on all categories... OK (0.00 seconds)
+  → [2018/6/22] Hash all IP addresses stored in Recent IPs zset... OK (0.00 seconds)
+  → [2018/8/28] Record first entry in username/email history... OK (0.00 seconds)
+  → [2018/9/24] Upgrade bans to hashes... OK (0.00 seconds)
+  → [2018/9/28] Give global local login privileges... OK (0.00 seconds)
+  → [2018/10/1] Optimize PostgreSQL sessions... OK (0.00 seconds)
+  → [2018/10/4] add filters to events...
+[1G    [##############] (1/1) 100%  OK (0.00 seconds)
+  → [2018/10/10] Fix category post zsets... OK (0.00 seconds)
+  → [2018/10/11] Fix category topic zsets... OK (0.00 seconds)
+  → [2018/10/24] Rename maximumImageWidth to resizeImageWidth... OK (0.00 seconds)
+  → [2018/11/10] Navigation item visibility groups... OK (0.00 seconds)
+  → [2018/11/10] Widget visibility groups... OK (0.00 seconds)
+  → [2018/12/11] Remove uid:<uid>:ignored:cids... OK (0.00 seconds)
+  → [2018/12/13] Update category watch data... OK (0.00 seconds)
+  → [2019/1/4] Group create global privilege... OK (0.00 seconds)
+  → [2019/1/5] Global view privileges... OK (0.00 seconds)
+  → [2019/3/16] Calculate image sizes of all uploaded images... OK (0.00 seconds)
+  → [2019/3/25] Delete username email history for deleted users... OK (0.00 seconds)
+  → [2019/4/5] Update moderation notes to hashes... OK (0.00 seconds)
+  → [2019/5/21] Disable plugin metrics for existing installs... OK (0.00 seconds)
+  → [2019/5/28] Give mods explicit privileges... OK (0.00 seconds)
+  → [2019/6/4] Update registration type... OK (0.00 seconds)
+  → [2019/6/23] Create zsets for user posts per category... OK (0.00 seconds)
+  → [2019/10/8] give mod info privilege... OK (0.00 seconds)
+  → [2019/9/24] Clean flag byCid zsets... OK (0.00 seconds)
+  → [2019/10/7] Clean up post hash data... OK (0.00 seconds)
+  → [2019/10/7] Clean up old notifications and hash data... OK (0.00 seconds)
+  → [2020/5/2] Fix user sorted sets... OK (0.00 seconds)
+  → [2020/5/21] Removing file upload privilege if file uploads were disabled (`allowFileUploads`)... OK (0.00 seconds)
+  → [2020/6/9] Remove duplicate image field for categories... OK (0.00 seconds)
+  → [2020/6/26] Unescape navigation titles... OK (0.00 seconds)
+  → [2018/10/11] Re-add deleted topics to topics:recent... OK (0.00 seconds)
+  → [2020/7/15] New sorted set for tracking flags by target... OK (0.00 seconds)
+  → [2020/7/16] Consolidate multiple flags reports, going forward... OK (0.00 seconds)
+  → [2020/7/31] Remove flag reporters sorted set... OK (0.00 seconds)
+  → [2020/8/22] Add target uid to flag objects... OK (0.00 seconds)
+  → [2020/9/6] Disable nodebb-plugin-soundpack-default... OK (0.00 seconds)
+  → [2020/9/6] Remove allow from uri setting... OK (0.00 seconds)
+  → [2020/9/11] Create fullname search set... OK (0.00 seconds)
+  → [2020/10/11] Fix category colors that are 3 digit hex colors... OK (0.00 seconds)
+  → [2020/10/13] Create verified/unverified user groups... OK (0.00 seconds)
+  → [2020/10/24] Store poster count in topic hash... OK (0.00 seconds)
+  → [2020/11/26] Clear purged replies and toPid... OK (0.00 seconds)
+  → [2020/11/23] Create category tags sorted sets... OK (0.00 seconds)
+  → [2020/12/11] Migrate existing topic thumbnails to new format... OK (0.00 seconds)
+  → [2020/12/13] Move banned users to banned-users group... OK (0.00 seconds)
+  → [2021/1/27] Create category name sorted set... OK (0.00 seconds)
+  → [2021/1/31] Create subCategoriesPerPage property for categories... OK (0.00 seconds)
+  → [2021/2/7] Store number of thumbs a topic has in the topic object... OK (0.00 seconds)
+  → [2021/3/9] Store default favicon if it does not exist... OK (0.00 seconds)
+  → [2021/3/11] Add "schedule" to default privileges of admins and gmods for existing categories... OK (0.00 seconds)
+  → [2021/6/18] Enable setting to include unverified emails for all mailings... OK (0.00 seconds)
+  → [2021/9/9] Store tags in topic hash... OK (0.00 seconds)
+  → [2021/9/28] Category topics sorted sets by views... OK (0.00 seconds)
+  → [2021/11/23] Re-enable username login... OK (0.00 seconds)
+  → [2021/12/13] Upgrade navigation items to hashes... OK (0.00 seconds)
+  → [2022/2/4] Store downvoted posts in user votes sorted set... OK (0.00 seconds)
+  → [2022/2/7] Clean up leftover topic thumb sorted sets and files for since-purged topics... OK (0.00 seconds)
+  → [2022/2/10] Fix paths in user uploads sorted sets... OK (0.00 seconds)
+  → [2022/2/10] Rename object and sorted sets used in post uploads... OK (0.00 seconds)
+  → [2023/2/4] Fix user email sorted sets... OK (0.00 seconds)
+  → [2023/4/24] Reset bootswatch skin... OK (0.00 seconds)
+  → [2023/5/1] Reset old bootswatch skin for all users... OK (0.00 seconds)
+  → [2023/5/2] Migrate tokens away from sorted-list implementation... OK (0.00 seconds)
+  → [2023/5/23] Migrate post sharing values to config... OK (0.00 seconds)
+  → [2023/6/5] Fix username zsets... OK (0.00 seconds)
+  → [2023/7/2] Update chat messages to add roomId field... OK (0.00 seconds)
+  → [2023/7/3] Store list of chat rooms... OK (0.00 seconds)
+  → [2023/7/14] Create chat:room:<room_id>uids:online zset... OK (0.00 seconds)
+  → [2023/7/17] Create chat:room:<room_id>:owners zset... OK (0.00 seconds)
+  → [2023/7/27] Set mid on message objects and create messages:mid... OK (0.00 seconds)
+  → [2023/10/5] Update translation keys in notification bodyShort... OK (0.00 seconds)
+  → [2023/7/27] Set messageCount on chat rooms... OK (0.00 seconds)
+  → [2023/11/3] Add tracking category state... OK (0.00 seconds)
+  → [2023/11/7] Rename newbiePostDelayThreshold to newbieReputationThreshold... OK (0.00 seconds)
+  → [2023/11/10] Convert rewards:list to a sorted set... OK (0.00 seconds)
+  → [2024/1/29] Remove cid:<cid>:read_by_uid sets... OK (0.00 seconds)
+  → [2024/3/4] New sorted set cid:<cid>:tids:create... OK (0.00 seconds)
+  → [2024/3/4] Change category sort settings... OK (0.00 seconds)
+  → [2024/3/28] Create user upload folders... OK (0.00 seconds)
+  → [2024/4/1] Add user filter to acp events...
+[1G    [##############] (1/1) 100%  OK (0.00 seconds)
+  → [2024/4/8] Remove privilege groups from groupslug:groupname object... OK (0.00 seconds)
+  → [2024/5/24] Add vote visibility config field... OK (0.00 seconds)
+  → [2024/6/24] Add id field to all topic events... OK (0.00 seconds)
+  → [2024/6/26] Remove uid:<uid>:sessionUUID:sessionId object... OK (0.00 seconds)
+  → [2024/7/17] Add downvote visibility config field... OK (0.00 seconds)
+  → [2018/11/26] Changing dbsearch mongodb search schema to use _id... OK (0.00 seconds)
+Schema update complete!
+
+.
+Parsing upgrade scripts... 
+OK | 0 script(s) found
+Schema update complete!
+
+.................................................
+  ........................................................
+  ........................................................
+  ........................................................
+  ........................................................
+  ........................................................
+  ........,!
+
+
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+error POST /login
+Error: [[error:invalid-ip]]
+    at Blacklist.test (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/meta/blacklist.js:2:3054)
+    at Object.wrapperCallback [as test] (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/promisify.js:2:2669)
+    at applyBlacklist (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/middleware/index.js:3:6133)
+    at Layer.handle [as handle_request] (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/layer.js:95:5)
+    at next (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/route.js:149:13)
+    at csrfSynchronisedProtection (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/csrf-sync/lib/cjs/index.cjs:46:13)
+    at middleware.applyCSRF (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/middleware/index.js:2:1845)
+    at Layer.handle [as handle_request] (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/layer.js:95:5)
+    at next (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/layer.js:95:5)
+    at /Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/index.js:346:12)
+    at next (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/index.js:280:10)
+    at rewrite (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/controllers/home.js:2:1482)
+    at Layer.handle [as handle_request] (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/index.js:328:13)
+    at /Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/index.js:346:12)
+    at next (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/index.js:280:10)
+    at Function.handle (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/index.js:175:3)
+    at router (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/index.js:47:12)
+    at Layer.handle [as handle_request] (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/index.js:328:13)
+    at /Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/index.js:346:12)
+    at next (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/index.js:280:10)
+    at stripLeadingSlashes (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/middleware/index.js:2:3267)
+    at Layer.handle [as handle_request] (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/index.js:328:13)
+    at /Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/index.js:346:12)
+    at next (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/index.js:280:10)
+    at Logger.expressLogger (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/logger.js:20:194)
+    at Layer.handle [as handle_request] (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/index.js:328:13)
+    at /Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/index.js:346:12)
+    at next (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/index.js:280:10)
+    at AsyncLocalStorage.run (node:internal/async_local_storage/async_hooks:91:14)
+    at /Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/webserver.js:3:5380
+    at Layer.handle [as handle_request] (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/index.js:328:13)
+    at /Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/index.js:346:12)
+    at next (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/index.js:280:10)
+    at /Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/routes/authentication.js:2:1225
+    at Layer.handle [as handle_request] (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/index.js:328:13)
+    at /Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/index.js:346:12)
+    at next (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/index.js:280:10)
+    at strategy.pass (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/passport/lib/middleware/authenticate.js:355:9)
+    at SessionStrategy.authenticate (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/passport/lib/strategies/session.js:126:10)
+    at attempt (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/passport/lib/middleware/authenticate.js:378:16)
+    at authenticate (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/passport/lib/middleware/authenticate.js:379:7)
+    at Layer.handle [as handle_request] (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/index.js:328:13)
+    at /Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/index.js:346:12)
+    at next (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/index.js:280:10)
+    at initialize (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/passport/lib/middleware/initialize.js:98:5)
+    at Layer.handle [as handle_request] (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/index.js:328:13)
+    at /Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/index.js:346:12)
+    at next (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/index.js:280:10)
+    at processRender (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/middleware/render.js:3:4159)
+    at Layer.handle [as handle_request] (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/index.js:328:13)
+    at /Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/index.js:346:12)
+    at next (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/index.js:280:10)
+    at /Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/middleware/headers.js:2:4513
+    at /Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/middleware/helpers.js:2:1076
+    at Layer.handle [as handle_request] (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/index.js:328:13)
+    at /Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/index.js:346:12)
+    at next (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/index.js:280:10)
+    at internalNext (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/helmet/index.cjs:521:6)
+    at xXssProtectionMiddleware (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/helmet/index.cjs:299:3)
+    at internalNext (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/helmet/index.cjs:519:6)
+    at xPoweredByMiddleware (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/helmet/index.cjs:292:3)
+    at internalNext (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/helmet/index.cjs:519:6)
+    at xPermittedCrossDomainPoliciesMiddleware (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/helmet/index.cjs:285:3)
+    at internalNext (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/helmet/index.cjs:519:6)
+    at xFrameOptionsMiddleware (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/helmet/index.cjs:269:3)
+    at internalNext (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/helmet/index.cjs:519:6)
+    at xDownloadOptionsMiddleware (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/helmet/index.cjs:249:3)
+    at internalNext (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/helmet/index.cjs:519:6)
+    at xDnsPrefetchControlMiddleware (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/helmet/index.cjs:242:3)
+    at internalNext (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/helmet/index.cjs:519:6)
+    at xContentTypeOptionsMiddleware (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/helmet/index.cjs:234:3)
+    at internalNext (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/helmet/index.cjs:519:6)
+    at strictTransportSecurityMiddleware (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/helmet/index.cjs:227:3)
+    at internalNext (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/helmet/index.cjs:519:6)
+    at referrerPolicyMiddleware (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/helmet/index.cjs:195:3)
+    at internalNext (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/helmet/index.cjs:519:6)
+    at originAgentClusterMiddleware (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/helmet/index.cjs:170:3)
+    at internalNext (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/helmet/index.cjs:519:6)
+    at crossOriginResourcePolicyMiddleware (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/helmet/index.cjs:163:3)
+    at internalNext (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/helmet/index.cjs:519:6)
+    at crossOriginOpenerPolicyMiddleware (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/helmet/index.cjs:147:3)
+    at internalNext (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/helmet/index.cjs:519:6)
+    at helmetMiddleware (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/helmet/index.cjs:523:6)
+    at Layer.handle [as handle_request] (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/index.js:328:13)
+    at /Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/index.js:346:12)
+    at next (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/index.js:280:10)
+    at /Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express-session/index.js:514:7
+    at RedisStore.get (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/connect-redis/dist/cjs/index.js:56:20)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+error GET /api/self
+Error: [[error:api.master-token-no-uid]]
+    at authenticate (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/middleware/user.js:4:451)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async /Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/middleware/user.js:7:457
+    at async /Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/middleware/helpers.js:2:828
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+warn [meta/blacklist] 1 invalid blacklist rule(s) were ignored.
+warn [meta/blacklist] 1 invalid blacklist rule(s) were ignored.
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+info [build] Building in parallel mode
+info [build] plugin static dirs  build started
+info [build] plugin static dirs  build completed in 0.001sec
+info [build] Asset compilation successful. Completed in 0.001sec.
+info [build] Building in parallel mode
+info [build] requirejs modules  build started
+info [build] requirejs modules  build completed in 0.033sec
+info [build] Asset compilation successful. Completed in 0.033sec.
+info [build] Building in parallel mode
+info [build] client js bundle  build started
+info [build] client js bundle  build completed in 0.326sec
+info [build] Asset compilation successful. Completed in 0.327sec.
+info [build] Building in parallel mode
+info [build] admin js bundle  build started
+info [build] admin js bundle  build completed in 0sec
+info [build] Asset compilation successful. Completed in 0sec.
+info [build] Building in parallel mode
+info [build] client side styles  build started
+info [build] client side styles  build completed in 1.01sec
+info [build] Asset compilation successful. Completed in 1.01sec.
+info [build] Building in parallel mode
+info [build] admin control panel styles  build started
+info [build] admin control panel styles  build completed in 0.637sec
+info [build] Asset compilation successful. Completed in 0.637sec.
+info [build] Building in parallel mode
+info [build] templates  build started
+info [build] templates  build completed in 0.16sec
+info [build] Asset compilation successful. Completed in 0.16sec.
+info [build] Building in parallel mode
+info [build] languages  build started
+info [build] languages  build completed in 0.589sec
+info [build] Asset compilation successful. Completed in 0.589sec.
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+warn [deprecated]
+    at SocketCategories.getRecentReplies (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/socket.io/categories.js:4:661)
+    at Callbackified (node:util:253:5)
+    at Object.wrapperCallback [as getRecentReplies] (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/promisify.js:2:2583)
+      use GET /api/v3/categories/:cid/posts
+warn [deprecated]
+    at SocketCategories.get (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/socket.io/categories.js:4:923)
+    at Callbackified (node:util:253:5)
+    at Object.wrapperCallback [as get] (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/promisify.js:2:2583)
+      use GET /api/v3/categories
+warn [deprecated]
+    at SocketCategories.getWatchedCategories (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/socket.io/categories.js:4:1238)
+    at Callbackified (node:util:253:5)
+    at Object.wrapperCallback [as getWatchedCategories] (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/promisify.js:2:2583)
+      there is no replacement for this call.
+warn [deprecated]
+    at SocketCategories.loadMore (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/socket.io/categories.js:4:1826)
+    at Callbackified (node:util:253:5)
+    at Object.wrapperCallback [as loadMore] (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/promisify.js:2:2583)
+      use GET /api/v3/categories/:cid/topics
+warn [deprecated]
+    at SocketCategories.loadMore (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/socket.io/categories.js:4:1826)
+    at Object.wrapperCallback [as loadMore] (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/promisify.js:2:2669)
+    at Context.<anonymous> (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/test/categories.js:241:40)
+      use GET /api/v3/categories/:cid/topics
+warn [deprecated]
+    at SocketCategories.getTopicCount (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/socket.io/categories.js:5:255)
+    at Callbackified (node:util:253:5)
+    at Object.wrapperCallback [as getTopicCount] (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/promisify.js:2:2583)
+      use GET /api/v3/categories/:cid
+warn [deprecated]
+    at SocketCategories.getCategoriesByPrivilege (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/socket.io/categories.js:5:594)
+    at Callbackified (node:util:253:5)
+    at Object.wrapperCallback [as getCategoriesByPrivilege] (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/promisify.js:2:2583)
+      there is no replacement for this call.
+warn [deprecated]
+    at SocketCategories.getMoveCategories (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/socket.io/categories.js:5:877)
+    at Callbackified (node:util:253:5)
+    at Object.wrapperCallback [as getMoveCategories] (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/promisify.js:2:2583)
+      there is no replacement for this call.
+warn [deprecated]
+    at SocketCategories.getSelectCategories (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/socket.io/categories.js:5:1132)
+    at Object.wrapperCallback [as getSelectCategories] (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/promisify.js:2:2669)
+    at SocketCategories.getMoveCategories (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/socket.io/categories.js:5:955)
+      there is no replacement for this call.
+warn [deprecated]
+    at SocketCategories.ignore (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/socket.io/categories.js:5:2675)
+    at Callbackified (node:util:253:5)
+    at Object.wrapperCallback [as ignore] (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/promisify.js:2:2583)
+      there is no replacement for this call.
+warn [deprecated]
+    at SocketCategories.watch (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/socket.io/categories.js:5:2431)
+    at Callbackified (node:util:253:5)
+    at Object.wrapperCallback [as watch] (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/promisify.js:2:2583)
+      there is no replacement for this call.
+warn [deprecated]
+    at SocketCategories.setWatchState (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/socket.io/categories.js:5:1770)
+    at Callbackified (node:util:253:5)
+    at Object.wrapperCallback [as setWatchState] (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/promisify.js:2:2583)
+      use PUT/DELETE /api/v3/categories/:cid/watch
+warn [deprecated]
+    at SocketCategories.isModerator (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/socket.io/categories.js:6:697)
+    at Callbackified (node:util:253:5)
+    at Object.wrapperCallback [as isModerator] (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/promisify.js:2:2583)
+      there is no replacement for this call.
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+error GET /api/users?query=bar&section=sort-posts
+Error: [[error:no-privileges]]
+    at usersAPI.search (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/api/users.js:11:2987)
+    at async usersController.search (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/controllers/users.js:2:1861)
+    at async usersController.index (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/controllers/users.js:2:1272)
+    at async /Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/routes/helpers.js:6:340
+warn [controller] Bad request: /user/a%AFc
+error Error decoding URI: a%AFc
+error URIError: URI malformed
+    at decodeURIComponent (<anonymous>)
+    at /Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/middleware/helpers.js:2:1586
+    at Array.forEach (<anonymous>)
+    at helpers.buildBodyClass (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/middleware/helpers.js:2:1478)
+    at renderMethod (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/middleware/render.js:3:999)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async ServerResponse.renderOverride [as render] (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/middleware/render.js:3:4044)
+warn [controller] Bad request: /api/user/a%AFc
+error GET /users
+csrf-error
+error GET /users
+Error: regular error
+    at Object.method (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/test/controllers.js:1512:18)
+    at /Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/middleware/index.js:3:192
+    at /Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/async/dist/async.js:2590:44
+    at eachOfArrayLike (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/async/dist/async.js:508:13)
+    at eachOf (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/async/dist/async.js:628:16)
+    at awaitable (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/async/dist/async.js:212:32)
+    at Object.eachLimit$2 (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/async/dist/async.js:2693:16)
+    at /Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/async/dist/async.js:220:25
+    at new Promise (<anonymous>)
+    at Object.awaitable (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/async/dist/async.js:215:20)
+    at /Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/middleware/index.js:3:13
+    at /Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/middleware/helpers.js:2:834
+    at Layer.handle [as handle_request] (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/layer.js:95:5)
+    at Immediate.next (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/route.js:149:13)
+    at process.processImmediate (node:internal/timers:511:21)
+    at process.callbackTrampoline (node:internal/async_hooks:130:17)
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+error [emailer.send] AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+  assert(false)
+
+    at Object.method (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/test/emailer.js:157:5)
+    at fireMethod (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/plugins/hooks.js:16:832)
+    at Object.fireStaticHook [as static] (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/plugins/hooks.js:17:7)
+    at Hooks.fire (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/plugins/hooks.js:11:2215)
+    at Object.wrapperCallback [as fire] (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/promisify.js:2:2669)
+    at Emailer.sendToEmail (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/emailer.js:17:234)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Emailer.send (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/emailer.js:15:197)
+    at async User.bans.ban (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/user/bans.js:6:484)
+    at async Context.<anonymous> (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/test/emailer.js:164:4)
+warn [emailer/send] User recipient (uid: 1) is banned; not sending email due to system config.
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+error PUT /api/v3/flags/12
+invalid csrf token
+error POST /api/v3/flags/12/notes
+invalid csrf token
+error DELETE /api/v3/flags/12/notes/1741919132070
+invalid csrf token
+error DELETE /api/v3/flags/12
+invalid csrf token
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+warn [meta/dependencies] Bundled plugin nodebb-plugin-somePlugin not found, skipping dependency check.
+warn [meta/dependencies] Bundled plugin nodebb-theme-someTheme not found, skipping dependency check.
+warn [missing] nodebb-plugin-test is a required dependency but could not be found
+
+warn [outdated] nodebb-plugin-test installed v0.9.0, package.json requires 1.0.0
+
+error [middleware.addHeaders] Invalid RegExp For access-control-allow-origin [match\.this\..+\.domain.com
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+warn [plugins] filter:test.hook3 already resolved in plugin test-plugin
+error Cannot activate plugins while plugin state is set in the configuration (config.json, environmental variables or terminal arguments), please modify the configuration instead
+error Cannot activate plugins while plugin state is set in the configuration (config.json, environmental variables or terminal arguments), please modify the configuration instead
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+warn [deprecated]
+    at SocketPosts.getVoters (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/socket.io/posts/votes.js:2:654)
+    at Callbackified (node:util:253:5)
+    at Object.wrapperCallback [as getVoters] (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/promisify.js:2:2583)
+      use GET /api/v3/posts/:pid/voters
+warn [deprecated]
+    at SocketPosts.getUpvoters (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/socket.io/posts/votes.js:2:1101)
+    at Callbackified (node:util:253:5)
+    at Object.wrapperCallback [as getUpvoters] (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/promisify.js:2:2583)
+      use GET /api/v3/posts/:pid/upvoters
+warn [deprecated]
+    at SocketPosts.getUpvoters (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/socket.io/posts/votes.js:2:1101)
+    at Object.wrapperCallback [as getUpvoters] (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/promisify.js:2:2669)
+    at Context.<anonymous> (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/test/posts.js:195:37)
+      use GET /api/v3/posts/:pid/upvoters
+warn [deprecated]
+    at SocketPosts.getRawPost (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/socket.io/posts.js:2:1184)
+    at Object.wrapperCallback [as getRawPost] (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/promisify.js:2:2669)
+    at Context.<anonymous> (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/test/posts.js:849:42)
+      use GET /api/v3/posts/:pid/raw
+warn [deprecated]
+    at SocketPosts.getPostSummaryByIndex (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/socket.io/posts.js:2:1447)
+    at Object.wrapperCallback [as getPostSummaryByIndex] (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/promisify.js:2:2669)
+    at Context.<anonymous> (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/test/posts.js:854:38)
+      use GET /api/v3/posts/byIndex/:index/summary?tid=:tid
+warn [deprecated]
+    at SocketPosts.getPostSummaryByPid (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/socket.io/posts.js:2:3413)
+    at Object.wrapperCallback [as getPostSummaryByPid] (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/promisify.js:2:2669)
+    at Context.<anonymous> (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/test/posts.js:870:38)
+      use GET /api/v3/posts/:pid/summary
+warn [deprecated]
+    at SocketPosts.getPidIndex (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/socket.io/posts.js:2:3876)
+    at Object.wrapperCallback [as getPidIndex] (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/promisify.js:2:2669)
+    at Context.<anonymous> (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/test/posts.js:882:36)
+      use GET /api/v3/posts/:pid/index
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+error [posts/uploads] Error while saving post upload sizes (files/abracadabra.png): Input file contains unsupported image format
+error [posts/uploads] Error while saving post upload sizes (files/shazam.jpg): Input file contains unsupported image format
+error [posts/uploads] Error while saving post upload sizes (files/whoa.gif): Input file contains unsupported image format
+error [posts/uploads] Error while saving post upload sizes (files/amazeballs.jpg): Input file contains unsupported image format
+error [posts/uploads] Error while saving post upload sizes (files/whoa.gif): Input file contains unsupported image format
+error [posts/uploads] Error while saving post upload sizes (files/amazeballs.jpg): Input file contains unsupported image format
+error [posts/uploads] Error while saving post upload sizes (files/test.bmp): Input file contains unsupported image format
+error [posts/uploads] Error while saving post upload sizes (files/test.bmp): Input file contains unsupported image format
+error [posts/uploads] Error while saving post upload sizes (files/abracadabra.png): Input file contains unsupported image format
+error [posts/uploads] Error while saving post upload sizes (files/abracadabra.png): Input file contains unsupported image format
+error [posts/uploads] Error while saving post upload sizes (files/test.bmp): Input file contains unsupported image format
+error [posts/uploads] Error while saving post upload sizes (files/abracadabra.png): Input file contains unsupported image format
+error [posts/uploads] Error while saving post upload sizes (files/test.bmp): Input file contains unsupported image format
+error [posts/uploads] Error while saving post upload sizes (files/abracadabra.png): Input file contains unsupported image format
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+error [posts/uploads] Error while saving post upload sizes (files/abracadabra.png): Input file contains unsupported image format
+error [posts/uploads] Error while saving post upload sizes (files/shazam.jpg): Input file contains unsupported image format
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+warn [deprecated]
+    at SocketCategories.categorySearch (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/socket.io/categories/search.js:4:433)
+    at Object.wrapperCallback [as categorySearch] (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/promisify.js:2:2669)
+    at Context.<anonymous> (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/test/search.js:133:37)
+      use GET /api/v3/search/categories
+warn [deprecated]
+    at SocketCategories.categorySearch (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/socket.io/categories/search.js:4:433)
+    at Object.wrapperCallback [as categorySearch] (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/promisify.js:2:2669)
+    at Context.<anonymous> (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/test/search.js:135:33)
+      use GET /api/v3/search/categories
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+warn [socket.io] Call to admin method ( someMethod ) blocked (accessed by uid 10)
+info [user/jobs] Digest (month) scheduling completed (1 subscribers). Sending emails; this may take some time...
+info [user/jobs] Digest (month) sending completed. 0 emails sent.
+info [user/jobs] Digest (month) complete.
+info [user/jobs] Digest (day) scheduling completed (1 subscribers). Sending emails; this may take some time...
+info [user/jobs] Digest (day) sending completed. 0 emails sent.
+info [user/jobs] Digest (day) complete.
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+error POST /api/v3/topics
+invalid csrf token
+warn [deprecated]
+    at SocketTopics.markAsRead (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/socket.io/topics/unread.js:2:484)
+    at Callbackified (node:util:253:5)
+    at Object.wrapperCallback [as markAsRead] (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/promisify.js:2:2583)
+      use PUT /api/v3/topics/:tid/read
+warn [deprecated]
+    at SocketTopics.markAsRead (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/socket.io/topics/unread.js:2:484)
+    at Callbackified (node:util:253:5)
+    at Object.wrapperCallback [as markAsRead] (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/promisify.js:2:2583)
+      use PUT /api/v3/topics/:tid/read
+warn [deprecated]
+    at SocketTopics.markUnread (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/socket.io/topics/unread.js:2:2202)
+    at Callbackified (node:util:253:5)
+    at Object.wrapperCallback [as markUnread] (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/promisify.js:2:2583)
+      use DELETE /api/v3/topics/:tid/read
+warn [deprecated]
+    at SocketTopics.markUnread (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/socket.io/topics/unread.js:2:2202)
+    at Callbackified (node:util:253:5)
+    at Object.wrapperCallback [as markUnread] (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/promisify.js:2:2583)
+      use DELETE /api/v3/topics/:tid/read
+warn [deprecated]
+    at SocketTopics.markAsRead (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/socket.io/topics/unread.js:2:484)
+    at Object.wrapperCallback [as markAsRead] (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/promisify.js:2:2669)
+    at SocketTopics.markCategoryTopicsRead (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/socket.io/topics/unread.js:2:2043)
+      use PUT /api/v3/topics/:tid/read
+warn [deprecated]
+    at SocketTopics.markAsRead (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/socket.io/topics/unread.js:2:484)
+    at Callbackified (node:util:253:5)
+    at Object.wrapperCallback [as markAsRead] (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/promisify.js:2:2583)
+      use PUT /api/v3/topics/:tid/read
+error POST /api/v3/topics/68
+invalid csrf token
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+error [posts/uploads] Error while saving post upload sizes (files/test.png): Input file contains unsupported image format
+error [posts/uploads] Error while saving post upload sizes (files/test.png): Input file contains unsupported image format
+error [posts/uploads] Error while saving post upload sizes (files/test.png): Input file contains unsupported image format
+error [posts/uploads] Error while saving post upload sizes (files/test2.png): Input file contains unsupported image format
+error [posts/uploads] Error while saving post upload sizes (files/test.png): Input file contains unsupported image format
+error [posts/uploads] Error while saving post upload sizes (files/test.png): Input file contains unsupported image format
+error [posts/uploads] Error while saving post upload sizes (files/test2.png): Input file contains unsupported image format
+error [posts/uploads] Error while saving post upload sizes (files/test.png): Input file contains unsupported image format
+error [posts/uploads] Error while saving post upload sizes (files/test2.png): Input file contains unsupported image format
+error [posts/uploads] Error while saving post upload sizes (files/test.png): Input file contains unsupported image format
+error [posts/uploads] Error while saving post upload sizes (files/test2.png): Input file contains unsupported image format
+error [posts/uploads] Error while saving post upload sizes (files/test.png): Input file contains unsupported image format
+error [posts/uploads] Error while saving post upload sizes (files/test2.png): Input file contains unsupported image format
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+error POST /api/post/upload
+Error: [[error:upload-ratelimit-reached]]
+    at /Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/middleware/uploads.js:2:1451
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async /Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/middleware/helpers.js:2:828
+error Error: pngload_buffer: end of stream
+error POST /api/admin/category/uploadpicture
+Error: [[error:invalid-image-type, image/png&#44; image/jpeg&#44; image/pjpeg&#44; image/jpg&#44; image/gif&#44; image/svg+xml]]
+    at validateUpload (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/controllers/admin/uploads.js:6:3049)
+    at uploadsController.uploadCategoryPicture (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/controllers/admin/uploads.js:5:631)
+    at /Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/routes/helpers.js:6:346
+    at Layer.handle [as handle_request] (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/layer.js:95:5)
+    at Immediate.next (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/route.js:149:13)
+    at process.processImmediate (node:internal/timers:511:21)
+    at process.callbackTrampoline (node:internal/async_hooks:130:17)
+error POST /api/admin/category/uploadpicture
+Error: [[error:invalid-json]]
+    at uploadsController.uploadCategoryPicture (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/controllers/admin/uploads.js:5:562)
+    at /Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/routes/helpers.js:6:346
+    at Layer.handle [as handle_request] (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/layer.js:95:5)
+    at Immediate.next (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/route.js:149:13)
+    at process.processImmediate (node:internal/timers:511:21)
+    at process.callbackTrampoline (node:internal/async_hooks:130:17)
+error POST /api/admin/upload/file
+Error: [[error:invalid-path]]
+    at file.saveFileToLocal (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/file.js:4:360)
+    at Object.wrapperCallback [as saveFileToLocal] (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/promisify.js:2:2669)
+    at uploadsController.uploadFile (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/controllers/admin/uploads.js:6:1791)
+    at /Users/sophiazhu/Documents/temp/nodebb-s25-cheese/src/routes/helpers.js:6:346
+    at Layer.handle [as handle_request] (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/layer.js:95:5)
+    at Immediate.next (/Users/sophiazhu/Documents/temp/nodebb-s25-cheese/node_modules/express/lib/router/route.js:149:13)
+    at process.processImmediate (node:internal/timers:511:21)
+    at process.callbackTrampoline (node:internal/async_hooks:130:17)
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+info [user/jobs] Digest (day) scheduling completed (1 subscribers). Sending emails; this may take some time...
+info [user/jobs] Digest (day) sending completed. 1 emails sent.
+info [user/jobs] Digest (day) complete.
+info [user/jobs] Digest (day) scheduling completed (1 subscribers). Sending emails; this may take some time...
+info [user/jobs] Digest (day) sending completed. 0 emails sent.
+info [user/jobs] Digest (day) complete.
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+info test_database flushed
+info Populating database with default configs, if not already set...
+
+info Giving default global privileges...
+
+info Enabling default plugins
+
+info [install/enableDefaultPlugins] activating default plugins
+
+
+  3982 passing (2m)
+  3 pending
+  1 failing
+
+  1) Utility Methods
+       should return true if browser is android:
+     TypeError: Cannot set property navigator of #<Object> which has only a getter
+      at Context.<anonymous> (test/utils.js:291:20)
+      at process.processImmediate (node:internal/timers:511:21)
+      at process.callbackTrampoline (node:internal/async_hooks:130:17)
+
+
+
+---------------------------------------|---------|----------|---------|---------|-------------------
+File                                   | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+---------------------------------------|---------|----------|---------|---------|-------------------
+All files                              |   86.81 |    73.54 |   87.35 |   86.98 |                   
+ nodebb-s25-cheese                     |     100 |       50 |     100 |     100 |                   
+  require-main.js                      |     100 |       50 |     100 |     100 | 6                 
+ nodebb-s25-cheese/public/src          |   56.83 |    47.71 |   64.51 |   57.01 |                   
+  utils.common.js                      |    47.8 |    41.35 |   59.61 |   48.02 | ...92,598,605-717 
+  utils.js                             |   88.46 |       90 |      90 |   88.23 | 48-49,82-85       
+ nodebb-s25-cheese/public/src/modules  |   79.48 |    75.24 |   68.42 |   79.95 |                   
+  helpers.common.js                    |   85.53 |    73.46 |   84.21 |   85.25 | ...43,358,370-381 
+  slugify.js                           |   92.59 |       75 |     100 |   92.59 | 6,10              
+  translator.common.js                 |   74.82 |    76.97 |   55.55 |   75.72 | ...57-571,587-629 
+ nodebb-s25-cheese/src                 |   81.39 |    67.25 |   82.64 |   81.57 |                   
+  als.js                               |     100 |      100 |     100 |     100 |                   
+  analytics.js                         |   79.14 |    61.53 |    92.3 |   78.34 | ...89,198,205,237 
+  batch.js                             |   94.73 |     88.4 |     100 |   94.73 | 17,30,79          
+  cache.js                             |     100 |      100 |     100 |     100 |                   
+  cacheCreate.js                       |     100 |      100 |     100 |     100 |                   
+  constants.js                         |     100 |      100 |     100 |     100 |                   
+  coverPhoto.js                        |   95.23 |       70 |     100 |   95.23 | 25                
+  emailer.js                           |   87.42 |    68.75 |     100 |   87.13 | ...82,336,344-345 
+  events.js                            |   78.94 |    56.52 |   65.38 |   79.12 | ...25-152,171-191 
+  file.js                              |   83.51 |     57.5 |   86.66 |   83.14 | ...97,115,120-127 
+  flags.js                             |   83.26 |    67.34 |   82.69 |   83.87 | ...01,871,916-928 
+  helpers.js                           |     100 |      100 |     100 |     100 |                   
+  image.js                             |   85.05 |    70.58 |   84.61 |   85.05 | ...14,136,144,167 
+  languages.js                         |    87.5 |       75 |     100 |   86.79 | 42-45,64-67,84    
+  logger.js                            |   84.44 |    69.23 |   93.75 |   84.44 | ...65,169,180,202 
+  notifications.js                     |   86.97 |       72 |   93.22 |   86.31 | ...88,495-496,502 
+  pagination.js                        |   97.67 |    83.33 |     100 |   97.56 | 50                
+  password.js                          |     100 |      100 |     100 |     100 |                   
+  prestart.js                          |   84.37 |    56.75 |      80 |   84.37 | 14,23-24,115-122  
+  promisify.js                         |     100 |      100 |     100 |     100 |                   
+  pubsub.js                            |   52.94 |    26.31 |   71.42 |   52.94 | 25-51             
+  request.js                           |    92.5 |    94.73 |   88.88 |   93.93 | 33,47             
+  search.js                            |   69.66 |    68.91 |   65.21 |   71.95 | ...08-314,325,339 
+  settings.js                          |   89.65 |    75.34 |   88.23 |   89.28 | ...01,162,181,203 
+  sitemap.js                           |   21.97 |     6.66 |    8.33 |   22.47 | ...74,179,182,185 
+  slugify.js                           |     100 |      100 |     100 |     100 |                   
+  social.js                            |   96.42 |    83.33 |     100 |   96.29 | 62                
+  translator.js                        |   83.33 |       50 |     100 |   83.33 | 7                 
+  upgrade.js                           |   90.17 |    63.04 |     100 |    89.9 | ...46-150,165-166 
+  utils.js                             |   88.88 |    64.28 |    87.5 |   88.88 | 8,39,46,60,64     
+  webserver.js                         |   73.23 |    48.64 |   66.66 |   73.84 | ...95,301,309-331 
+ nodebb-s25-cheese/src/admin           |   92.59 |    80.76 |     100 |    92.3 |                   
+  search.js                            |    93.1 |    81.25 |     100 |   92.72 | 79,117-118,129    
+  versions.js                          |    91.3 |       80 |     100 |    91.3 | 30,33             
+ nodebb-s25-cheese/src/api             |   88.34 |    74.64 |   94.34 |   88.59 |                   
+  admin.js                             |    87.5 |    41.66 |      80 |    91.3 | 13,32             
+  categories.js                        |   84.21 |    69.35 |   85.71 |   85.82 | ...05,210,213-221 
+  chats.js                             |   82.55 |     67.4 |   96.77 |   82.25 | ...58,366,385,395 
+  files.js                             |     100 |      100 |     100 |     100 |                   
+  flags.js                             |   83.92 |       50 |     100 |   83.33 | ...65,70-71,76,91 
+  groups.js                            |   93.98 |    88.52 |     100 |   93.98 | ...98,332,350,353 
+  helpers.js                           |   86.76 |    79.31 |     100 |   86.76 | ...01,109,113,140 
+  index.js                             |     100 |      100 |     100 |     100 |                   
+  posts.js                             |   93.44 |    81.97 |     100 |    93.3 | ...69-370,470,485 
+  search.js                            |      81 |    51.06 |      70 |   82.97 | ...64,167,184-189 
+  tags.js                              |     100 |      100 |     100 |     100 |                   
+  topics.js                            |   90.72 |    76.11 |   96.29 |   91.33 | ...18,246,258,266 
+  users.js                             |   87.67 |    74.67 |   97.67 |   87.46 | ...08,712,720-721 
+  utils.js                             |   96.55 |     87.5 |     100 |   96.42 | 70,107            
+ nodebb-s25-cheese/src/cache           |   75.49 |    54.34 |   70.58 |   76.19 |                   
+  lru.js                               |    88.6 |    69.23 |   94.11 |   88.31 | ...,62,73,117,142 
+  ttl.js                               |   61.11 |       35 |   47.05 |   62.85 | ...97-115,119,123 
+ nodebb-s25-cheese/src/categories      |   88.86 |    79.69 |   85.84 |   89.51 |                   
+  activeusers.js                       |     100 |       50 |     100 |     100 | 10                
+  create.js                            |    87.5 |    82.25 |   81.81 |   88.13 | 106,130-146,162   
+  data.js                              |   98.24 |     92.5 |   92.85 |   98.18 | 63                
+  delete.js                            |      90 |       75 |   72.72 |    92.1 | 22,65-66          
+  index.js                             |   93.43 |    81.89 |   92.18 |   94.37 | ...62-363,393,404 
+  recentreplies.js                     |    91.3 |    80.59 |      90 |   92.23 | ...82,135,153,184 
+  search.js                            |   89.36 |    79.16 |      80 |   88.63 | 49,55-58,67       
+  topics.js                            |   83.46 |    75.58 |      90 |   82.92 | ...14,224,230-246 
+  unread.js                            |      20 |        0 |   11.11 |   23.07 | ...24,29-35,40-44 
+  update.js                            |   97.43 |       90 |     100 |   97.33 | 21,109            
+  watch.js                             |   88.23 |    81.25 |   84.61 |   88.88 | 43-45             
+ nodebb-s25-cheese/src/cli             |   51.72 |     32.5 |   58.33 |   51.72 |                   
+  package-install.js                   |   51.72 |     32.5 |   58.33 |   51.72 | ...06-138,144-173 
+ nodebb-s25-cheese/src/controllers     |   84.35 |    73.42 |   82.14 |   84.61 |                   
+  404.js                               |   87.09 |    69.56 |     100 |   87.09 | 17,25,37,43       
+  accounts.js                          |     100 |      100 |     100 |     100 |                   
+  admin.js                             |   96.87 |    94.44 |     100 |   96.87 | 57                
+  api.js                               |    92.3 |    70.32 |     100 |    92.3 | 129-132           
+  authentication.js                    |   77.93 |    76.47 |    87.5 |   78.41 | ...61-486,501-504 
+  categories.js                        |     100 |    83.33 |     100 |     100 | 17,48             
+  category.js                          |   98.09 |    89.39 |     100 |   98.09 | 92,96             
+  composer.js                          |   84.31 |    65.38 |     100 |   84.31 | ...61,78,81,84,95 
+  errors.js                            |   79.45 |    78.37 |    87.5 |   79.45 | ...12-114,126-127 
+  globalmods.js                        |     100 |      100 |     100 |     100 |                   
+  groups.js                            |   79.16 |    56.66 |     100 |   79.16 | ...53,56-61,73,94 
+  helpers.js                           |   85.99 |    80.66 |    92.3 |   85.88 | ...80-585,592-593 
+  home.js                              |   96.55 |    85.71 |     100 |   96.55 | 37                
+  index.js                             |   74.65 |    47.77 |   81.81 |   74.65 | ...48,257-329,341 
+  mods.js                              |   80.95 |    62.26 |   93.33 |    81.3 | ...67,184,253-254 
+  osd.js                               |      50 |        0 |       0 |      50 | 10-56             
+  ping.js                              |   42.85 |        0 |       0 |   42.85 | 7-11              
+  popular.js                           |      95 |     87.5 |     100 |      95 | 15                
+  posts.js                             |   95.65 |       80 |     100 |   95.65 | 22                
+  recent.js                            |   96.55 |       90 |     100 |   96.42 | 19,32             
+  search.js                            |   87.75 |    77.87 |   76.92 |   88.42 | ...91-192,199,201 
+  sitemap.js                           |   29.16 |        0 |       0 |   30.43 | 9-15,19,23,27-39  
+  tags.js                              |     100 |    83.33 |     100 |     100 | 20,75             
+  top.js                               |   94.44 |     87.5 |     100 |   94.44 | 15                
+  topics.js                            |   88.53 |    80.79 |   73.91 |    89.2 | ...74,396,404,458 
+  unread.js                            |   96.07 |    76.19 |     100 |      96 | 46,88             
+  uploads.js                           |    87.5 |    72.34 |     100 |   87.36 | ...43,164,168,175 
+  user.js                              |   93.75 |       84 |     100 |   93.75 | 62,66,71          
+  users.js                             |   62.61 |    48.27 |   47.61 |    63.8 | ...55,161-177,201 
+ ...25-cheese/src/controllers/accounts |   90.41 |    78.46 |   85.08 |   91.21 |                   
+  blocks.js                            |     100 |      100 |     100 |     100 |                   
+  categories.js                        |     100 |       75 |     100 |     100 | 27                
+  chats.js                             |    88.7 |    73.17 |     100 |    88.7 | ...,84,94,101,105 
+  consent.js                           |   93.33 |       50 |     100 |   93.33 | 11                
+  edit.js                              |   71.08 |    54.76 |   55.55 |   71.95 | ...97,116,144-166 
+  follow.js                            |   95.83 |     87.5 |     100 |   95.83 | 20                
+  groups.js                            |     100 |      100 |     100 |     100 |                   
+  helpers.js                           |   96.62 |    83.52 |   94.44 |   96.55 | 24,29,91,118,177  
+  info.js                              |   96.55 |    66.66 |     100 |   96.55 | 46                
+  notifications.js                     |   96.77 |    92.85 |     100 |   96.66 | 58                
+  posts.js                             |   80.35 |    66.66 |   76.31 |   83.49 | ...18,190,246-249 
+  profile.js                           |    98.3 |    91.89 |     100 |   98.27 | 19                
+  sessions.js                          |     100 |      100 |     100 |     100 |                   
+  settings.js                          |   90.75 |       85 |   88.88 |   91.45 | ...03-204,231-232 
+  tags.js                              |    92.3 |       50 |     100 |    92.3 | 10                
+  uploads.js                           |   95.65 |      100 |      50 |     100 |                   
+ ...b-s25-cheese/src/controllers/admin |   87.27 |    73.57 |   85.94 |   87.87 |                   
+  admins-mods.js                       |     100 |    83.33 |     100 |     100 | 27                
+  appearance.js                        |     100 |       50 |     100 |     100 | 6                 
+  cache.js                             |   96.55 |       80 |     100 |   96.55 | 64                
+  categories.js                        |    97.1 |    92.59 |      90 |   96.96 | 24,124            
+  dashboard.js                         |    77.4 |    61.53 |   75.67 |   77.97 | ...51,356-381,387 
+  database.js                          |   71.42 |       50 |     100 |   71.42 | 14-15,18-19       
+  digest.js                            |     100 |      100 |     100 |     100 |                   
+  errors.js                            |     100 |       50 |     100 |     100 | 21                
+  events.js                            |    92.3 |       70 |     100 |      92 | 18,20             
+  groups.js                            |   96.07 |     87.5 |     100 |      96 | 38,46             
+  hooks.js                             |     100 |       50 |     100 |     100 | 22                
+  info.js                              |   82.35 |    33.33 |    92.3 |   82.08 | ...57,121-126,133 
+  logger.js                            |     100 |      100 |     100 |     100 |                   
+  logs.js                              |      90 |      100 |     100 |      90 | 15                
+  plugins.js                           |   91.17 |    81.25 |     100 |   90.32 | 41,66-67          
+  privileges.js                        |     100 |       85 |     100 |     100 | 15,31,43          
+  rewards.js                           |     100 |      100 |     100 |     100 |                   
+  settings.js                          |     100 |      100 |     100 |     100 |                   
+  tags.js                              |     100 |      100 |     100 |     100 |                   
+  themes.js                            |   38.88 |        0 |       0 |   38.88 | 14-30             
+  uploads.js                           |   83.68 |    71.73 |   85.71 |   84.05 | ...96-197,237,264 
+  users.js                             |   85.36 |    82.35 |   69.44 |   88.66 | ...57,265,289-293 
+  widgets.js                           |     100 |      100 |     100 |     100 |                   
+ ...b-s25-cheese/src/controllers/write |   93.88 |    59.79 |   97.67 |   93.86 |                   
+  admin.js                             |   97.43 |    66.66 |     100 |   97.43 | 68                
+  categories.js                        |   98.14 |       75 |     100 |   98.14 | 71                
+  chats.js                             |   96.39 |    79.16 |   96.42 |   96.33 | 19-20,73-78       
+  files.js                             |     100 |      100 |     100 |     100 |                   
+  flags.js                             |     100 |      100 |     100 |     100 |                   
+  groups.js                            |     100 |      100 |     100 |     100 |                   
+  index.js                             |     100 |      100 |     100 |     100 |                   
+  posts.js                             |   78.21 |    23.07 |   95.45 |   78.21 | ...71,119-122,177 
+  search.js                            |     100 |      100 |     100 |     100 |                   
+  tags.js                              |     100 |      100 |     100 |     100 |                   
+  topics.js                            |   98.11 |    81.25 |     100 |   98.11 | 22,159            
+  users.js                             |   91.86 |    57.89 |   97.05 |   91.86 | ...63,171,199,211 
+  utilities.js                         |   93.75 |      100 |      80 |   93.75 | 29                
+ nodebb-s25-cheese/src/database        |   89.38 |    68.42 |      90 |    90.9 |                   
+  cache.js                             |     100 |      100 |     100 |     100 |                   
+  helpers.js                           |     100 |      100 |     100 |     100 |                   
+  index.js                             |   81.25 |    65.38 |     100 |   83.87 | 9-10,28,40-41     
+  redis.js                             |   90.47 |    57.14 |   77.77 |   91.93 | 26,106-109        
+ nodebb-s25-cheese/src/database/redis  |   96.13 |    91.95 |   96.15 |   96.18 |                   
+  connection.js                        |   74.07 |    57.14 |      75 |   74.07 | ...24,43,47-48,57 
+  hash.js                              |   96.07 |    92.78 |   97.29 |   96.47 | 45-47,62,185,225  
+  helpers.js                           |      95 |       50 |      80 |   94.11 | 11                
+  list.js                              |     100 |      100 |     100 |     100 |                   
+  main.js                              |   97.22 |    90.47 |   95.45 |   97.14 | 86,103            
+  sets.js                              |     100 |    88.88 |     100 |     100 | 56-63             
+  sorted.js                            |   97.32 |    96.84 |   98.24 |   97.53 | 153-157,251       
+  transaction.js                       |   66.66 |      100 |      50 |   66.66 | 6                 
+ ...5-cheese/src/database/redis/sorted |   96.73 |    86.31 |     100 |   96.59 |                   
+  add.js                               |   95.83 |     92.5 |     100 |   95.55 | 9,26              
+  intersect.js                         |   97.56 |    79.16 |     100 |   97.56 | 8                 
+  remove.js                            |   96.66 |    93.33 |     100 |   96.29 | 9                 
+  union.js                             |   97.05 |       75 |     100 |   97.05 | 9                 
+ nodebb-s25-cheese/src/groups          |   92.67 |    82.17 |   91.73 |   93.05 |                   
+  cache.js                             |   88.88 |       50 |     100 |    87.5 | 14                
+  cover.js                             |   95.23 |     91.3 |     100 |   95.23 | 57,71             
+  create.js                            |     100 |    98.36 |     100 |     100 | 36                
+  data.js                              |     100 |    89.58 |     100 |     100 | 54-59,85,91,101   
+  delete.js                            |   96.55 |       75 |     100 |   96.15 | 17                
+  index.js                             |   95.39 |     83.6 |   92.59 |   95.17 | 125,220-225,233   
+  invite.js                            |   98.33 |    90.47 |     100 |   98.11 | 89                
+  join.js                              |   94.91 |    88.23 |     100 |   94.44 | 85-87             
+  leave.js                             |   82.43 |    75.75 |   69.56 |   84.61 | ...-78,91,111-118 
+  membership.js                        |    97.6 |    96.15 |   97.56 |   98.11 | 101,116           
+  ownership.js                         |   95.23 |     87.5 |     100 |   95.23 | 18                
+  posts.js                             |     100 |    83.33 |     100 |     100 | 19,46             
+  search.js                            |   81.13 |    53.33 |    92.3 |   79.16 | 23,55-58,77-82    
+  update.js                            |   83.53 |    69.29 |   75.86 |   85.35 | ...87-290,301-303 
+  user.js                              |   95.12 |    69.23 |   93.75 |   96.96 | 55                
+ nodebb-s25-cheese/src/messaging       |   88.86 |    71.31 |   91.44 |   88.87 |                   
+  create.js                            |   93.24 |    83.33 |     100 |   93.15 | 16,35,43,87,102   
+  data.js                              |   95.72 |    84.61 |     100 |   95.53 | ...49-150,154-155 
+  delete.js                            |     100 |    91.66 |     100 |     100 | 25                
+  edit.js                              |   84.21 |    59.52 |     100 |   83.63 | ...6,71,81,85,102 
+  index.js                             |   88.42 |    72.66 |   86.36 |   88.69 | ...97,408,415,443 
+  notifications.js                     |   81.25 |       75 |      80 |   82.25 | ...,60,75,123-128 
+  pins.js                              |   76.19 |     37.5 |      80 |   76.19 | 28-34             
+  rooms.js                             |   90.21 |    65.21 |   95.65 |      90 | ...39,468,473-474 
+  unread.js                            |      75 |       50 |   73.33 |      75 | ...41,44-50,63,69 
+ nodebb-s25-cheese/src/meta            |   82.73 |    66.54 |   84.72 |   82.83 |                   
+  aliases.js                           |     100 |      100 |     100 |     100 |                   
+  blacklist.js                         |   88.42 |    90.69 |      90 |   88.42 | ...76,101-102,164 
+  build.js                             |   62.77 |    30.76 |   82.14 |   62.12 | ...06,210-246,252 
+  cacheBuster.js                       |   81.81 |    83.33 |     100 |   81.81 | 29-30,36-37       
+  configs.js                           |    85.5 |    80.85 |     100 |    85.5 | ...90-192,212-228 
+  css.js                               |   63.15 |     36.5 |   51.51 |    64.8 | ...23-324,328-329 
+  debugFork.js                         |   77.77 |       70 |     100 |   76.47 | 20-22,26-27       
+  dependencies.js                      |   95.65 |       85 |     100 |   95.55 | 26,28             
+  errors.js                            |   87.87 |       40 |   83.33 |   87.87 | 24,32,38,49       
+  index.js                             |    85.1 |    78.26 |    62.5 |   84.44 | 51-52,58-68       
+  js.js                                |   90.16 |    66.66 |   85.71 |   90.16 | ...11,115-116,143 
+  languages.js                         |   95.52 |    65.21 |     100 |   95.38 | 32,44,129         
+  logs.js                              |     100 |      100 |     100 |     100 |                   
+  minifier.js                          |   82.79 |    66.66 |   78.94 |    82.6 | ...14,123,137,168 
+  settings.js                          |   98.64 |    88.46 |     100 |   98.59 | 103               
+  tags.js                              |   88.31 |    74.35 |     100 |   87.83 | ...17,224,254-259 
+  templates.js                         |   90.36 |    61.11 |     100 |   89.87 | 36-39,49,60-64    
+  themes.js                            |      80 |    60.86 |      90 |   80.41 | ...62,174,178-179 
+ nodebb-s25-cheese/src/middleware      |   83.35 |    72.85 |   84.37 |   83.96 |                   
+  admin.js                             |   68.75 |    58.62 |     100 |   68.75 | 32,53,63,69-86    
+  assert.js                            |   87.83 |    75.67 |     100 |   87.83 | ...,84,96,108,130 
+  csrf.js                              |   81.81 |    85.71 |     100 |   81.81 | 14,16             
+  expose.js                            |     100 |       75 |     100 |     100 | 33                
+  header.js                            |     100 |      100 |     100 |     100 |                   
+  headers.js                           |      80 |    71.73 |     100 |   79.68 | ...-91,98,112-113 
+  helpers.js                           |   97.82 |    97.14 |     100 |   97.82 | 25                
+  index.js                             |   73.21 |    54.43 |   77.77 |   74.39 | ...56-257,264-275 
+  maintenance.js                       |   96.29 |     87.5 |     100 |   96.29 | 35                
+  ratelimit.js                         |   78.94 |       75 |     100 |   78.94 | 21-22,26-27       
+  render.js                            |   84.88 |    69.54 |   76.47 |   86.81 | ...57-479,510-512 
+  uploads.js                           |     100 |      100 |     100 |     100 |                   
+  user.js                              |   84.26 |    79.09 |   79.31 |   83.81 | ...43-247,264,320 
+ nodebb-s25-cheese/src/navigation      |    95.5 |    76.66 |     100 |   95.06 |                   
+  admin.js                             |   95.58 |    79.16 |     100 |   95.16 | 73-74,98          
+  index.js                             |   95.23 |    66.66 |     100 |   94.73 | 27                
+ nodebb-s25-cheese/src/plugins         |    81.6 |    70.91 |    91.3 |    81.6 |                   
+  data.js                              |   81.63 |    67.85 |   95.65 |   80.85 | ...68-169,208-219 
+  hooks.js                             |   74.62 |    73.98 |   91.66 |   73.84 | ...23,329,339-350 
+  index.js                             |   84.11 |    68.18 |   96.15 |   84.95 | ...53,278,321-324 
+  install.js                           |   85.41 |    70.83 |   82.35 |   86.31 | ...96,128,174-178 
+  load.js                              |   83.13 |    70.27 |   95.23 |    82.5 | ...50-153,167-168 
+  usage.js                             |   77.27 |    77.77 |      50 |   77.27 | 15-16,22,39-42    
+ nodebb-s25-cheese/src/posts           |   92.41 |    79.71 |   92.11 |   92.66 |                   
+  bookmarks.js                         |   90.62 |    81.81 |     100 |      90 | 17,28,32          
+  cache.js                             |     100 |     62.5 |     100 |     100 | 12-28             
+  category.js                          |     100 |      100 |     100 |     100 |                   
+  create.js                            |   95.55 |    92.59 |     100 |   95.55 | 24,44             
+  data.js                              |     100 |     87.5 |     100 |     100 | 31-45             
+  delete.js                            |   95.51 |    95.83 |   87.93 |    97.7 | 169,184,187       
+  diffs.js                             |   90.42 |       68 |   88.88 |   90.69 | ...49-150,160,173 
+  edit.js                              |   95.74 |    90.74 |     100 |   95.74 | 29,42,186,190     
+  index.js                             |   94.66 |    76.47 |    90.9 |   94.44 | 32,38,51,75       
+  parse.js                             |   98.61 |    91.66 |     100 |   98.61 | 103               
+  queue.js                             |   88.31 |    72.97 |   91.17 |   88.44 | ...53,356,387,394 
+  recent.js                            |     100 |    66.66 |     100 |     100 | 18-22             
+  summary.js                           |   96.82 |     87.5 |     100 |   96.55 | 45,105            
+  tools.js                             |   81.81 |    71.42 |     100 |   81.81 | 22,26,28,32       
+  topics.js                            |   88.88 |       65 |      90 |   87.87 | 10-12,50          
+  uploads.js                           |    90.6 |    81.25 |   86.04 |   90.69 | 36-40,141-154     
+  user.js                              |   89.93 |    75.94 |   88.37 |   90.97 | ...64,224,266-279 
+  votes.js                             |      90 |    79.78 |     100 |   89.65 | ...76,250,254-257 
+ nodebb-s25-cheese/src/privileges      |   96.06 |    88.02 |   96.89 |   95.76 |                   
+  admin.js                             |   94.73 |    83.33 |   89.47 |   94.36 | 37,129,223-224    
+  categories.js                        |   98.07 |    89.06 |     100 |   97.95 | 46,149            
+  global.js                            |   89.55 |    86.36 |      85 |    88.7 | ...24-125,155-156 
+  helpers.js                           |   98.64 |    92.72 |     100 |   98.42 | 41,53             
+  index.js                             |     100 |      100 |     100 |     100 |                   
+  posts.js                             |   92.98 |    82.29 |     100 |   92.85 | ...84,203,212,230 
+  topics.js                            |   97.72 |       90 |     100 |   97.64 | 150-153           
+  users.js                             |   97.43 |    91.66 |     100 |   97.14 | 70,140            
+ nodebb-s25-cheese/src/rewards         |   88.63 |    62.06 |   91.66 |   87.65 |                   
+  admin.js                             |   85.36 |       40 |   88.88 |      85 | 12,64-72          
+  index.js                             |   91.48 |    73.68 |   93.33 |   90.24 | 14,22,42,47       
+ nodebb-s25-cheese/src/routes          |    77.6 |    43.31 |   76.05 |    77.6 |                   
+  admin.js                             |     100 |      100 |     100 |     100 |                   
+  api.js                               |     100 |      100 |     100 |     100 |                   
+  authentication.js                    |   63.15 |    25.92 |   53.33 |   63.15 | 72-73,85,89-152   
+  feeds.js                             |   56.25 |    42.62 |   76.19 |   56.25 | ...82-383,396-419 
+  helpers.js                           |   94.59 |    82.35 |     100 |   94.59 | 15,46             
+  index.js                             |   91.26 |    58.33 |   86.36 |   91.26 | ...08-209,214-216 
+  meta.js                              |    92.3 |      100 |      50 |    92.3 | 16                
+  user.js                              |   97.43 |      100 |      50 |   97.43 | 45                
+ nodebb-s25-cheese/src/routes/write    |   99.02 |       70 |   89.47 |   99.02 |                   
+  admin.js                             |     100 |      100 |     100 |     100 |                   
+  categories.js                        |     100 |      100 |     100 |     100 |                   
+  chats.js                             |     100 |      100 |     100 |     100 |                   
+  files.js                             |     100 |      100 |     100 |     100 |                   
+  flags.js                             |     100 |      100 |     100 |     100 |                   
+  groups.js                            |     100 |      100 |     100 |     100 |                   
+  index.js                             |   93.02 |       70 |      80 |   93.02 | 28-29,68          
+  posts.js                             |     100 |      100 |     100 |     100 |                   
+  search.js                            |     100 |      100 |     100 |     100 |                   
+  tags.js                              |     100 |      100 |     100 |     100 |                   
+  topics.js                            |     100 |      100 |     100 |     100 |                   
+  users.js                             |     100 |      100 |   66.66 |     100 |                   
+  utilities.js                         |     100 |      100 |     100 |     100 |                   
+ nodebb-s25-cheese/src/socket.io       |   75.47 |    56.36 |   67.66 |    75.5 |                   
+  admin.js                             |   78.08 |    53.84 |   38.46 |   78.08 | ...08-109,122-123 
+  blacklist.js                         |   88.88 |    66.66 |      75 |   88.88 | 19,28             
+  categories.js                        |   86.41 |    60.71 |   88.88 |   87.01 | ...16,127,143-150 
+  groups.js                            |   61.19 |    58.97 |   45.45 |   63.07 | ...1-69,73-84,117 
+  helpers.js                           |   82.24 |       62 |   77.27 |   81.73 | ...78-190,218-222 
+  index.js                             |   74.85 |    56.63 |   80.76 |   74.55 | ...11,318-319,328 
+  meta.js                              |   91.42 |    70.37 |      80 |   91.42 | 40,44,57          
+  modules.js                           |   26.36 |        0 |       0 |   26.36 | ...01-208,212-221 
+  notifications.js                     |     100 |      100 |     100 |     100 |                   
+  plugins.js                           |     100 |      100 |     100 |     100 |                   
+  posts.js                             |   80.19 |    58.82 |   85.71 |   80.19 | ...18,142-145,173 
+  topics.js                            |   97.46 |       82 |     100 |   97.46 | 26,119            
+  uploads.js                           |   81.81 |    78.94 |      50 |   81.81 | 15,32,45,55-56,61 
+  user.js                              |   83.17 |    61.22 |    87.5 |   83.17 | ...51,159-175,180 
+ nodebb-s25-cheese/src/socket.io/admin |   88.42 |    69.38 |      84 |   88.77 |                   
+  analytics.js                         |     100 |    95.65 |     100 |     100 | 22                
+  cache.js                             |   86.66 |       50 |     100 |   86.66 | 17,31             
+  categories.js                        |   77.27 |      100 |   71.42 |   80.95 | 38-42             
+  config.js                            |     100 |       75 |     100 |     100 | 29-40             
+  digest.js                            |     100 |       80 |     100 |     100 | 10,18             
+  email.js                             |     100 |    70.58 |     100 |     100 | 18-40,57          
+  errors.js                            |     100 |      100 |     100 |     100 |                   
+  logs.js                              |     100 |      100 |     100 |     100 |                   
+  navigation.js                        |      75 |      100 |       0 |      75 | 8                 
+  plugins.js                           |   93.93 |    66.66 |     100 |   93.33 | 43,49             
+  rewards.js                           |   83.33 |      100 |      50 |   83.33 | 12                
+  rooms.js                             |   80.24 |    57.14 |   66.66 |   82.05 | ...,81-82,121-126 
+  settings.js                          |     100 |      100 |     100 |     100 |                   
+  tags.js                              |   92.85 |    83.33 |     100 |   92.85 | 17                
+  themes.js                            |     100 |      100 |     100 |     100 |                   
+  user.js                              |   81.37 |    51.51 |      80 |    80.2 | ...51-160,175,186 
+  widgets.js                           |     100 |      100 |     100 |     100 |                   
+ ...25-cheese/src/socket.io/categories |     100 |      100 |     100 |     100 |                   
+  search.js                            |     100 |      100 |     100 |     100 |                   
+ nodebb-s25-cheese/src/socket.io/posts |   87.93 |    81.57 |   85.71 |   89.47 |                   
+  tools.js                             |   88.88 |    84.37 |      75 |    90.9 | 75,82-93          
+  votes.js                             |   84.61 |    66.66 |     100 |   84.61 | 9,17              
+ ...bb-s25-cheese/src/socket.io/topics |   78.67 |    64.22 |   85.29 |   79.02 |                   
+  infinitescroll.js                    |   96.55 |    80.95 |     100 |   96.55 | 21                
+  merge.js                             |   93.75 |     90.9 |     100 |   93.33 | 17                
+  move.js                              |   88.37 |       65 |     100 |   88.37 | 14,19,27,58,62    
+  tags.js                              |    60.6 |     43.9 |      75 |   60.31 | ...62,65-67,76-99 
+  tools.js                             |   81.81 |    66.66 |     100 |   81.81 | 10,13,22,25       
+  unread.js                            |   77.14 |    72.22 |   77.77 |   78.78 | 43,50-60          
+ nodebb-s25-cheese/src/socket.io/user  |   90.72 |    69.76 |     100 |   90.62 |                   
+  picture.js                           |     100 |     90.9 |     100 |     100 | 34                
+  profile.js                           |   88.23 |    68.75 |     100 |   88.23 | 10,19,29,46       
+  registration.js                      |   85.71 |       50 |     100 |   85.71 | 10,25,39          
+  status.js                            |    91.3 |       60 |     100 |    91.3 | 9,17              
+ nodebb-s25-cheese/src/topics          |    91.3 |    80.19 |   90.81 |   91.66 |                   
+  bookmarks.js                         |   92.85 |    64.28 |     100 |    92.1 | 26,58,63          
+  create.js                            |   93.54 |    86.11 |     100 |   93.54 | ...89,308,312,316 
+  data.js                              |      96 |    92.59 |   93.75 |   95.89 | 44,68-69          
+  delete.js                            |   95.08 |    83.33 |   89.47 |   96.29 | 66,78             
+  events.js                            |   95.38 |     82.5 |   95.34 |   95.76 | 61,97,115,218,220 
+  follow.js                            |   87.87 |    70.58 |    86.2 |   89.01 | ...11,122,132-136 
+  fork.js                              |   83.78 |     64.7 |     100 |   83.56 | ...02,106,129,155 
+  index.js                             |   97.14 |    86.84 |   97.22 |   96.95 | 193,219,258-263   
+  merge.js                             |   97.36 |       90 |     100 |   97.22 | 12                
+  posts.js                             |   90.07 |     76.3 |   87.27 |   91.35 | ...73,377-388,411 
+  recent.js                            |      90 |    70.58 |    87.5 |      90 | 17,39,55,76       
+  scheduled.js                         |   94.44 |    68.75 |   96.55 |   93.54 | 17-18,26,71       
+  sorted.js                            |      80 |    74.03 |   68.42 |   81.15 | ...21,227-234,274 
+  suggested.js                         |   82.97 |    66.66 |   73.33 |    87.8 | 15,49,65-67       
+  tags.js                              |   90.24 |    77.07 |   92.92 |   90.34 | ...00,612,640-662 
+  teaser.js                            |   97.19 |    91.37 |     100 |   97.11 | 33,100,119        
+  thumbs.js                            |   98.13 |    90.32 |   95.45 |   98.96 | 119               
+  tools.js                             |   85.89 |    76.13 |      95 |    85.8 | ...09,239,242,267 
+  unread.js                            |   92.27 |     86.5 |   90.74 |   92.55 | ...37,346,380,407 
+  user.js                              |      90 |      100 |   66.66 |      90 | 16                
+ nodebb-s25-cheese/src/user            |   90.03 |    79.47 |   89.73 |   90.24 |                   
+  admin.js                             |   78.57 |    58.82 |   71.42 |   78.43 | 17,35-47,59       
+  approval.js                          |   89.69 |    76.19 |   80.95 |   90.21 | 18,66,82,157-164  
+  auth.js                              |   95.69 |    89.47 |     100 |   95.45 | 92,104,114-115    
+  bans.js                              |    97.7 |     92.3 |     100 |   97.53 | 149,153           
+  blocks.js                            |   94.52 |     82.6 |     100 |   93.93 | 27,29,39,42       
+  categories.js                        |   85.71 |    55.55 |    90.9 |   86.95 | 12,21,28,38,50,65 
+  create.js                            |   94.68 |    91.04 |      90 |   94.68 | ...16,145,155,178 
+  data.js                              |   93.12 |    86.25 |   93.75 |    93.4 | ...85-288,312,318 
+  delete.js                            |   80.76 |     62.5 |   65.71 |   87.23 | ...38,188,213-217 
+  digest.js                            |    84.8 |     67.1 |      80 |   85.34 | ...93,199,211,217 
+  email.js                             |   88.39 |    76.71 |   91.66 |   88.39 | ...98,219,224,230 
+  follow.js                            |   84.21 |       70 |     100 |   84.21 | 18,22,29,41,50,78 
+  index.js                             |   97.98 |    89.74 |   94.59 |   97.93 | 216-221,225       
+  info.js                              |   97.95 |    83.33 |      96 |   97.77 | 103,158           
+  interstitials.js                     |   79.51 |     73.8 |      75 |   79.26 | ...46,175,182-208 
+  invite.js                            |   91.08 |    74.35 |     100 |   90.72 | ...96,129-130,151 
+  jobs.js                              |   74.35 |       50 |      80 |   74.35 | 18,20,37-47       
+  notifications.js                     |   96.57 |    81.15 |   97.05 |   97.01 | 58-59,63,228      
+  online.js                            |    90.9 |    76.47 |     100 |   90.62 | 18,33-34          
+  password.js                          |   95.83 |       80 |     100 |   95.83 | 12                
+  picture.js                           |   78.76 |    60.86 |   94.44 |   78.57 | ...11,130,191-193 
+  posts.js                             |   91.78 |    89.74 |    87.5 |   91.54 | ...,78,83,120,146 
+  profile.js                           |   85.38 |    77.09 |    91.3 |   85.79 | ...71,285,295,304 
+  reset.js                             |   88.29 |    80.76 |   83.33 |   88.29 | ...36-138,145-151 
+  search.js                            |   93.26 |    86.76 |   85.71 |   92.78 | ...,69-71,157,161 
+  settings.js                          |   94.62 |    80.51 |     100 |    94.5 | ...15,123,155,173 
+  topics.js                            |     100 |      100 |     100 |     100 |                   
+  uploads.js                           |   88.88 |    81.25 |   88.88 |   86.95 | 19,43,53,81-87    
+ nodebb-s25-cheese/src/user/jobs       |   77.77 |    53.33 |   45.45 |   79.84 |                   
+  export-posts.js                      |     100 |    66.66 |     100 |     100 | 13,26-48          
+  export-profile.js                    |      70 |    47.61 |   35.71 |   74.07 | ...09,115,118-119 
+  export-uploads.js                    |   72.72 |       50 |      40 |   72.72 | 41-48,53-63       
+ nodebb-s25-cheese/src/widgets         |   81.02 |    62.96 |   94.59 |   80.52 |                   
+  admin.js                             |     100 |      100 |     100 |     100 |                   
+  index.js                             |   76.58 |    61.53 |   92.59 |   75.97 | ...19,225,230-265 
+---------------------------------------|---------|----------|---------|---------|-------------------
