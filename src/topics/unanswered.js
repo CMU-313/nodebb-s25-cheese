@@ -3,15 +3,29 @@
 const db = require('../database');
 
 async function getUnanswered(callback) {
-    const topicIds = await db.getSortedSetRange('topics:tid', 0, -1);
-    const unansweredTopics = [];
+	// Fetch all topic IDs
+	const topicIds = await db.getSortedSetRange('topics:tid', 0, -1);
+	const unansweredTopics = [];
 
-    for (const tid of topicIds) {
-        const topic = await db.getObject(`topic:${tid}`);
-        if (topic.unanswered == 1) {
-            unansweredTopics.push(topic);
-        }
-    }
+	// Fetch topic details in parallel to avoid await inside the loop
+	const topics = await Promise.all(topicIds.map(tid => db.getObject(`topic:${tid}`)));
 
-    callback(null, unansweredTopics);
+	// Filter unanswered topics
+	for (const topic of topics) {
+		if (topic.unanswered === 1) {
+			unansweredTopics.push(topic);
+		}
+	}
+
+	callback(null, unansweredTopics);
 }
+
+// Test function call
+getUnanswered((err, topics) => {
+	if (err) {
+		console.error(err);
+	} else {
+		console.log(topics);
+	}
+});
+

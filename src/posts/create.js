@@ -40,7 +40,7 @@ module.exports = function (Posts) {
 		// Mark topic as answered if there's a reply
 		const postCount = await db.sortedSetCard(`tid:${tid}:posts`);
 		if (postCount > 0) {
-  			await db.setObjectField(`topic:${tid}`, 'unanswered', 0);
+			await db.setObjectField(`topic:${tid}`, 'unanswered', 0);
 		}
 
 		if (data.toPid) {
