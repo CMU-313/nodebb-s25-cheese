@@ -33,8 +33,8 @@ module.exports = function (Topics) {
 			lastposttime: 0,
 			postcount: 0,
 			viewcount: 0,
-			// Newly added fields:
 			resolved: false,
+			unanswered: 1,
 		};
 
 		if (Array.isArray(data.tags) && data.tags.length) {
