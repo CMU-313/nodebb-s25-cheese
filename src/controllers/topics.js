@@ -33,6 +33,7 @@ topicsController.get = async function getTopic(req, res, next) {
 	}
 	let postIndex = parseInt(req.params.post_index, 10) || 1;
 	const topicData = await topics.getTopicData(tid);
+
 	if (!topicData) {
 		return next();
 	}
@@ -456,5 +457,52 @@ topicsController.setResolved = async function (req, res) {
 		res.json({ message: 'Topic resolved status updated', tid, resolved });
 	} catch (error) {
 		res.status(500).json({ error: error.message });
+	}
+};
+// Adding topics.Controller.getUnansweredTopics function method for filtering unanswered questions
+topicsController.getUnansweredTopics = async function (uid, limit = 10, offset = 0) {
+	try {
+		// Check if the user is an administrator
+		const isAdmin = await privileges.users.isAdministrator(uid);
+		if (!isAdmin) {
+			throw new Error('Forbidden');
+		}
+
+		// Fetch topic IDs from Redis
+		const tids = await db.getSortedSetRevRange('topics:tid', offset, offset + (limit * 2) - 1);
+
+		// 🔍 Debug: Check if we're actually getting topic IDs
+		console.log('Retrieved TIDs from DB:', tids);
+
+		if (!tids || tids.length === 0) {
+			return { topics: [] }; // Return an object with empty topics array
+		}
+
+		// Retrieve topic details
+		const topicData = await topics.getTopicsByTids(tids, uid);
+
+		// 🔍 Debug: Check what topic data is returned
+		console.log('Fetched Topic Data:', topicData);
+
+		// Filter topics with postcount === 1 (indicating unanswered)
+		// const unansweredTopics = topicData.filter(topic => parseInt(topic.postcount, 10) === 1).slice(0, limit);
+		// Filter topics with postcount === 1 (indicating unanswered)
+		const unansweredTopics = topicData
+			.filter(topic => parseInt(topic.postcount, 10) === 1)
+			.slice(0, limit)
+			.map(topic => ({
+				...topic,
+				numThumbs: topic.numThumbs || 0, // Ensure numThumbs is always present
+				thumbs: topic.thumbs || [], // Ensure thumbs is always an array
+			}));
+
+		// 🔍 Debug: Ensure filtering logic is correct
+		console.log('Filtered Unanswered Topics:', unansweredTopics);
+
+		// Return object with topics property
+		return { topics: unansweredTopics };
+	} catch (err) {
+		console.error('Error fetching unanswered topics:', err);
+		throw new Error('Error fetching unanswered topics');
 	}
 };

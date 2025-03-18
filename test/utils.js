@@ -280,18 +280,22 @@ describe('Utility Methods', () => {
 	});
 
 	it('should return false if browser is not android', (done) => {
-		global.navigator = {
-			userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36',
-		};
+		Object.defineProperty(global.navigator, 'userAgent', {
+			get: () => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.96 Safari/537.36', configurable: true,
+		});
 		assert.equal(utils.isAndroidBrowser(), false);
 		done();
 	});
-
-	it('should return true if browser is android', (done) => {
-		global.navigator = {
-			userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Android /58.0.3029.96 Safari/537.36',
-		};
-		assert.equal(utils.isAndroidBrowser(), true);
+	it('should return true if browser is native Android browser (not Chrome)', (done) => {
+		Object.defineProperty(global.navigator, 'userAgent', {
+			get: function () {
+				return 'Mozilla/5.0 (Linux; Android 9; SAMSUNG SM-J320F) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Mobile Safari/537.36';
+			},
+			configurable: true,
+		});
+		console.log('Mocked UserAgent (Native Android Browser):', global.navigator.userAgent);
+		console.log('isAndroidBrowser() Output:', utils.isAndroidBrowser());
+		assert.strictEqual(utils.isAndroidBrowser(), true);
 		done();
 	});
 

@@ -317,3 +317,30 @@ topicsAPI.bump = async (caller, { tid }) => {
 //     return { tid, resolved };
 // };
 
+// Use built-in fetch available in Node.js 18+
+async function post(url, data, jar) {
+	try {
+		const cookies = jar.getCookiesSync(url).map(cookie => cookie.toString()).join('; ');
+
+		const response = await fetch(url, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Cookie: cookies,
+			},
+			body: JSON.stringify(data),
+		});
+
+		if (!response.ok) {
+			throw new Error(`HTTP error! Status: ${response.status}`);
+		}
+
+		return await response.json();
+	} catch (error) {
+		console.error('API POST error:', error);
+		throw error;
+	}
+}
+
+// Export the function inside topicsAPI (not in a separate file)
+topicsAPI.post = post;
