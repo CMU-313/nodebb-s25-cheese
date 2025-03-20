@@ -83,8 +83,14 @@ jobs:
       - name: Node tests
         run: npm test
 
-      - name: Extract coverage info
-        run: npm run coverage
+      - name: Run Tests with NYC (Istanbul)
+        run: npx nyc --reporter=lcov --reporter=text mocha "test/**/*.js" --exclude test/files/1.js
+
+      - name: Upload Coverage Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-report
+          path: coverage/
 
       - name: Test coverage
         uses: coverallsapp/github-action@v2
