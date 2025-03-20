@@ -87,7 +87,7 @@ jobs:
         run: npx nyc --reporter=lcov --reporter=text mocha "test/**/*.js" --exclude test/files/1.js
 
       - name: Upload Coverage Report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: coverage-report
           path: coverage/
