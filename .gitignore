@@ -21,6 +21,11 @@ feeds/recent.rss
 .eslintcache
 .svn
 
+*.pyc
+__pycache__/
+.venv/
+
+
 logs/
 
 pidfile
@@ -72,4 +77,4 @@ link-plugins.sh
 test.sh
 
 .docker/**
-!**/.gitkeep
+!**/.gitkeepdump.rdb

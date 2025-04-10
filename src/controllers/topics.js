@@ -33,6 +33,7 @@ topicsController.get = async function getTopic(req, res, next) {
 	}
 	let postIndex = parseInt(req.params.post_index, 10) || 1;
 	const topicData = await topics.getTopicData(tid);
+
 	if (!topicData) {
 		return next();
 	}
